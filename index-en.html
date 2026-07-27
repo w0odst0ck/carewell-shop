@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Mojin — Protection You Can Trust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Variables ===== */
+    :root {
+      --warm-blue: #3A7B9E;
+      --light-blue: #6D9FB8;
+      --sand-orange: #E8874E;
+      --light-orange: #F4A261;
+      --cream: #FCF8F4;
+      --warm-gray: #F0EDE8;
+      --white: #FFFFFF;
+      --warm-black: #3A3530;
+      --warm-text: #7A756E;
+      --desert-gold: #DAA55C;
+      --saudi-green: #006C35;
+      --border-light: #E8E2D8;
+
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+
+      --shadow-card: 0 4px 20px rgba(58, 53, 48, 0.06);
+      --shadow-hover: 0 8px 30px rgba(58, 53, 48, 0.10);
+      --shadow-btn: 0 2px 8px rgba(232, 135, 78, 0.20);
+
+      --max-width: 1200px;
+    }
+
+    /* ===== Reset ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--cream);
+      color: var(--warm-black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul, ol { list-style: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== Announcement Bar ===== */
+    .announcement {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border-light);
+      padding: 8px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--warm-text);
+      position: relative;
+    }
+    .announcement .close-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--warm-text);
+      font-size: 16px;
+      opacity: 0.5;
+    }
+    .announcement .close-btn:hover { opacity: 1; }
+
+    /* ===== Header ===== */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--warm-black);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      color: var(--warm-blue);
+    }
+
+    nav.desktop-nav {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    nav.desktop-nav a {
+      color: var(--warm-black);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+    }
+    nav.desktop-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--warm-blue);
+      border-radius: 1px;
+      transition: width 0.3s ease;
+    }
+    nav.desktop-nav a:hover { color: var(--warm-blue); }
+    nav.desktop-nav a:hover::after { width: 100%; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      position: relative;
+    }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--warm-black);
+      transition: border-color 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--warm-blue); }
+    .lang-btn .globe { font-size: 16px; }
+    .lang-btn .arrow { font-size: 10px; }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-hover);
+      min-width: 90px;
+      overflow: hidden;
+      z-index: 200;
+    }
+    .lang-dropdown.active { display: block; }
+    .lang-dropdown button {
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--warm-black);
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .lang-dropdown button:hover { background: var(--cream); }
+    .lang-dropdown button.active-lang {
+      background: var(--warm-blue);
+      color: var(--white);
+    }
+
+    .cart-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      position: relative;
+      color: var(--warm-black);
+    }
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--sand-orange);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(232,135,78,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 70% at 80% 60%, rgba(58,123,158,0.05) 0%, transparent 50%),
+        linear-gradient(160deg, #f0e9e0 0%, #e8ddd0 35%, #ded0c0 70%, #d4c9ba 100%);
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: var(--cream);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 L1200,60 L0,60 Z' fill='%23FCF8F4'/%3E%3C/svg%3E") no-repeat bottom center;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 L1200,60 L0,60 Z' fill='%23FCF8F4'/%3E%3C/svg%3E") no-repeat bottom center;
+      -webkit-mask-size: 100% 100%; mask-size: 100% 100%; z-index: 2;
+    }
+    .hero-bg .deco-1 {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,135,78,0.08) 0%, transparent 70%);
+      top: -80px; right: -60px;
+    }
+    .hero-bg .deco-2 {
+      position: absolute; width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(58,123,158,0.06) 0%, transparent 70%);
+      bottom: 10%; left: -40px;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(252,248,244,0.3) 0%, rgba(252,248,244,0.6) 100%);
+    }
+    .hero-bg .placeholder-text {
+      font-size: 14px;
+      color: var(--warm-text);
+      opacity: 0.6;
+      letter-spacing: 1px;
+    }
+    /* Dot texture overlay */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(var(--warm-text) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.04;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 700px;
+      padding: 40px 20px;
+    }
+    .hero-content .tagline {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--warm-black);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+    .hero-content .sub {
+      font-size: 18px;
+      color: var(--warm-text);
+      margin-top: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--sand-orange);
+      color: var(--white);
+      box-shadow: var(--shadow-btn);
+    }
+    .btn-primary:hover {
+      background: var(--light-orange);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--warm-black);
+      border: 2px solid var(--warm-blue);
+    }
+    .btn-secondary:hover {
+      background: var(--warm-blue);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ===== Trust Bar ===== */
+    .trust-bar {
+      background: var(--warm-gray);
+      padding: 32px 0;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      padding: 12px;
+    }
+    .trust-item .icon { font-size: 24px; }
+    .trust-item .label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--warm-black);
+    }
+    .trust-item .sub-label {
+      font-size: 12px;
+      color: var(--warm-text);
+    }
+
+    /* ===== Categories ===== */
+    .section { padding: 64px 0; }
+    .section.alt { background: var(--white); }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 15px;
+      color: var(--warm-text);
+      margin-bottom: 36px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .category-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px 16px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .category-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+    .category-card .emoji { font-size: 36px; }
+    .category-card .name { font-size: 16px; font-weight: 600; margin-top: 12px; }
+    .category-card .name-en { font-size: 13px; color: var(--warm-text); margin-top: 4px; }
+
+    /* ===== Best Sellers ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      transition: all 0.3s ease;
+    }
+    .product-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+    .product-image {
+      aspect-ratio: 1 / 1;
+      background: #FAF8F5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--warm-text);
+      font-size: 13px;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--desert-gold);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .product-info {
+      padding: 16px;
+    }
+    .product-name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .product-name-en {
+      font-size: 12px;
+      color: var(--warm-text);
+      margin-top: 2px;
+    }
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+    .product-rating .stars { color: var(--desert-gold); letter-spacing: 1px; }
+    .product-rating .count { color: var(--warm-text); font-size: 12px; }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sand-orange);
+    }
+    .product-price .old {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--warm-text);
+      text-decoration: line-through;
+      margin-left: 6px;
+    }
+    .btn-add {
+      background: var(--sand-orange);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-add:hover { background: var(--light-orange); }
+
+    .view-all {
+      text-align: center;
+      margin-top: 32px;
+    }
+    .view-all a {
+      color: var(--warm-blue);
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+    .view-all a:hover { color: var(--light-blue); }
+
+    /* ===== Brand Story ===== */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .story-text .story-quote {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.7;
+      color: var(--warm-black);
+      border-left: 3px solid var(--sand-orange);
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .story-text .story-quote cite {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--warm-text);
+      margin-top: 8px;
+      font-style: normal;
+    }
+    .story-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .story-feat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px;
+      background: var(--cream);
+      border-radius: var(--radius-md);
+    }
+    .story-feat .icon { font-size: 22px; }
+    .story-feat .title { font-size: 14px; font-weight: 600; }
+    .story-feat .desc { font-size: 12px; color: var(--warm-text); }
+
+    .story-image {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #ddd0c0 0%, #cbbcac 100%);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--warm-text);
+      font-size: 14px;
+    }
+
+    /* ===== WhatsApp CTA ===== */
+    .whatsapp-cta {
+      background: var(--warm-blue);
+      color: var(--white);
+      padding: 48px 0;
+      text-align: center;
+    }
+    .whatsapp-cta h2 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .whatsapp-cta p {
+      font-size: 15px;
+      margin-top: 8px;
+      opacity: 0.85;
+    }
+    .whatsapp-cta .agent-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .whatsapp-cta .agent-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .whatsapp-cta .agent-detail { text-align: left; }
+    .whatsapp-cta .agent-detail .name { font-size: 14px; font-weight: 600; }
+    .whatsapp-cta .agent-detail .status {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+    .whatsapp-cta .btn {
+      margin-top: 20px;
+      background: #25D366;
+      color: var(--white);
+    }
+    .whatsapp-cta .btn:hover { background: #20BD5A; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--cream);
+      border-top: 1px solid var(--border-light);
+      padding: 48px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    footer h3 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: var(--warm-blue);
+    }
+    footer h3 .sub {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--warm-text);
+      letter-spacing: 0;
+      margin-top: 2px;
+    }
+    footer h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a {
+      font-size: 13px;
+      color: var(--warm-text);
+      transition: color 0.2s;
+    }
+    footer ul li a:hover { color: var(--warm-blue); }
+    footer .contact-info {
+      font-size: 13px;
+      color: var(--warm-text);
+      line-height: 2;
+    }
+    footer .copyright {
+      text-align: center;
+      padding-top: 32px;
+      margin-top: 32px;
+      border-top: 1px solid var(--border-light);
+      font-size: 13px;
+      color: var(--warm-text);
+    }
+
+    /* ===== Toast ===== */
+    .toast {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--warm-black);
+      color: var(--white);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      box-shadow: var(--shadow-hover);
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 999;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav.desktop-nav { display: none; }
+      .hamburger { display: block; }
+
+      .hero-content .tagline { font-size: 32px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .story-grid { grid-template-columns: 1fr; }
+      .story-features { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 22px; }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ===== Mobile Nav Overlay ===== */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      z-index: 200;
+      padding: 80px 24px 24px;
+    }
+    .mobile-nav.active { display: block; }
+    .mobile-nav a {
+      display: block;
+      padding: 16px 0;
+      font-size: 18px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .mobile-nav .close-nav {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Announcement ===== -->
+<div class="announcement" id="announcement">
+  <div class="container">
+    🇸🇦 Free shipping on orders over SAR 100 — Delivery within 3–7 business days
+    <button class="close-btn" onclick="document.getElementById('announcement').style.display='none'">✕</button>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header>
+  <div class="container">
+    <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+
+    <a href="/" class="logo">MOJIN</a>
+
+    <nav class="desktop-nav">
+      <a href="index-en.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about-en.html">About Us</a>
+      <a href="faq.html">FAQ</a>
+      <a href="faq.html">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn" onclick="toggleLang()">
+          <span class="globe">🌐 -->
+          <span id="currentLang">EN</span>
+          <span class="arrow">▾</span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <button class="active-lang" onclick="switchLang('EN')">EN</button>
+          <button onclick="switchLang('CN')">CN</button>
+          <button onclick="switchLang('AR')">AR</button>
+        </div>
+      </div>
+
+      <button class="cart-btn" onclick="showToast()">
+        🛒
+        <span class="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-nav" onclick="toggleMobileNav()">✕</button>
+    <a href="index-en.html">Home</a>
+    <a href="product.html">Products</a>
+    <a href="about-en.html">About Us</a>
+    <a href="faq.html">FAQ</a>
+    <a href="faq.html">Contact</a>
+    <a href="javascript:void(0)" onclick="switchLang()" style="margin-top:16px;font-size:14px;">
+      🌐 Language: <span id="mobileLang">EN</span>
+    </a>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="deco-1"></div>
+    <div class="deco-2"></div>
+    <div class="deco-1"></div>
+    <div class="deco-2"></div>
+    
+  </div>
+  <div class="hero-content">
+    <h1 class="tagline">Protection You<br>Can Trust</h1>
+    <p class="sub">Professional-grade protection, from our factory to your door. CE &amp; SASO certified.</p>
+    <div class="hero-actions">
+      <a href="product.html" class="btn btn-primary">🛒 Shop Now</a>
+      <a href="#" class="btn btn-secondary">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Trust Bar ===== -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <span class="icon">✅</span>
+        <span class="label">CE Certified</span>
+        <span class="sub-label">European standard</span>
+      </div>
+      <div class="trust-item">
+        <span class="icon">✅</span>
+        <span class="label">SASO Certified</span>
+        <span class="sub-label">Saudi standards</span>
+      </div>
+      <div class="trust-item">
+        <span class="icon">🏭</span>
+        <span class="label">Factory Direct</span>
+        <span class="sub-label">No middleman markup</span>
+      </div>
+      <div class="trust-item">
+        <span class="icon">📦</span>
+        <span class="label">Fast Shipping</span>
+        <span class="sub-label">3–7 days across KSA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Categories ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Shop by Category</h2>
+    <p class="section-sub">Find what you need — from head to toe</p>
+
+    <div class="category-grid">
+      <div class="category-card" onclick="window.location.href='product.html'">
+        <div class="emoji">🛡️</div>
+        <div class="name">Isolation Gowns</div>
+        <div class="name-en">أثواب عزل</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='product.html'">
+        <div class="emoji">🧢</div>
+        <div class="name">Protective Caps</div>
+        <div class="name-en">أغطية رأس</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='product.html'">
+        <div class="emoji">👟</div>
+        <div class="name">Shoe Covers</div>
+        <div class="name-en">أغطية أحذية</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='product.html'">
+        <div class="emoji">🧤</div>
+        <div class="name">Gloves</div>
+        <div class="name-en">قفازات</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Best Sellers ===== -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title">Best Sellers</h2>
+    <p class="section-sub">Top-rated products trusted by families and businesses across Saudi Arabia</p>
+
+    <div id="featuredGrid" class="product-grid"></div>
+
+    <div class="view-all">
+      <a href="product.html">View All Products →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Brand Story ===== -->
+<section class="section">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text">
+        <div class="story-quote">
+          "A factory owner saw workers using low-quality protective gear. He decided to make something that actually works."
+          <cite>— The Mojin Story</cite>
+        </div>
+        <div class="story-features">
+          <div class="story-feat">
+            <span class="icon">🏭</span>
+            <span class="title">Factory Direct</span>
+            <span class="desc">We produce what we sell. No middlemen markups.</span>
+          </div>
+          <div class="story-feat">
+            <span class="icon">📦</span>
+            <span class="title">Fast Delivery</span>
+            <span class="desc">Ships within 24h across Saudi Arabia.</span>
+          </div>
+          <div class="story-feat">
+            <span class="icon">✅</span>
+            <span class="title">Certified Quality</span>
+            <span class="desc">CE, SASO &amp; ISO 13485 compliant.</span>
+          </div>
+          <div class="story-feat">
+            <span class="icon">💬</span>
+            <span class="title">Local Support</span>
+            <span class="desc">Arabic &amp; English, WhatsApp-ready.</span>
+          </div>
+        </div>
+      </div>
+      <div class="story-image">
+        <div style="text-align:center;padding:20px"><div style="font-size:32px;font-weight:800;letter-spacing:6px;color:#3A7B9E;margin-bottom:8px">MOJIN</div><div style="font-size:14px;color:#7A756E">موجين · 莲墨瑾</div><div style="margin-top:16px;font-size:13px;color:#7A756E;opacity:0.6">Lotojin Textile Co., Ltd.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WhatsApp CTA ===== -->
+<section class="whatsapp-cta">
+  <div class="container">
+    <h2>Questions? Need bulk pricing?</h2>
+    <p>Our team is ready to help — usually replies within 5 minutes.</p>
+    <div class="agent-info">
+      <div class="agent-avatar">👩</div>
+      <div class="agent-detail">
+        <div class="name">Mona — Customer Support</div>
+        <div class="status">🟢 Online · Usually replies in &lt;5 min</div>
+      </div>
+    </div>
+    <a href="https://wa.me/966551234567" class="btn">💬 WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>MOJIN <span class="sub">موجين · 莲墨瑾</span></h3>
+        <p style="font-size:13px;color:var(--warm-text);margin-top:8px;line-height:1.7;">
+          Protection You Can Trust.<br>
+          Professional-grade protective gear, direct from our factory to your door.
+        </p>
+        <div class="contact-info" style="margin-top:16px;">
+          📧 info@mojin.shop<br>
+          💬 WhatsApp: +86 XXX XXXX XXXX
+        </div>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="product.html">Isolation Gowns</a></li>
+          <li><a href="product.html">Protective Caps</a></li>
+          <li><a href="product.html">Shoe Covers</a></li>
+          <li><a href="product.html">Gloves</a></li>
+          
+          
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about-en.html">About Mojin</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="faq.html">Contact Us</a></li>
+          
+          
+          
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="contact-info">
+          📧 info@mojin.shop<br>
+          💬 WhatsApp<br>
+          📍 Saudi Arabia<br>
+          🏭 China
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Mojin. All rights reserved. · 莲墨瑾服装有限公司 · موجين. جميع الحقوق محفوظة.
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast">✅ Added to cart</div>
+
+<script>
+  // ===== Featured Products Data =====
+  const FEATURED = [
+    { sku: 'cap-bouffant', name: 'Bouffant Doctor Cap', sub: 'قبعة بوفان طبية', price: 29, stars: 5, count: 6, img: 'images/手工医生帽.jpg', badge: 'New' },
+    { sku: 'cap-round',    name: 'Regular Bouffant Cap', sub: 'قبعة بوفان عادية',   price: 22, stars: 4, count: 8, img: 'images/普通圆帽.jpg', badge: '' },
+    { sku: 'cap-striped',  name: 'Striped Bouffant Cap', sub: 'قبعة بوفان مخططة',  price: 25, stars: 5, count: 5, img: 'images/条毛.jpg', badge: '' },
+    { sku: 'cap-round-w',  name: 'Bouffant Cap (White)',  sub: 'قبعة بوفان (أبيض)',   price: 22, stars: 4, count: 4, img: 'images/普通圆帽-白.jpg', badge: '' },
+    { sku: 'cap-round-g',  name: 'Bouffant Cap (Green)',  sub: 'قبعة بوفان (أخضر)',   price: 22, stars: 4, count: 3, img: 'images/普通圆帽-绿.jpg', badge: '' },
+  ];
+
+  function renderFeatured() {
+    const grid = document.getElementById('featuredGrid');
+    if (!grid) return;
+    grid.innerHTML = FEATURED.map(p => {
+      const starStr = '★'.repeat(p.stars) + '☆'.repeat(5 - p.stars);
+      const badgeHtml = p.badge ? `<span class="product-badge">${p.badge}</span>` : '';
+      return `<div class="product-card">
+        <a href="product.html#${p.sku}">
+          <div class="product-image" style="background:#FAF8F5;overflow:hidden">
+            <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">
+            ${badgeHtml}
+          </div>
+        </a>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-name-en">${p.sub}</div>
+          <div class="product-rating">
+            <span class="stars">${starStr}</span>
+            <span class="count">(${p.count})</span>
+          </div>
+          <div class="product-footer">
+            <span class="product-price">SAR ${p.price}</span>
+            <button class="btn-add" onclick="window.location.href='product.html#${p.sku}'">查看</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Render featured products on page load
+  document.addEventListener('DOMContentLoaded', renderFeatured);
+
+  function toggleLang() {
+    document.getElementById('langDropdown').classList.toggle('active');
+  }
+
+  function switchLang(lang) {
+    document.getElementById('currentLang').textContent = lang;
+    document.getElementById('mobileLang').textContent = lang;
+    document.getElementById('langDropdown').classList.remove('active');
+
+    // Update active state on buttons
+    document.querySelectorAll('.lang-dropdown button').forEach(btn => {
+      btn.classList.remove('active-lang');
+      if (btn.textContent.trim() === lang) btn.classList.add('active-lang');
+    });
+
+    // Demo: change tagline
+    const tagline = document.querySelector('.tagline');
+    const sub = document.querySelector('.hero .sub');
+    const heroTitle = document.querySelector('.section-title');
+    if (lang === 'EN') {
+      window.location.href = 'index-en.html';
+    } else if (lang === 'CN') {
+      window.location.href = 'index-cn.html';
+    } else if (lang === 'AR') {
+      window.location.href = 'index-ar.html';
+    }
+  }
+
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('active');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    if (msg) toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // Close lang dropdown on outside click
+  document.addEventListener('click', function(e) {
+    const sw = document.getElementById('langSwitcher');
+    if (!sw.contains(e.target)) {
+      document.getElementById('langDropdown').classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>

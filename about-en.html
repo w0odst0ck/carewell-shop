@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>About Mojin · 莲墨瑾 · موجين</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --warm-blue: #3A7B9E; --light-blue: #6D9FB8;
+      --sand-orange: #E8874E; --light-orange: #F4A261;
+      --cream: #FCF8F4; --warm-gray: #F0EDE8;
+      --white: #FFFFFF; --warm-black: #3A3530;
+      --warm-text: #7A756E; --desert-gold: #DAA55C;
+      --border-light: #E8E2D8;
+      --radius-lg: 16px; --radius-md: 10px; --radius-sm: 6px;
+      --shadow-card: 0 4px 20px rgba(58,53,48,0.06);
+      --max-width: 1200px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--cream); color: var(--warm-black); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+    header {
+      background: var(--white); border-bottom: 1px solid var(--border-light);
+      padding: 14px 0; position: sticky; top: 0; z-index: 100;
+    }
+    header .container { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 22px; font-weight: 800; letter-spacing: 6px; color: var(--warm-blue); text-decoration: none; }
+    nav a { color: var(--warm-black); text-decoration: none; font-size: 14px; font-weight: 500; margin-left: 28px; }
+    nav a:hover { color: var(--warm-blue); }
+
+    .page-hero {
+      background: linear-gradient(135deg, #e8ddd0 0%, #d4c9ba 100%);
+      padding: 80px 0; text-align: center;
+    }
+    .page-hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 12px; }
+    .page-hero p { font-size: 18px; color: var(--warm-text); max-width: 600px; margin: 0 auto; }
+
+    .section { padding: 64px 0; }
+    .section.alt { background: var(--white); }
+
+    .story-block { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .story-text h2 { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+    .story-text p { font-size: 15px; color: var(--warm-text); line-height: 1.8; margin-bottom: 16px; }
+    .story-image {
+      aspect-ratio: 4/3; background: linear-gradient(135deg, #ddd0c0 0%, #cbbcac 100%);
+      border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
+      color: var(--warm-text); font-size: 14px;
+    }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
+    .stat-card {
+      background: var(--cream); border-radius: var(--radius-lg); padding: 32px 16px; text-align: center;
+    }
+    .stat-card .num { font-size: 36px; font-weight: 800; color: var(--warm-blue); }
+    .stat-card .label { font-size: 14px; color: var(--warm-text); margin-top: 8px; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    .value-card {
+      background: var(--cream); border-radius: var(--radius-lg); padding: 32px 24px;
+      border: 1px solid var(--border-light);
+    }
+    .value-card .icon { font-size: 32px; }
+    .value-card h3 { font-size: 18px; font-weight: 600; margin: 12px 0 8px; }
+    .value-card p { font-size: 14px; color: var(--warm-text); line-height: 1.7; }
+
+    .back-link { display: inline-block; margin-top: 32px; color: var(--warm-blue); font-weight: 600; text-decoration: none; }
+    .back-link:hover { color: var(--light-blue); }
+
+    footer { background: var(--cream); border-top: 1px solid var(--border-light); padding: 48px 0 32px; text-align: center; }
+    footer p { font-size: 13px; color: var(--warm-text); }
+
+    @media (max-width: 768px) {
+      .story-block { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+      .page-hero h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index-en.html" class="logo">MOJIN</a>
+      <nav>
+        <a href="index-en.html">Home</a>
+        <a href="product.html">Products</a>
+        <a href="about-en.html">About</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Our Story</h1>
+      <p>From a factory floor in China to homes across Saudi Arabia — Mojin exists to make professional protection accessible to everyone.</p>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="story-block">
+        <div class="story-text">
+          <h2>From Factory to You</h2>
+          <p>Mojin was born at <strong>莲墨瑾服装有限公司 (Lotojin Textile Co., Ltd.)</strong>, a factory with years of experience producing protective apparel. Our founder saw a problem: most PPE on the market was either overpriced or unreliable. So we decided to build our own brand — one that delivers factory-direct quality at fair prices.</p>
+          <p>Today, we export to Saudi Arabia and the Middle East, serving hospitals, clinics, businesses, and families. Every product is CE certified and tested for quality.</p>
+          <p><strong>Our promise:</strong> Professional-grade protection, no middleman markup.</p>
+          <a href="product.html" class="back-link">→ Browse Our Products</a>
+        </div>
+        <div class="story-image"><div style="text-align:center;padding:20px"><div style="font-size:32px;font-weight:800;letter-spacing:6px;color:#3A7B9E;margin-bottom:8px">MOJIN</div><div style="font-size:14px;color:#7A756E">موجين · 莲墨瑾</div><div style="margin-top:16px;font-size:13px;color:#7A756E;opacity:0.6">Lotojin Textile Co., Ltd.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align:center;font-size:28px;font-weight:700">By the Numbers</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="num">1</div><div class="label">Factory, Direct to You</div></div>
+        <div class="stat-card"><div class="num">5+</div><div class="label">Years in Protective Gear</div></div>
+        <div class="stat-card"><div class="num">20+</div><div class="label">Products &amp; Variations</div></div>
+        <div class="stat-card"><div class="num">CE</div><div class="label">Certified Quality</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <h2 style="text-align:center;font-size:28px;font-weight:700">Our Values</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="icon">🏭</div>
+          <h3>Factory Direct</h3>
+          <p>We produce what we sell. This means better quality control, fair pricing, and total transparency.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon">🌍</div>
+          <h3>Middle East Focus</h3>
+          <p>From product specs to packaging to certification — everything is designed with the Saudi market in mind.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon">🤝</div>
+          <h3>Trust Above All</h3>
+          <p>Every product is independently tested and certified. We don't cut corners on safety.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Mojin · 莲墨瑾服装有限公司 · موجين. All rights reserved.</p>
+      <p style="margin-top:8px"><a href="index-en.html" style="color:var(--warm-blue)">Home</a> · <a href="product.html" style="color:var(--warm-blue)">Products</a> · <a href="faq.html" style="color:var(--warm-blue)">FAQ</a></p>
+    </div>
+  </footer>
+</body>
+</html>

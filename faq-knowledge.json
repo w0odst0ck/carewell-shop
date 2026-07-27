@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "brand": "Mojin · 莲墨瑾 · موجين",
+    "domain": "mojin.shop",
+    "version": "1.0",
+    "description": "FAQ knowledge base for Botpress RAG training"
+  },
+  "categories": [
+    {
+      "id": "about",
+      "en": { "name": "About Mojin" },
+      "cn": { "name": "关于莲墨瑾" },
+      "ar": { "name": "عن موجين" }
+    },
+    {
+      "id": "shipping",
+      "en": { "name": "Products & Shipping" },
+      "cn": { "name": "产品与配送" },
+      "ar": { "name": "المنتجات والشحن" }
+    },
+    {
+      "id": "support",
+      "en": { "name": "Returns & Support" },
+      "cn": { "name": "退换与客服" },
+      "ar": { "name": "الإرجاع والدعم" }
+    }
+  ],
+  "faqs": [
+    {
+      "id": "q1",
+      "category": "about",
+      "en": {
+        "question": "Who is Mojin?",
+        "answer": "Mojin is a protective equipment brand born from Lotojin Textile (莲墨瑾服装有限公司), a Chinese manufacturer with years of experience producing non-woven protective products. We focus on the Middle Eastern market, providing reliable, affordable protective gear for families, clinics, and businesses."
+      },
+      "cn": {
+        "question": "莲墨瑾是谁？",
+        "answer": "莲墨瑾服装有限公司（Lotojin Textile）是一家专注无纺布防护制品多年的中国制造商。自有品牌 Mojin 面向中东市场，为家庭、诊所和企业提供可靠且买得起的防护用品。"
+      },
+      "ar": {
+        "question": "من هي موجين؟",
+        "answer": "موجين هي علامة تجارية لمعدات الحماية انبثقت من مصنع لوتوجين للمنسوجات (莲墨瑾服装有限公司)، وهي شركة تصنيع صينية لديها سنوات من الخبرة في إنتاج منتجات الحماية غير المنسوجة. نركز على سوق الشرق الأوسط، ونوفر معدات حماية موثوقة وبأسعار معقولة للعائلات والعيادات والشركات."
+      }
+    },
+    {
+      "id": "q2",
+      "category": "about",
+      "en": {
+        "question": "Are your products certified?",
+        "answer": "Yes. All Mojin products meet international quality standards:\n- CE Marking (European conformity)\n- SASO (Saudi Standards, Metrology and Quality Organization)\n- ISO 13485 (Medical devices quality management)\nWe ensure full compliance with Saudi regulations."
+      },
+      "cn": {
+        "question": "产品有认证吗？",
+        "answer": "有。所有 Mojin 产品均符合国际质量标准：\n- CE 标志（欧盟符合性认证）\n- SASO（沙特标准局认证）\n- ISO 13485（医疗器械质量管理体系）\n我们确保全面符合沙特法规要求。"
+      },
+      "ar": {
+        "question": "هل منتجاتكم معتمدة؟",
+        "answer": "نعم. جميع منتجات موجين تلبي معايير الجودة الدولية:\n- علامة CE (المطابقة الأوروبية)\n- SASO (الهيئة السعودية للمواصفات والمقاييس والجودة)\n- ISO 13485 (نظام إدارة جودة الأجهزة الطبية)\nنضمن الامتثال الكامل للوائح السعودية."
+      }
+    },
+    {
+      "id": "q3",
+      "category": "shipping",
+      "en": {
+        "question": "How long does shipping take?",
+        "answer": "Delivery within Saudi Arabia takes 3–7 business days. Express options are available for urgent orders. We ship from our local warehouse in Saudi Arabia to ensure fast delivery."
+      },
+      "cn": {
+        "question": "发货多久能到？",
+        "answer": "沙特境内配送 3-7 个工作日。加急订单可提供快递选项。我们从沙特本地仓库发货，确保快速送达。"
+      },
+      "ar": {
+        "question": "كم يستغرق الشحن؟",
+        "answer": "التوصيل داخل المملكة العربية السعودية يستغرق 3-7 أيام عمل. تتوفر خيارات الشحن السريع للطلبات العاجلة. نشحن من مستودعنا المحلي في السعودية لضمان التوصيل السريع."
+      }
+    },
+    {
+      "id": "q4",
+      "category": "shipping",
+      "en": {
+        "question": "What is the free shipping threshold?",
+        "answer": "Free shipping is available on orders over SAR 100 within Saudi Arabia. For orders under SAR 100, a flat shipping fee applies."
+      },
+      "cn": {
+        "question": "满多少免运费？",
+        "answer": "沙特境内订单满 SAR 100 免运费。未满 SAR 100 的订单收取固定运费。"
+      },
+      "ar": {
+        "question": "كم قيمة الطلب للشحن المجاني؟",
+        "answer": "الشحن مجاني للطلبات فوق 100 ريال سعودي داخل المملكة. للطلبات أقل من 100 ريال، تُطبق رسوم شحن ثابتة."
+      }
+    },
+    {
+      "id": "q5",
+      "category": "shipping",
+      "en": {
+        "question": "Do you ship to other Gulf countries?",
+        "answer": "Currently we ship within Saudi Arabia only. UAE, Kuwait, Qatar, and other GCC countries are planned for future expansion. Contact us via WhatsApp if you have a bulk order outside KSA for special arrangements."
+      },
+      "cn": {
+        "question": "能发到其他海湾国家吗？",
+        "answer": "目前仅限沙特境内配送。阿联酋、科威特、卡塔尔等 GCC 国家正在扩展中。如有沙特以外的大宗订单，请通过 WhatsApp 联系特别安排。"
+      },
+      "ar": {
+        "question": "هل تشحنون إلى دول الخليج الأخرى؟",
+        "answer": "حالياً، نقوم بالشحن داخل المملكة العربية السعودية فقط. الإمارات والكويت وقطر ودول الخليج الأخرى قيد التوسع المستقبلي. اتصل بنا عبر واتساب للطلبات الكبيرة خارج السعودية لترتيبات خاصة."
+      }
+    },
+    {
+      "id": "q6",
+      "category": "shipping",
+      "en": {
+        "question": "Can I get samples before ordering in bulk?",
+        "answer": "Absolutely. We offer sample orders for bulk buyers. Contact us via WhatsApp to arrange sample shipments. Sample cost is typically deducted from your first bulk order."
+      },
+      "cn": {
+        "question": "可以拿样品吗？",
+        "answer": "可以。大宗买家可安排样品订单。请通过 WhatsApp 联系我们安排样品寄送。样品费用通常在首单批发中抵扣。"
+      },
+      "ar": {
+        "question": "هل يمكن الحصول على عينات قبل الطلب بالجملة؟",
+        "answer": "بالتأكيد. نقدم طلبات عينات للمشترين بالجملة. اتصل بنا عبر واتساب لترتيب شحن العينات. عادةً ما يتم خصم تكلفة العينة من أول طلب بالجملة."
+      }
+    },
+    {
+      "id": "q7",
+      "category": "support",
+      "en": {
+        "question": "What is your return policy?",
+        "answer": "We offer 7-day returns for unused, unopened products in original packaging. To initiate a return, contact us via WhatsApp. Refunds are processed within 5-7 business days after we receive the returned items."
+      },
+      "cn": {
+        "question": "退换货政策是什么？",
+        "answer": "我们提供 7 天退货服务，要求产品未使用、未拆封、原包装完好。请通过 WhatsApp 联系发起退货。退款在收到退货后 5-7 个工作日内处理。"
+      },
+      "ar": {
+        "question": "ما هي سياسة الإرجاع؟",
+        "answer": "نقدم إرجاع لمدة 7 أيام للمنتجات غير المستخدمة وغير المفتوحة في عبوتها الأصلية. لبدء الإرجاع، اتصل بنا عبر واتساب. تتم معالجة المبالغ المستردة في غضون 5-7 أيام عمل بعد استلامنا العناصر المرتجعة."
+      }
+    },
+    {
+      "id": "q8",
+      "category": "support",
+      "en": {
+        "question": "Do you offer bulk or wholesale pricing?",
+        "answer": "Yes. We offer discounted pricing for bulk orders. Clinics, hospitals, construction companies, and cleaning services can contact us via WhatsApp for custom quotes. Minimum bulk order quantities apply."
+      },
+      "cn": {
+        "question": "有批发价吗？",
+        "answer": "有。大宗订单享受折扣价。诊所、医院、建筑公司、保洁服务请联系 WhatsApp 获取定制报价。批发有最低起订量要求。"
+      },
+      "ar": {
+        "question": "هل يوجد سعر جملة؟",
+        "answer": "نعم. نقدم أسعار مخفضة للطلبات بالجملة. يمكن للعيادات والمستشفيات وشركات البناء وخدمات التنظيف الاتصال بنا عبر واتساب للحصول على عروض أسعار مخصصة. تطبق الحدود الدنيا لكمية الطلب بالجملة."
+      }
+    },
+    {
+      "id": "q9",
+      "category": "support",
+      "en": {
+        "question": "How can I contact customer support?",
+        "answer": "You can reach us via:\n- WhatsApp: +86 XXX XXXX XXXX (fastest response, usually within 5 minutes)\n- Email: info@mojin.shop\nWe support English, Chinese, and Arabic. Our operating hours are Sunday to Thursday, 9:00 AM – 6:00 PM (KSA time)."
+      },
+      "cn": {
+        "question": "怎么联系客服？",
+        "answer": "您可以通过以下方式联系我们：\n- WhatsApp：+86 XXX XXXX XXXX（最快回复，通常 5 分钟内）\n- 邮箱：info@mojin.shop\n支持中英阿三语。工作时间：周日至周四，沙特时间 9:00-18:00。"
+      },
+      "ar": {
+        "question": "كيف يمكنني الاتصال بخدمة العملاء؟",
+        "answer": "يمكنك التواصل معنا عبر:\n- واتساب: +86 XXX XXXX XXXX (أسرع رد، عادةً خلال 5 دقائق)\n- البريد الإلكتروني: info@mojin.shop\nندعم العربية والإنجليزية والصينية. ساعات العمل: الأحد إلى الخميس، 9:00 صباحاً – 6:00 مساءً (بتوقيت السعودية)."
+      }
+    }
+  ]
+}

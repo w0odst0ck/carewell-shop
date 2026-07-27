@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Mojin · 莲墨瑾 · موجين — Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --warm-blue: #3A7B9E; --light-blue: #6D9FB8;
+      --sand-orange: #E8874E; --light-orange: #F4A261;
+      --cream: #FCF8F4; --warm-gray: #F0EDE8;
+      --white: #FFFFFF; --warm-black: #3A3530;
+      --warm-text: #7A756E; --desert-gold: #DAA55C;
+      --saudi-green: #006C35; --border-light: #E8E2D8;
+      --radius-lg: 16px; --radius-md: 10px; --radius-sm: 6px;
+      --shadow-card: 0 4px 20px rgba(58,53,48,0.06);
+      --shadow-hover: 0 8px 30px rgba(58,53,48,0.10);
+      --shadow-btn: 0 2px 8px rgba(232,135,78,0.20);
+      --max-width: 1200px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--cream);color:var(--warm-black);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+
+    /* Lang-specific fonts */
+    body.lang-en{font-family:'Inter',-apple-system,sans-serif}
+    body.lang-cn{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;font-size:17px}
+    body.lang-ar{font-family:'Tajawal','Noto Sans Arabic',sans-serif;direction:rtl}
+
+    /* ===== Header ===== */
+    header{
+      background:var(--white);border-bottom:1px solid var(--border-light);
+      padding:14px 0;position:sticky;top:0;z-index:100
+    }
+    header .container{display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:22px;font-weight:800;letter-spacing:6px;color:var(--warm-blue)}
+    body.lang-cn .logo{font-weight:900;letter-spacing:3px}
+    body.lang-ar .logo{font-size:24px;font-weight:900;letter-spacing:2px}
+
+    nav.desktop-nav{display:flex;gap:28px;font-size:14px;font-weight:500}
+    nav.desktop-nav a{color:var(--warm-black);position:relative;padding-bottom:4px;transition:color .2s}
+    nav.desktop-nav a::after{
+      content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+      width:0;height:2px;background:var(--warm-blue);border-radius:1px;transition:width .3s
+    }
+    nav.desktop-nav a:hover{color:var(--warm-blue)}
+    nav.desktop-nav a:hover::after{width:100%}
+    .header-actions{display:flex;align-items:center;gap:12px}
+
+    .lang-btn{
+      display:flex;align-items:center;gap:4px;
+      background:none;border:1px solid var(--border-light);border-radius:var(--radius-sm);
+      padding:6px 10px;cursor:pointer;font-size:13px;font-family:inherit;color:var(--warm-black)
+    }
+    .lang-btn:hover{border-color:var(--warm-blue)}
+
+    .cart-btn{background:none;border:none;cursor:pointer;font-size:20px;position:relative;color:var(--warm-black)}
+    .cart-badge{
+      position:absolute;top:-6px;right:-6px;background:var(--sand-orange);color:var(--white);
+      font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center
+    }
+
+    /* ===== Breadcrumb ===== */
+    .breadcrumb{padding:16px 0;font-size:13px;color:var(--warm-text)}
+    .breadcrumb a{color:var(--warm-blue)}
+    .breadcrumb a:hover{color:var(--light-blue)}
+    .breadcrumb span{margin:0 6px;opacity:.5}
+
+    /* ===== Product Main ===== */
+    .product-main{padding:0 0 48px}
+    .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+
+    /* Gallery */
+    .gallery{position:sticky;top:100px}
+    .gallery-main{
+      aspect-ratio:1/1;background:#FAF8F5;border-radius:var(--radius-lg);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--warm-text);font-size:14px;position:relative;
+      margin-bottom:12px;overflow:hidden
+    }
+    .gallery-main img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg)}
+    .gallery-thumbs{display:flex;gap:8px}
+    .gallery-thumb{
+      width:72px;height:72px;background:#FAF8F5;border-radius:var(--radius-sm);
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid transparent;cursor:pointer;transition:border-color .2s;font-size:11px;color:var(--warm-text)
+    }
+    .gallery-thumb.active{border-color:var(--warm-blue)}
+    .gallery-thumb:hover{border-color:var(--light-blue)}
+
+    /* Product Info */
+    .product-badge-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .badge-cert{
+      background:var(--warm-gray);color:var(--warm-black);
+      font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px
+    }
+    .badge-sale{
+      background:var(--desert-gold);color:var(--white);
+      font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px
+    }
+
+    .product-title{font-size:26px;font-weight:700;line-height:1.3}
+    .product-title-en{font-size:14px;color:var(--warm-text);margin-top:4px}
+    body.lang-ar .product-title{font-size:28px}
+    body.lang-cn .product-title{font-size:24px}
+
+    .product-rating{
+      display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px
+    }
+    .product-rating .stars{color:var(--desert-gold);letter-spacing:1px;font-size:16px}
+    .product-rating .count{color:var(--warm-text)}
+    .product-rating .reviews-link{color:var(--warm-blue);font-size:13px}
+
+    .product-price-block{margin-top:20px;display:flex;align-items:baseline;gap:10px}
+    .product-price{font-size:28px;font-weight:700;color:var(--sand-orange)}
+    .product-price-old{font-size:16px;color:var(--warm-text);text-decoration:line-through}
+    .product-price-unit{font-size:14px;color:var(--warm-text)}
+
+    .product-variants{margin-top:20px}
+    .variant-label{font-size:13px;font-weight:600;margin-bottom:6px}
+    .variant-options{display:flex;gap:8px;flex-wrap:wrap}
+    .variant-btn{
+      padding:8px 16px;border:1px solid var(--border-light);border-radius:var(--radius-sm);
+      background:var(--white);cursor:pointer;font-size:13px;font-family:inherit;
+      transition:all .2s;color:var(--warm-black)
+    }
+    .variant-btn:hover{border-color:var(--warm-blue)}
+    .variant-btn.active{border-color:var(--warm-blue);background:var(--warm-blue);color:var(--white)}
+
+    .product-qty{margin-top:20px;display:flex;align-items:center;gap:12px}
+    .product-qty .qty-label{font-size:13px;font-weight:600}
+    .qty-control{display:flex;align-items:center;gap:0;border:1px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden}
+    .qty-control button{
+      width:36px;height:36px;background:var(--cream);border:none;cursor:pointer;
+      font-size:16px;font-weight:600;color:var(--warm-black);font-family:inherit;transition:background .15s
+    }
+    .qty-control button:hover{background:var(--warm-gray)}
+    .qty-control input{
+      width:48px;height:36px;text-align:center;border:none;border-left:1px solid var(--border-light);
+      border-right:1px solid var(--border-light);font-size:14px;font-weight:600;font-family:inherit;color:var(--warm-black)
+    }
+
+    .product-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:14px 28px;
+      border-radius:var(--radius-md);font-size:15px;font-weight:600;font-family:inherit;
+      cursor:pointer;border:none;transition:all .2s
+    }
+    .btn-primary{background:var(--sand-orange);color:var(--white);box-shadow:var(--shadow-btn)}
+    .btn-primary:hover{background:var(--light-orange);transform:translateY(-2px)}
+    .btn-wa{background:#25D366;color:var(--white)}
+    .btn-wa:hover{background:#20BD5A;transform:translateY(-2px)}
+
+    .product-trust{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+    .product-trust li{font-size:13px;color:var(--warm-text);display:flex;align-items:center;gap:6px}
+    .product-trust li .check{color:var(--saudi-green);font-weight:700}
+
+    /* ===== Tabs ===== */
+    .tabs-section{background:var(--white);padding:48px 0}
+    .tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border-light);margin-bottom:32px}
+    .tab-btn{
+      padding:12px 24px;background:none;border:none;border-bottom:3px solid transparent;
+      font-size:15px;font-weight:600;font-family:inherit;color:var(--warm-text);cursor:pointer;transition:all .2s
+    }
+    .tab-btn:hover{color:var(--warm-black)}
+    .tab-btn.active{color:var(--warm-blue);border-bottom-color:var(--warm-blue)}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block}
+
+    /* Description */
+    .desc-section{max-width:700px}
+    .desc-section h4{font-size:16px;font-weight:600;margin:20px 0 8px}
+    .desc-section h4:first-child{margin-top:0}
+    .desc-section ul{margin:0;padding:0}
+    .desc-section ul li{
+      padding:4px 0;font-size:14px;color:var(--warm-text);
+      display:flex;align-items:baseline;gap:8px
+    }
+    .desc-section ul li::before{content:'·';color:var(--sand-orange);font-weight:700}
+    .desc-section p{font-size:15px;color:var(--warm-text);line-height:1.7}
+    body.lang-ar .desc-section ul li::before{content:'·'}
+
+    /* Size Chart */
+    .size-chart{
+      width:100%;border-collapse:collapse;margin-top:12px;font-size:14px
+    }
+    .size-chart th{
+      background:var(--cream);padding:10px 16px;text-align:left;font-weight:600;border:1px solid var(--border-light)
+    }
+    .size-chart td{padding:10px 16px;border:1px solid var(--border-light);color:var(--warm-text)}
+    .size-chart tr:nth-child(even) td{background:var(--cream)}
+    body.lang-ar .size-chart th{text-align:right}
+
+    /* Reviews */
+    .review-card{
+      background:var(--cream);border-radius:var(--radius-md);padding:20px;margin-bottom:12px
+    }
+    .review-card .review-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .review-card .review-avatar{
+      width:40px;height:40px;border-radius:50%;background:var(--warm-gray);
+      display:flex;align-items:center;justify-content:center;font-size:18px
+    }
+    .review-card .review-name{font-size:14px;font-weight:600}
+    .review-card .review-date{font-size:12px;color:var(--warm-text)}
+    .review-card .review-text{font-size:14px;color:var(--warm-text);line-height:1.6}
+
+    /* Related */
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .related-card{
+      background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius-lg);
+      overflow:hidden;box-shadow:var(--shadow-card);cursor:pointer;transition:all .3s
+    }
+    .related-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-4px)}
+    .related-card .image{
+      aspect-ratio:1/1;background:#FAF8F5;
+      display:flex;align-items:center;justify-content:center;color:var(--warm-text);font-size:12px
+    }
+    .related-card .info{padding:12px}
+    .related-card .name{font-size:14px;font-weight:600}
+    .related-card .price{font-size:16px;font-weight:700;color:var(--sand-orange);margin-top:4px}
+
+    /* ===== Footer ===== */
+    footer{background:var(--cream);border-top:1px solid var(--border-light);padding:48px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
+    footer h3{font-size:18px;font-weight:800;letter-spacing:4px;color:var(--warm-blue)}
+    body.lang-cn footer h3{letter-spacing:2px}
+    footer h3 .sub{display:block;font-size:12px;font-weight:400;color:var(--warm-text);letter-spacing:0;margin-top:2px}
+    footer h4{font-size:14px;font-weight:600;margin-bottom:12px}
+    footer ul li{margin-bottom:8px}
+    footer ul li a{font-size:13px;color:var(--warm-text);transition:color .2s}
+    footer ul li a:hover{color:var(--warm-blue)}
+    footer .contact-info{font-size:13px;color:var(--warm-text);line-height:2}
+    footer .copyright{
+      text-align:center;padding-top:32px;margin-top:32px;border-top:1px solid var(--border-light);
+      font-size:13px;color:var(--warm-text)
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;top:80px;right:20px;background:var(--warm-black);color:var(--white);
+      padding:12px 20px;border-radius:var(--radius-md);font-size:14px;box-shadow:var(--shadow-hover);
+      transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:999
+    }
+    .toast.show{transform:translateX(0)}
+    body.lang-ar .toast{right:auto;left:20px;transform:translateX(-120%)}
+    body.lang-ar .toast.show{transform:translateX(0)}
+
+    /* ===== Responsive ===== */
+    @media(max-width:1024px){
+      .product-grid{grid-template-columns:1fr;gap:32px}
+      .gallery{position:static}
+      .related-grid{grid-template-columns:repeat(2,1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      .product-title{font-size:20px}
+      .product-actions{flex-direction:column}
+      .related-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .tab-btn{padding:10px 16px;font-size:13px}
+      .footer-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body class="lang-en">
+
+<!-- ===== Header ===== -->
+<header>
+  <div class="container">
+    <a href="index-en.html" class="logo" id="headerLogo">MOJIN</a>
+    <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+    <nav class="desktop-nav">
+      <a href="index-en.html" id="navHome">Home</a>
+      <a href="product.html" id="navProducts">Products</a>
+      <a href="about-en.html" id="navAbout">About</a>
+      <a href="faq.html" id="navFaq">FAQ</a>
+      <a href="faq.html" id="navContact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-btn" onclick="switchLang()">
+        <span>🌐</span> <span id="langLabel">EN</span>
+      </button>
+      <button class="cart-btn" onclick="showToast('🛒 '+msgCart)">
+        🛒<span class="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-nav" onclick="toggleMobileNav()">✕</button>
+    <a href="index-en.html" id="mNavHome">Home</a>
+    <a href="product.html" id="mNavProducts">Products</a>
+    <a href="about-en.html" id="mNavAbout">About</a>
+    <a href="faq.html" id="mNavFaq">FAQ</a>
+  </div>
+</header>
+
+<!-- ===== Product ===== -->
+<div class="container">
+  <div class="breadcrumb">
+    <a href="index-en.html" id="bcHome">Home</a><span> / </span>
+    <a href="#" id="bcCat">Isolation Gowns</a><span> / </span>
+    <span id="bcProduct">AAMI Level 2 Isolation Gown</span>
+  </div>
+</div>
+
+<section class="product-main">
+  <div class="container">
+    <div class="product-grid">
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery-main" id="mainImage">
+          <img id="productMainImage" src="" alt="Product photo" style="display:none">
+          <span id="mainImagePlaceholder">🖼️ Product photo (warm white background)</span>
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs">
+          <div class="gallery-thumb active">📷1</div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info" id="productInfo">
+        <div class="product-badge-bar">
+          <span class="badge-cert" id="badgeCE">✅ CE</span>
+          <span class="badge-cert" id="badgeSASO">✅ SASO</span>
+          <span class="badge-sale" id="badgeSale">-18%</span>
+        </div>
+        <h1 class="product-title" id="pTitle">AAMI Level 2 Isolation Gown</h1>
+        <div class="product-title-en" id="pTitleSub">ثوب عزل طبي مستوى 2 · 医用隔离衣</div>
+
+        <div class="product-rating">
+          <span class="stars" id="pStars">★★★★★</span>
+          <span class="count" id="pRatingText">4.8 <span id="revCountLabel">(12 reviews)</span></span>
+          <a href="#reviews" onclick="switchTab('reviews', document.querySelectorAll('.tab-btn')[2])" class="reviews-link" id="pReadReviews">Read reviews</a>
+        </div>
+
+        <div class="product-price-block">
+          <span class="product-price" id="pPrice">SAR 45</span>
+          <span class="product-price-old" id="pOldPrice">SAR 55</span>
+          <span class="product-price-unit" id="pUnit">/ 10 pcs</span>
+        </div>
+
+        <div class="product-variants">
+          <div class="variant-label" id="vSize">Size</div>
+          <div class="variant-options" id="sizeOptions">
+            <button class="variant-btn">M</button>
+            <button class="variant-btn active">L</button>
+            <button class="variant-btn">XL</button>
+            <button class="variant-btn">XXL</button>
+          </div>
+        </div>
+
+        <div class="product-variants">
+          <div class="variant-label" id="vColor">Color</div>
+          <div class="variant-options" id="colorOptions">
+            <button class="variant-btn active">Blue</button>
+            <button class="variant-btn">White</button>
+            <button class="variant-btn">Yellow</button>
+          </div>
+        </div>
+
+        <div class="product-qty">
+          <span class="qty-label" id="qtyLabel">Quantity</span>
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <input type="text" id="qtyInput" value="1" readonly>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <button class="btn btn-primary" onclick="showToast(msgAddCart)" id="btnAddCart">🛒 Add to Cart</button>
+          <button class="btn btn-wa" onclick="window.open('https://wa.me/966551234567','_blank')" id="btnWhatsApp">💬 WhatsApp</button>
+        </div>
+
+        <ul class="product-trust" id="trustList">
+          <li><span class="check">✓</span> <span id="trust1">Free shipping over SAR 100</span></li>
+          <li><span class="check">✓</span> <span id="trust2">7-day return, unused items</span></li>
+          <li><span class="check">✓</span> <span id="trust3">CE · SASO · ISO 13485 certified</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Tabs ===== -->
+<section class="tabs-section">
+  <div class="container">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('desc', this)" id="tabDesc">Description</button>
+      <button class="tab-btn" onclick="switchTab('size', this)" id="tabSize">Size Guide</button>
+      <button class="tab-btn" onclick="switchTab('reviews', this)" id="tabReviews">Reviews</button>
+    </div>
+
+    <!-- Description Tab -->
+    <div class="tab-pane active" id="pane-desc">
+      <div class="desc-section" id="descContent">
+        <h4>Product Overview</h4>
+        <p>The Mojin Disposable Isolation Gown provides reliable protection for medical, industrial, and household environments. Made from high-quality PP+PE non-woven fabric, it offers excellent water resistance while maintaining breathability for all-day comfort.</p>
+        <h4>Key Features</h4>
+        <ul>
+          <li>AAMI Level 2 Protection — tested for fluid resistance</li>
+          <li>Comfortable Fit — elastic cuffs, adjustable neck ties</li>
+          <li>Breathable Material — PP+PE non-woven, reduces heat buildup</li>
+          <li>CE & SASO Certified — meets international safety standards</li>
+          <li>Individually Packaged — each gown sealed for hygiene</li>
+        </ul>
+        <h4>Specifications</h4>
+        <ul>
+          <li>Material: PP+PE non-woven fabric (35gsm)</li>
+          <li>Sizes: M, L, XL, XXL</li>
+          <li>Colors: Blue, White, Yellow</li>
+          <li>Pack Size: 10 pcs/pack (bulk available)</li>
+          <li>Standards: CE, SASO, ISO 13485</li>
+        </ul>
+        <h4>Common Uses</h4>
+        <ul>
+          <li>Healthcare — clinics, hospitals, dental offices</li>
+          <li>Industrial — factories, clean rooms, labs</li>
+          <li>Household — cleaning, caregiving</li>
+          <li>Other — salons, food processing, agriculture</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Size Tab -->
+    <div class="tab-pane" id="pane-size">
+      <div class="desc-section">
+        <h4 id="sizeTitle">Size Guide</h4>
+        <table class="size-chart" id="sizeChart">
+          <thead>
+            <tr>
+              <th id="sizeH1">Size</th>
+              <th id="sizeH2">Height</th>
+              <th id="sizeH3">Chest</th>
+              <th id="sizeH4">Recommended For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>M</td><td>155–165 cm</td><td>90–98 cm</td><td id="sizeM">Women, slim build</td></tr>
+            <tr><td>L</td><td>165–175 cm</td><td>98–106 cm</td><td id="sizeL">Standard adult</td></tr>
+            <tr><td>XL</td><td>175–185 cm</td><td>106–114 cm</td><td id="sizeXL">Tall, broad shoulders</td></tr>
+            <tr><td>XXL</td><td>185+ cm</td><td>114+ cm</td><td id="sizeXXL">Plus size, bulky wear</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Reviews Tab -->
+    <div class="tab-pane" id="pane-reviews">
+      <div class="desc-section">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">A</div>
+            <div>
+              <div class="review-name">Ahmed R.</div>
+              <div class="review-date">Riyadh · 2 weeks ago</div>
+            </div>
+            <div style="margin-right:auto;color:var(--desert-gold)">★★★★★</div>
+          </div>
+          <div class="review-text">جودة ممتازة وسرعة في التوصيل. أنصح بالتعامل معهم.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">N</div>
+            <div>
+              <div class="review-name">Noor S.</div>
+              <div class="review-date">Jeddah · 1 month ago</div>
+            </div>
+            <div style="margin-right:auto;color:var(--desert-gold)">★★★★☆</div>
+          </div>
+          <div class="review-text">منتج جيد للتجربة الأولى. الخامة ممتازة، سأطلب مرة أخرى.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">M</div>
+            <div>
+              <div class="review-name">Mohammed A.</div>
+              <div class="review-date">Dammam · 3 weeks ago</div>
+            </div>
+            <div style="margin-right:auto;color:var(--desert-gold)">★★★★★</div>
+          </div>
+          <div class="review-text">Excellent quality for the price. Our clinic now orders regularly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Related Products ===== -->
+<section class="section" style="padding:48px 0;background:var(--cream)">
+  <div class="container">
+    <h2 class="section-title" id="relatedTitle" style="font-size:24px;font-weight:700;text-align:center;margin-bottom:28px">Related Products</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3 id="footerBrand">MOJIN</h3>
+        <p style="font-size:13px;color:var(--warm-text);margin-top:8px;line-height:1.7" id="footerTagline">Protection You Can Trust.</p>
+        <div class="contact-info" style="margin-top:16px">📧 info@mojin.shop<br>💬 WhatsApp: +86 XXX XXXX XXXX</div>
+      </div>
+      <div><h4 id="fNav1">Products</h4><ul id="fNav1List"></ul></div>
+      <div><h4 id="fNav2">Company</h4><ul id="fNav2List"></ul></div>
+      <div><h4 id="fNav3">Contact</h4><div class="contact-info" id="fContact"></div></div>
+    </div>
+    <div class="copyright" id="copyrightText">© 2026 Mojin. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== LANGUAGE DATA =====
+const L = {
+  en: {
+    logo: 'MOJIN', logoFooter: 'MOJIN',
+    tagline: 'Protection You Can Trust.',
+    nav: ['Home','Products','About','FAQ','Contact'],
+    bc: ['Home','Isolation Gowns'],
+    badge: { ce: '✅ CE', saso: '✅ SASO' },
+    qty: 'Quantity',
+    sizeLbl: 'Size', colorLbl: 'Color',
+    btnAdd: '🛒 Add to Cart', btnWA: '💬 WhatsApp',
+    trust: ['Free shipping over SAR 100','7-day return, unused items','CE · SASO · ISO 13485 certified'],
+    tabs: ['Description','Size Guide','Reviews'],
+    sizeT: 'Size Guide',
+    sizeH: ['Size','Height (cm)','Chest (cm)','Recommended For'],
+    sizeM: 'Women, slim build', sizeL: 'Standard adult', sizeXL: 'Tall, broad shoulders', sizeXXL: 'Plus size, bulky wear',
+    readRev: 'Read reviews',
+    msgAdd: '✅ Added to cart',
+    msgCart: 'Cart opened',
+    relTitle: 'Related Products',
+    rel: ['Disposable Gown','PPE Protective Cap','Shoe Covers','Nitrile Gloves'],
+    fNav1: 'Products', fNav2: 'Company', fNav3: 'Contact',
+    fProd: ['Isolation Gowns','Protective Caps','Shoe Covers','Gloves'],
+    fComp: ['About Mojin','FAQ','Contact Us'],
+    fCont: '📧 info@mojin.shop\n💬 WhatsApp\n📍 Saudi Arabia\n🏭 China',
+    copy: '© 2026 Mojin. All rights reserved. · 莲墨瑾服装有限公司 · موجين. جميع الحقوق محفوظة.',
+  },
+  cn: {
+    logo: '莲墨瑾', logoFooter: '莲墨瑾',
+    tagline: '守护每一份信任。',
+    nav: ['首页','产品','关于莲墨瑾','常见问题','联系我们'],
+    bc: ['首页','隔离衣'],
+    badge: { ce: '✅ CE 认证', saso: '✅ SASO 认证' },
+    qty: '数量',
+    sizeLbl: '尺码', colorLbl: '颜色',
+    btnAdd: '🛒 加入购物车', btnWA: '💬 联系我们',
+    trust: ['满 SAR 100 免运费','7 天退换货（未拆封）','CE · SASO · ISO 13485 认证'],
+    tabs: ['产品描述','尺码指南','客户评价'],
+    sizeT: '尺码指南',
+    sizeH: ['尺码','身高 (cm)','胸围 (cm)','适用人群'],
+    sizeM: '女性/纤瘦', sizeL: '标准成人', sizeXL: '高个/宽肩', sizeXXL: '偏大体型/外套叠加'],
+    readRev: '查看评价',
+    msgAdd: '✅ 已加入购物车',
+    msgCart: '购物车已打开',
+    relTitle: '相关产品',
+    rel: ['一次性隔离衣','PPE 防护帽','一次性鞋套','丁腈手套'],
+    fNav1: '产品', fNav2: '关于', fNav3: '联系方式',
+    fProd: ['隔离衣','防护帽','鞋套','手套'],
+    fComp: ['关于莲墨瑾','常见问题','联系我们'],
+    fCont: '📧 info@mojin.shop\n💬 WhatsApp\n📍 沙特阿拉伯\n🏭 中国',
+    copy: '© 2026 莲墨瑾服装有限公司 · Mojin · موجين. 保留所有权利。',
+  },
+  ar: {
+    logo: 'موجين', logoFooter: 'موجين',
+    tagline: 'حماية تثق بها.',
+    nav: ['الرئيسية','المنتجات','عنا','الأسئلة','اتصل بنا'],
+    bc: ['الرئيسية','أثواب عزل'],
+    badge: { ce: '✅ معتمد CE', saso: '✅ معتمد SASO' },
+    qty: 'الكمية',
+    sizeLbl: 'المقاس', colorLbl: 'اللون',
+    btnAdd: '🛒 أضف إلى السلة', btnWA: '💬 واتساب',
+    trust: ['شحن مجاني للطلبات فوق ١٠٠ ر.س','إرجاع ٧ أيام، منتجات غير مستخدمة','معتمد CE · SASO · ISO 13485'],
+    tabs: ['الوصف','دليل المقاسات','التقييمات'],
+    sizeT: 'دليل المقاسات',
+    sizeH: ['المقاس','الطول (سم)','الصدر (سم)','الموصى به'],
+    sizeM: 'نساء، نحيفات', sizeL: 'بالغ قياسي', sizeXL: 'طويل، أكتاف عريضة', sizeXXL: 'مقاس كبير'],
+    readRev: 'اقرأ التقييمات',
+    msgAdd: '✅ أضيف إلى السلة',
+    msgCart: 'فتحت السلة',
+    relTitle: 'منتجات ذات صلة',
+    rel: ['ثوب عزل يمكن التخلص منه','قبعة واقية PPE','أغطية أحذية','قفازات نيتريل'],
+    fNav1: 'المنتجات', fNav2: 'عن الموجين', fNav3: 'تواصل',
+    fProd: ['أثواب عزل','أغطية رأس','أغطية أحذية','قفازات'],
+    fComp: ['عنا','الأسئلة الشائعة','اتصل بنا'],
+    fCont: '📧 info@mojin.shop\n💬 واتساب\n📍 المملكة العربية السعودية\n🏭 الصين',
+    copy: '© 2026 موجين. جميع الحقوق محفوظة. · Mojin · 莲墨瑾服装有限公司',
+  }
+};
+
+// ===== PRODUCT DATA =====
+const PRODUCTS = {
+  'gown-l2': {
+    en: {
+      name: 'AAMI Level 2 Isolation Gown',
+      sub: 'ثوب عزل طبي مستوى 2 · 医用隔离衣',
+      cat: 'Isolation Gowns',
+      catAr: 'أثواب عزل',
+      desc: `<h4>Product Overview</h4><p>The Mojin Disposable Isolation Gown provides reliable protection for medical, industrial, and household environments. Made from high-quality PP+PE non-woven fabric, it offers excellent water resistance while maintaining breathability for all-day comfort.</p>
+<h4>Key Features</h4><ul><li>AAMI Level 2 Protection — tested for fluid resistance</li><li>Comfortable Fit — elastic cuffs, adjustable neck ties</li><li>Breathable Material — PP+PE non-woven, reduces heat buildup</li><li>CE & SASO Certified — meets international safety standards</li><li>Individually Packaged — each gown sealed for hygiene</li></ul>
+<h4>Specifications</h4><ul><li>Material: PP+PE non-woven fabric (35gsm)</li><li>Sizes: M, L, XL, XXL</li><li>Colors: Blue, White, Yellow</li><li>Pack Size: 10 pcs/pack (bulk available)</li><li>Standards: CE, SASO, ISO 13485</li></ul>
+<h4>Common Uses</h4><ul><li>Healthcare — clinics, hospitals, dental offices</li><li>Industrial — factories, clean rooms, labs</li><li>Household — cleaning, caregiving</li><li>Other — salons, food processing, agriculture</li></ul>`,
+    },
+    cn: {
+      name: 'AAMI Level 2 一次性隔离衣',
+      sub: 'ثوب عزل طبي · Disposable Isolation Gown',
+      cat: '隔离衣',
+      desc: `<h4>产品概述</h4><p>Mojin 一次性隔离衣为医疗、工业和家庭环境提供可靠防护。采用优质 PP+PE 无纺布，防水透气，全天候舒适。</p>
+<h4>主要特点</h4><ul><li>AAMI Level 2 防护 — 通过防液测试</li><li>舒适贴合 — 弹性袖口、可调节颈带</li><li>透气材质 — PP+PE 无纺布，减少闷热</li><li>CE & SASO 认证 — 符合国际安全标准</li><li>独立包装 — 每个密封卫生</li></ul>
+<h4>规格参数</h4><ul><li>材质：PP+PE 无纺布 (35gsm)</li><li>尺码：M, L, XL, XXL</li><li>颜色：蓝色、白色、黄色</li><li>包装：10 件/包（可批发）</li><li>认证：CE, SASO, ISO 13485</li></ul>
+<h4>适用场景</h4><ul><li>医疗 — 诊所、医院、牙科</li><li>工业 — 工厂、洁净室、实验室</li><li>家用 — 清洁、护工</li><li>其他 — 美容、食品加工、农业</li></ul>`,
+    },
+    ar: {
+      name: 'ثوب عزل طبي مستوى AAMI 2',
+      sub: 'Disposable Isolation Gown · 一次性隔离衣',
+      cat: 'أثواب عزل',
+      desc: `<h4>نظرة عامة</h4><p>يوفر ثوب العزل الطبي من موجين حماية موثوقة للبيئات الطبية والصناعية والمنزلية. مصنوع من قماش PP+PE غير المنسوج عالي الجودة.</p>
+<h4>المميزات الرئيسية</h4><ul><li>حماية مستوى AAMI 2 — تم اختبار مقاومة السوائل</li><li>مقاس مريح — أكمام مرنة، أربطة رقبة قابلة للتعديل</li><li>قماش قابل للتنفس — يقلل من تراكم الحرارة</li><li>معتمد من CE و SASO — يلبي معايير السلامة</li><li>مغلف بشكل فردي — كل ثوب مغلق للنظافة</li></ul>
+<h4>المواصفات</h4><ul><li>المادة: قماش PP+PE غير منسوج (35gsm)</li><li>المقاسات: M، L، XL، XXL</li><li>الألوان: أزرق، أبيض، أصفر</li><li>حجم العبوة: 10 قطع/عبوة</li><li>المعايير: CE، SASO، ISO 13485</li></ul>
+<h4>الاستخدامات الشائعة</h4><ul><li>الرعاية الصحية — العيادات، المستشفيات</li><li>الصناعة — المصانع، الغرف النظيفة</li><li>المنزل — التنظيف، رعاية المسنين</li><li>أخرى — صالونات، تجهيز الأغذية</li></ul>`,
+    },
+    price: 45, oldPrice: 55, unit: '/ 10 pcs', sale: '-18%',
+    rating: 4.8, reviews: 12,
+    sizes: ['M','L','XL','XXL'], colors: ['Blue','White','Yellow'],
+  },
+  'gown-l1': {
+    en: { name: 'Disposable Isolation Gown', sub: 'Economy · 经济款', cat: 'Isolation Gowns', desc: '<h4>Product Overview</h4><p>An economical disposable isolation gown suitable for general protection needs. Made from lightweight non-woven fabric for comfort during extended wear.</p><h4>Key Features</h4><ul><li>Lightweight PP non-woven material</li><li>Elastic cuffs for secure fit</li><li>Breathable for all-day use</li><li>CE Certified</li><li>Bulk packaging available</li></ul>' },
+    cn: { name: '一次性隔离衣（经济款）', sub: 'Economy · Disposable Gown', cat: '隔离衣', desc: '<h4>产品概述</h4><p>经济型一次性隔离衣，适合一般防护需求。轻质无纺布材质，长时间穿着舒适。</p><h4>主要特点</h4><ul><li>轻质 PP 无纺布</li><li>弹性袖口，贴合牢固</li><li>透气设计，全天舒适</li><li>CE 认证</li><li>可批量包装</li></ul>' },
+    ar: { name: 'ثوب عزل يمكن التخلص منه', sub: 'اقتصادي · Economy', cat: 'أثواب عزل', desc: '<h4>نظرة عامة</h4><p>ثوب عزل اقتصادي يمكن التخلص منه ومناسب لاحتياجات الحماية العامة. مصنوع من قماش غير منسوج خفيف الوزن.</p><h4>المميزات</h4><ul><li>قماش PP خفيف غير منسوج</li><li>أكمام مرنة لمقاس آمن</li><li>قابل للتنفس للاستخدام الطويل</li><li>معتمد CE</li><li>متاح بالتعبئة بالجملة</li></ul>' },
+    price: 35, oldPrice: 42, unit: '/ 10 pcs', sale: '-17%', rating: 4.5, reviews: 8,
+    sizes: ['M','L','XL','XXL'], colors: ['Blue','White'],
+  },
+  'cap': {
+    en: { name: 'PPE Protective Cap (50 pcs)', sub: '50 pcs · 防护帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Lightweight disposable protective caps made from non-woven fabric. Ideal for maintaining hygiene standards in medical, industrial, and food service environments.</p><h4>Key Features</h4><ul><li>Breathable non-woven fabric</li><li>One-size-fits-most with elastic edge</li><li>50 pcs per pack</li><li>CE Certified</li><li>Disposable, single-use</li></ul>' },
+    cn: { name: 'PPE 防护帽（50只装）', sub: '50只装 · 无纺布', cat: '防护帽', desc: '<h4>产品概述</h4><p>轻便一次性防护帽，无纺布材质。适用于医疗、工业和食品行业保持卫生标准。</p><h4>主要特点</h4><ul><li>透气无纺布</li><li>弹力边缘，均码适用</li><li>50 只/包</li><li>CE 认证</li><li>一次性使用</li></ul>' },
+    ar: { name: 'قبعة واقية PPE (50 قطعة)', sub: '50 قطعة · قماش غير منسوج', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>أغطية رأس واقية خفيفة يمكن التخلص منها مصنوعة من قماش غير منسوج. مثالية للحفاظ على معايير النظافة.</p><h4>المميزات</h4><ul><li>قماش غير منسوج قابل للتنفس</li><li>مقاس واحد مناسب لمعظم الرؤوس</li><li>50 قطعة/عبوة</li><li>معتمد CE</li><li>للاستخدام مرة واحدة</li></ul>' },
+    price: 18, oldPrice: null, unit: '/ 50 pcs', sale: null, rating: 4.8, reviews: 15,
+    sizes: ['One Size'], colors: ['White','Blue'],
+  },
+  'shoe-cover': {
+    en: { name: 'Disposable Shoe Covers (100 pcs)', sub: '100 pcs · 鞋套', cat: 'Shoe Covers', desc: '<h4>Product Overview</h4><p>Durable disposable shoe covers with non-slip soles. Perfect for maintaining clean environments in medical facilities, clean rooms, and food processing areas.</p><h4>Key Features</h4><ul><li>Water-resistant non-woven material</li><li>Non-slip sole design</li><li>Elastic opening for secure fit</li><li>100 pcs per pack</li><li>CE Certified</li></ul>' },
+    cn: { name: '一次性鞋套（100只装）', sub: '100只装 · 防滑底', cat: '鞋套', desc: '<h4>产品概述</h4><p>耐用一次性鞋套，防滑鞋底设计。适用于医院、洁净室和食品加工业保持环境卫生。</p><h4>主要特点</h4><ul><li>防水无纺布材质</li><li>防滑鞋底</li><li>弹性开口，贴合牢固</li><li>100 只/包</li><li>CE 认证</li></ul>' },
+    ar: { name: 'أغطية أحذية يمكن التخلص منها (100 قطعة)', sub: '100 قطعة · نعل غير قابل للانزلاق', cat: 'أغطية أحذية', desc: '<h4>نظرة عامة</h4><p>أغطية أحذية متينة يمكن التخلص منها بنعل غير قابل للانزلاق. مثالية للحفاظ على البيئات النظيفة.</p><h4>المميزات</h4><ul><li>مادة غير منسوجة مقاومة للماء</li><li>تصميم نعل غير قابل للانزلاق</li><li>فتحة مرنة لمقاس آمن</li><li>100 قطعة/عبوة</li><li>معتمد CE</li></ul>' },
+    price: 22, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.6, reviews: 10,
+    sizes: ['Standard','Large'], colors: ['Blue','White'],
+  },
+  'glove': {
+    en: { name: 'Nitrile Gloves (100 pcs)', sub: '100 pcs · 丁腈手套', cat: 'Gloves', desc: '<h4>Product Overview</h4><p>High-quality nitrile examination gloves offering excellent chemical resistance and tactile sensitivity. Latex-free, suitable for medical and industrial use.</p><h4>Key Features</h4><ul><li>Nitrile material — latex-free, no allergy risk</li><li>Excellent chemical splash resistance</li><li>High tactile sensitivity</li><li>Textured fingertips for grip</li><li>100 pcs per box</li></ul>' },
+
+    cn: { name: '丁腈手套（100只装）', sub: '100只装 · 无乳胶', cat: '手套', desc: '<h4>产品概述</h4><p>优质丁腈检查手套，出色的耐化学性和触觉灵敏度。无乳胶，适合医疗和工业使用。</p><h4>主要特点</h4><ul><li>丁腈材质 — 无乳胶，无过敏风险</li><li>出色的防化学品飞溅</li><li>高触觉灵敏度</li><li>指尖纹理防滑</li><li>100 只/盒</li></ul>' },
+    ar: { name: 'قفازات نيتريل (100 قطعة)', sub: '100 قطعة · خالية من اللاتكس', cat: 'قفازات', desc: '<h4>نظرة عامة</h4><p>قفازات فحص نيتريل عالية الجودة توفر مقاومة ممتازة للمواد الكيميائية وحساسية عالية للمس. خالية من اللاتكس.</p><h4>المميزات</h4><ul><li>مادة نيتريل — خالية من اللاتكس</li><li>مقاومة ممتازة لرذاذ المواد الكيميائية</li><li>حساسية عالية للمس</li><li>أطراف أصابع محكمة</li><li>100 قطعة/علبة</li></ul>' },
+    price: 28, oldPrice: 35, unit: '/ 100 pcs', sale: '-20%', rating: 4.7, reviews: 18,
+    sizes: ['S','M','L','XL'], colors: ['Blue','Black'],
+    image: null,
+  },
+
+  // ===== Real Cap Products (from factory samples) =====
+  'cap-bouffant': {
+    en: { name: 'Bouffant Doctor Cap (Handmade)', sub: '100 pcs · 手工医生帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Classic handmade bouffant cap made from high-quality non-woven fabric. Features elastic edge for comfortable all-day wear. Ideal for medical staff, food service workers, and cleanroom environments. Breathable and lightweight.</p><h4>Key Features</h4><ul><li>Handmade construction for consistent quality</li><li>Elastic edge — one size fits most</li><li>Breathable non-woven fabric</li><li>100 pcs per pack</li><li>CE Certified</li></ul><h4>Common Uses</h4><ul><li>Healthcare — hospitals, clinics, dental</li><li>Food Service — kitchens, restaurants</li><li>Industrial — cleanrooms, light manufacturing</li><li>Hospitality — hotels, salons</li></ul>' },
+    cn: { name: '手工医生帽（无纺布）', sub: '100只装 · Bouffant Cap', cat: '防护帽', desc: '<h4>产品概述</h4><p>经典手工医生帽，优质无纺布材质。弹力边缘，全天佩戴舒适。适用于医务、餐饮和洁净室环境。</p><h4>主要特点</h4><ul><li>手工制作，品质稳定</li><li>弹力边缘，均码适用</li><li>透气无纺布</li><li>100 只/包</li><li>CE 认证</li></ul><h4>适用场景</h4><ul><li>医疗 — 医院、诊所、牙科</li><li>餐饮 — 厨房、餐厅</li><li>工业 — 洁净室、轻工制造</li><li>酒店 — 客房、美容</li></ul>' },
+    ar: { name: 'قبعة بوفان (مصنوعة يدويًا)', sub: '100 قطعة · يدوي', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>قبعة بوفان كلاسيكية مصنوعة يدويًا من قماش غير منسوج عالي الجودة. حافة مرنة لراحة الاستخدام اليومي.</p><h4>المميزات</h4><ul><li>صناعة يدوية لجودة ثابتة</li><li>حافة مرنة — مقاس واحد</li><li>قماش غير منسوج قابل للتنفس</li><li>100 قطعة/عبوة</li><li>معتمد CE</li></ul><h4>الاستخدامات</h4><ul><li>الرعاية الصحية</li><li>خدمات الطعام</li><li>الغرف النظيفة</li><li>الضيافة</li></ul>' },
+    price: 29, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.6, reviews: 6,
+    sizes: ['One Size'], colors: ['White'],
+    image: 'images/手工医生帽.jpg',
+  },
+
+  'cap-round': {
+    en: { name: 'Regular Bouffant Cap', sub: '100 pcs · 普通圆帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Standard disposable bouffant cap made from lightweight non-woven fabric. Elastic edge ensures secure fit for all head sizes. Suitable for healthcare, food processing, hospitality, and industrial use.</p><h4>Key Features</h4><ul><li>Lightweight non-woven fabric</li><li>Elastic edge — fits all head sizes</li><li>Breathable and comfortable</li><li>100 pcs per pack</li><li>CE Certified</li></ul><h4>Common Uses</h4><ul><li>Healthcare — general ward, triage</li><li>Food Industry — processing, packaging</li><li>Hospitality — housekeeping</li><li>Industrial — basic cleanroom</li></ul>' },
+    cn: { name: '普通圆帽（无纺布）', sub: '100只装 · Bouffant Cap', cat: '防护帽', desc: '<h4>产品概述</h4><p>标准一次性圆帽，轻质无纺布材质。弹力边缘适合各种头型。适用于医疗、食品加工、酒店和工业环境。</p><h4>主要特点</h4><ul><li>轻质无纺布</li><li>弹力边缘，适合各种头型</li><li>透气舒适</li><li>100 只/包</li><li>CE 认证</li></ul><h4>适用场景</h4><ul><li>医疗 — 普通病房、分诊</li><li>食品 — 加工、包装</li><li>酒店 — 客房清洁</li><li>工业 — 基础洁净室</li></ul>' },
+    ar: { name: 'قبعة بوفان عادية', sub: '100 قطعة · عادي', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>قبعة بوفان عادية يمكن التخلص منها مصنوعة من قماش غير منسوج خفيف الوزن. حافة مرنة تناسب جميع أحجام الرأس.</p><h4>المميزات</h4><ul><li>قماش غير منسوج خفيف الوزن</li><li>حافة مرنة تناسب الجميع</li><li>قابل للتنفس ومريح</li><li>100 قطعة/عبوة</li><li>معتمد CE</li></ul><h4>الاستخدامات</h4><ul><li>الرعاية الصحية</li><li>الصناعة الغذائية</li><li>الضيافة</li><li>الصناعة</li></ul>' },
+    price: 22, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.5, reviews: 8,
+    sizes: ['One Size'], colors: ['White','Green'],
+    image: 'images/普通圆帽.jpg',
+  },
+
+  'cap-round-w': {
+    en: { name: 'Bouffant Cap (White)', sub: '100 pcs · 白色圆帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Disposable white bouffant cap made from lightweight non-woven fabric. Elastic edge for secure fit. 100 pcs per pack.</p><h4>Key Features</h4><ul><li>White non-woven material</li><li>Elastic edge — one size fits most</li><li>Breathable and lightweight</li><li>100 pcs per pack</li></ul>' },
+    cn: { name: '圆帽（白色）', sub: '100只装 · White', cat: '防护帽', desc: '<h4>产品概述</h4><p>一次性白色圆帽，轻质无纺布。弹力边缘贴合牢固。100只/包。</p><h4>主要特点</h4><ul><li>白色无纺布</li><li>弹力边缘，均码适用</li><li>透气轻便</li><li>100 只/包</li></ul>' },
+    ar: { name: 'قبعة بوفان (أبيض)', sub: '100 قطعة · أبيض', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>قبعة بوفان بيضاء يمكن التخلص منها. قماش غير منسوج خفيف الوزن. حافة مرنة.</p><h4>المميزات</h4><ul><li>مادة غير منسوجة بيضاء</li><li>حافة مرنة</li><li>قابلة للتنفس وخفيفة</li><li>100 قطعة/عبوة</li></ul>' },
+    price: 22, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.4, reviews: 4,
+    sizes: ['One Size'], colors: ['White'],
+    image: 'images/普通圆帽-白.jpg',
+  },
+
+  'cap-round-g': {
+    en: { name: 'Bouffant Cap (Green)', sub: '100 pcs · 绿色圆帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Disposable green bouffant cap made from lightweight non-woven fabric. Elastic edge for secure fit. 100 pcs per pack.</p><h4>Key Features</h4><ul><li>Green non-woven material</li><li>Elastic edge — one size fits most</li><li>Breathable and lightweight</li><li>100 pcs per pack</li></ul>' },
+    cn: { name: '圆帽（绿色）', sub: '100只装 · Green', cat: '防护帽', desc: '<h4>产品概述</h4><p>一次性绿色圆帽，轻质无纺布。弹力边缘贴合牢固。100只/包。</p><h4>主要特点</h4><ul><li>绿色无纺布</li><li>弹力边缘，均码适用</li><li>透气轻便</li><li>100 只/包</li></ul>' },
+    ar: { name: 'قبعة بوفان (أخضر)', sub: '100 قطعة · أخضر', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>قبعة بوفان خضراء يمكن التخلص منها. قماش غير منسوج خفيف الوزن.</p><h4>المميزات</h4><ul><li>مادة غير منسوجة خضراء</li><li>حافة مرنة</li><li>قابلة للتنفس وخفيفة</li><li>100 قطعة/عبوة</li></ul>' },
+    price: 22, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.3, reviews: 3,
+    sizes: ['One Size'], colors: ['Green'],
+    image: 'images/普通圆帽-绿.jpg',
+  },
+
+  'cap-striped': {
+    en: { name: 'Striped Bouffant Cap', sub: '100 pcs · 条纹圆帽', cat: 'Protective Caps', desc: '<h4>Product Overview</h4><p>Disposable striped bouffant cap made from lightweight non-woven fabric. Elastic edge provides comfortable fit. Popular in food service, hospitality, and industrial cleanroom environments.</p><h4>Key Features</h4><ul><li>Striped non-woven design</li><li>Elastic edge — one size fits most</li><li>Breathable and lightweight</li><li>100 pcs per pack</li><li>CE Certified</li></ul><h4>Common Uses</h4><ul><li>Food Service — commercial kitchens, restaurants</li><li>Hospitality — hotels, catering</li><li>Industrial — light cleanroom, assembly</li><li>Healthcare — general use</li></ul>' },
+    cn: { name: '条纹圆帽（无纺布）', sub: '100只装 · Striped', cat: '防护帽', desc: '<h4>产品概述</h4><p>一次性条纹圆帽，轻质无纺布。弹力边缘，舒适贴合。广泛用于餐饮、酒店和工业洁净室。</p><h4>主要特点</h4><ul><li>条纹无纺布设计</li><li>弹力边缘，均码适用</li><li>透气轻便</li><li>100 只/包</li><li>CE 认证</li></ul><h4>适用场景</h4><ul><li>餐饮 — 商业厨房、餐厅</li><li>酒店 — 客房、宴会</li><li>工业 — 洁净室、装配</li><li>医疗 — 一般用途</li></ul>' },
+    ar: { name: 'قبعة بوفان مخططة', sub: '100 قطعة · مخطط', cat: 'أغطية رأس', desc: '<h4>نظرة عامة</h4><p>قبعة بوفان مخططة يمكن التخلص منها من قماش غير منسوج خفيف الوزن. حافة مرنة. مشهورة في خدمات الطعام والضيافة.</p><h4>المميزات</h4><ul><li>تصميم غير منسوج مخططة</li><li>حافة مرنة</li><li>قابلة للتنفس وخفيفة</li><li>100 قطعة/عبوة</li><li>معتمد CE</li></ul><h4>الاستخدامات</h4><ul><li>خدمات الطعام</li><li>الضيافة</li><li>الغرف النظيفة</li><li>الرعاية الصحية</li></ul>' },
+    price: 25, oldPrice: null, unit: '/ 100 pcs', sale: null, rating: 4.5, reviews: 5,
+    sizes: ['One Size'], colors: ['White/Blue Stripe'],
+    image: 'images/条毛.jpg',
+  }
+};
+
+let currentLang = 'en';
+let currentProduct = 'gown-l2';
+
+// ===== Related Products Renderer =====
+function renderRelated(id) {
+  if (!id) id = currentProduct;
+  // Only show products with real images
+  const keys = Object.keys(PRODUCTS).filter(k => PRODUCTS[k].image);
+  const relKeys = keys.filter(k => k !== id).slice(0,4);
+  const grid = document.getElementById('relatedGrid');
+  if (!grid) return;
+  grid.innerHTML = relKeys.map(rk => {
+    const rp = PRODUCTS[rk];
+    const rl = rp[currentLang] || rp.en;
+    const imgHtml = rp.image
+      ? `<div class="image" style="background:#FAF8F5;overflow:hidden"><img src="${rp.image}" alt="${rl.name}" style="width:100%;height:100%;object-fit:cover"></div>`
+      : `<div class="image">🖼️</div>`;
+    return `<div class="related-card" onclick="loadProduct('${rk}')">
+      ${imgHtml}
+      <div class="info">
+        <div class="name">${rl.name}</div>
+        <div class="price">SAR ${rp.price}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== Language / Product switching =====
+const langs = ['en','cn','ar'];
+function switchLang() {
+  const idx = langs.indexOf(currentLang);
+  currentLang = langs[(idx + 1) % 3];
+  applyLang(currentLang);
+  applyProduct(currentProduct);
+}
+function setLang(l) { currentLang = l; applyLang(l); applyProduct(currentProduct); }
+
+function applyLang(l) {
+  const d = L[l];
+  document.body.className = 'lang-' + l;
+  document.documentElement.lang = l === 'ar' ? 'ar' : l === 'cn' ? 'zh-CN' : 'en';
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('langLabel').textContent = l.toUpperCase();
+
+  // Header
+  document.getElementById('headerLogo').textContent = d.logo;
+  document.getElementById('footerBrand').textContent = d.logoFooter;
+  document.getElementById('footerTagline').textContent = d.tagline;
+
+  // Navigation
+  ['navHome','navProducts','navAbout','navFaq','navContact'].forEach((id,i) => {
+    document.getElementById(id).textContent = d.nav[i];
+  });
+  // Mobile nav
+  ['mNavHome','mNavProducts','mNavAbout','mNavFaq'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = d.nav[i];
+  });
+
+  // Breadcrumb
+  document.getElementById('bcHome').textContent = d.bc[0];
+  document.getElementById('bcCat').textContent = d.bc[1];
+
+  // Badges
+  document.getElementById('badgeCE').textContent = d.badge.ce;
+  document.getElementById('badgeSASO').textContent = d.badge.saso;
+
+  // Variants
+  document.getElementById('qtyLabel').textContent = d.qty;
+  document.getElementById('vSize').textContent = d.sizeLbl;
+  document.getElementById('vColor').textContent = d.colorLbl;
+
+  // Buttons
+  document.getElementById('btnAddCart').textContent = d.btnAdd;
+  document.getElementById('btnWhatsApp').textContent = d.btnWA;
+
+  // Trust
+  ['trust1','trust2','trust3'].forEach((id,i) => {
+    document.getElementById(id).textContent = d.trust[i];
+  });
+
+  // Tabs
+  ['tabDesc','tabSize','tabReviews'].forEach((id,i) => {
+    document.getElementById(id).textContent = d.tabs[i];
+  });
+
+  // Size chart
+  document.getElementById('sizeTitle').textContent = d.sizeT;
+  ['sizeH1','sizeH2','sizeH3','sizeH4'].forEach((id,i) => {
+    document.getElementById(id).textContent = d.sizeH[i];
+  });
+  ['sizeM','sizeL','sizeXL','sizeXXL'].forEach((id,i) => {
+    document.getElementById(id).textContent = d['size' + ['M','L','XL','XXL'][i]];
+  });
+
+  document.getElementById('pReadReviews').textContent = d.readRev;
+  document.getElementById('relatedTitle').textContent = d.relTitle;
+
+  // Re-render related products (language-specific names)
+  window.renderRelated && window.renderRelated(currentProduct);
+
+  // Footer
+  document.getElementById('fNav1').textContent = d.fNav1;
+  document.getElementById('fNav2').textContent = d.fNav2;
+  document.getElementById('fNav3').textContent = d.fNav3;
+  document.getElementById('fNav1List').innerHTML = d.fProd.map(x => '<li><a href="#">'+x+'</a></li>').join('');
+  document.getElementById('fNav2List').innerHTML = d.fComp.map(x => '<li><a href="#">'+x+'</a></li>').join('');
+  document.getElementById('fContact').innerHTML = d.fCont.replace(/\n/g,'<br>');
+  document.getElementById('copyrightText').textContent = d.copy;
+
+  window.msgAddCart = d.msgAdd;
+  window.msgCart = d.msgCart;
+}
+
+function applyProduct(id) {
+  currentProduct = id;
+  const p = PRODUCTS[id];
+  if (!p) return;
+  const l = currentLang;
+  const d = p[l];
+
+  document.title = d.name + ' — Mojin';
+  document.getElementById('pTitle').textContent = d.name;
+  document.getElementById('pTitleSub').textContent = d.sub;
+  document.getElementById('bcProduct').textContent = d.name;
+  document.getElementById('bcCat').textContent = d.cat;
+
+  // Product image
+  const img = document.getElementById('productMainImage');
+  const placeholder = document.getElementById('mainImagePlaceholder');
+  if (p.image) {
+    img.src = p.image;
+    img.style.display = '';
+    placeholder.style.display = 'none';
+  } else {
+    img.style.display = 'none';
+    placeholder.style.display = '';
+  }
+
+  // Price
+  document.getElementById('pPrice').textContent = 'SAR ' + p.price;
+  document.getElementById('pOldPrice').textContent = p.oldPrice ? 'SAR ' + p.oldPrice : '';
+  document.getElementById('pOldPrice').style.display = p.oldPrice ? '' : 'none';
+  document.getElementById('pUnit').textContent = p.unit;
+
+  // Badge
+  const badgeSale = document.getElementById('badgeSale');
+  if (p.sale) { badgeSale.textContent = p.sale; badgeSale.style.display = ''; }
+  else { badgeSale.style.display = 'none'; }
+
+  // Rating
+  const stars = '★★★★★';
+  document.getElementById('pStars').textContent = stars;
+  document.getElementById('pRatingText').innerHTML = p.rating + ' <span class="count">(' + p.reviews + ' ' + (l === 'en' ? 'reviews' : l === 'cn' ? '评价' : 'تقييم') + ')</span>';
+
+  // Description
+  document.getElementById('descContent').innerHTML = d.desc || p.en.desc;
+
+  // Sizes
+  const sizeOpts = document.getElementById('sizeOptions');
+  sizeOpts.innerHTML = p.sizes.map(s => `<button class="variant-btn${s === 'L' || s === 'One Size' || s === 'Standard' ? ' active' : ''}">${s}</button>`).join('');
+
+  // Colors
+  const colOpts = document.getElementById('colorOptions');
+  colOpts.innerHTML = p.colors.map(c => `<button class="variant-btn${c === 'Blue' ? ' active' : ''}">${c}</button>`).join('');
+
+  // Related products — dynamic render
+  window.renderRelated && window.renderRelated(id);
+}
+
+function loadProduct(id) {
+  applyProduct(id);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== Interactions =====
+function changeQty(delta) {
+  const input = document.getElementById('qtyInput');
+  let v = parseInt(input.value) + delta;
+  if (v < 1) v = 1;
+  if (v > 999) v = 999;
+  input.value = v;
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + name).classList.add('active');
+  btn.classList.add('active');
+
+  // Update variant buttons behavior
+  document.querySelectorAll('.variant-btn').forEach(b => {
+    b.addEventListener('click', function() {
+      this.parentElement.querySelectorAll('.variant-btn').forEach(s => s.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+}
+
+function toggleMobileNav() { document.getElementById("mobileNav").classList.toggle("active"); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('show');
+  void t.offsetWidth; // force reflow
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== Init =====
+// Set hash-based product loading
+window.addEventListener('hashchange', () => {
+  const id = window.location.hash.replace('#','');
+  if (PRODUCTS[id]) loadProduct(id);
+});
+// Load from hash on page load
+const initId = window.location.hash.replace('#','');
+if (PRODUCTS[initId]) currentProduct = initId;
+
+applyLang('en');
+applyProduct(currentProduct);
+
+// Init variant listeners
+document.querySelectorAll('.variant-btn').forEach(b => {
+  b.addEventListener('click', function() {
+    this.parentElement.querySelectorAll('.variant-btn').forEach(s => s.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
