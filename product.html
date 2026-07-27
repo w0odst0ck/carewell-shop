@@ -69,10 +69,11 @@
 
 
     /* ===== Catalog Mode ===== */
-    .catalog-section { display: block; }
-    .catalog-section.hidden { display: none; }
-    .product-detail-section { display: none; }
-    .product-detail-section.active { display: block; }
+    /* ===== Catalog Mode ===== */
+    .catalog-section { display: none; }
+    .catalog-section.active { display: block; }
+    .detail-section { display: none; }
+    .detail-section.active { display: block; }
 
     .cat-tabs {
       display: flex; gap: 0; border-bottom: 1px solid var(--border-light);
@@ -107,17 +108,14 @@
       display: inline-block; background: var(--desert-gold); color: var(--white);
       font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 6px;
     }
-    .cat-card .info .no-img-label {
-      font-size: 11px; color: var(--warm-text); margin-top: 4px; opacity: 0.6;
-    }
-
+    .cat-card .info .no-img-label { font-size: 11px; color: var(--warm-text); margin-top: 4px; opacity: 0.6; }
     .cat-count { font-size: 13px; color: var(--warm-text); margin-bottom: 16px; }
-    .back-link-catalog {
+    .back-link {
       display: inline-flex; align-items: center; gap: 6px;
       color: var(--warm-blue); font-size: 14px; font-weight: 600;
-      cursor: pointer; margin-bottom: 20px; transition: color .2s;
+      cursor: pointer; margin-bottom: 16px; transition: color .2s;
     }
-    .back-link-catalog:hover { color: var(--light-blue); }
+    .back-link:hover { color: var(--light-blue); }
 
     @media(max-width:1024px){
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
@@ -128,9 +126,7 @@
     }
     @media(max-width:480px){
       .cat-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ===== Breadcrumb ===== */
+    }/* ===== Breadcrumb ===== */
     .breadcrumb{padding:16px 0;font-size:13px;color:var(--warm-text)}
     .breadcrumb a{color:var(--warm-blue)}
     .breadcrumb a:hover{color:var(--light-blue)}
@@ -365,23 +361,22 @@
 </header>
 
 <!-- ===== Catalog Section ===== -->
+<!-- ===== Catalog Section ===== -->
 <section class="catalog-section" id="catalogSection">
   <div class="container">
-    <h1 class="section-title" id="catTitle" style="font-size:28px;font-weight:700;text-align:center;margin-bottom:4px">All Products</h1>
-    <p class="section-sub" id="catSub" style="text-align:center;font-size:15px;color:var(--warm-text);margin-bottom:28px">Browse our full catalog</p>
-
+    <h1 class="section-title" style="font-size:28px;font-weight:700;text-align:center;margin-bottom:4px" id="catTitle">All Products</h1>
+    <p class="section-sub" style="text-align:center;font-size:15px;color:var(--warm-text);margin-bottom:28px" id="catSub">Browse our full catalog</p>
     <div class="cat-tabs" id="catTabs"></div>
     <div class="cat-count" id="catCount"></div>
     <div class="cat-grid" id="catGrid"></div>
   </div>
 </section>
 
-<!-- ===== Product Detail Section (wrapped original content) ===== -->
-<div class="product-detail-section" id="detailSection">
+<!-- ===== Detail Section ===== -->
+<div class="detail-section" id="detailSection">
   <div class="container">
-    <div class="back-link-catalog" id="backLink" onclick="showCatalog()">← <span id="backLabel">Back to Products</span></div>
+    <div class="back-link" id="backLink" onclick="showCatalog()">← <span id="backLabel">Back to Products</span></div>
   </div>
-
 <!-- ===== Product ===== -->
 <div class="container">
   <div class="breadcrumb">
@@ -390,9 +385,8 @@
     <span id="bcProduct">AAMI Level 2 Isolation Gown</span>
   </div>
 </div>
-</div>
 
-<section class="product-main">
+<section class="product-main" id="productMain">
   <div class="container">
     <div class="product-grid">
       <!-- Gallery -->
@@ -472,7 +466,7 @@
 </section>
 
 <!-- ===== Tabs ===== -->
-<section class="tabs-section">
+<section class="tabs-section" id="tabsSection">
   <div class="container">
     <div class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('desc', this)" id="tabDesc">Description</button>
@@ -576,7 +570,7 @@
 </section>
 
 <!-- ===== Related Products ===== -->
-<section class="section" style="padding:48px 0;background:var(--cream)">
+<section class="section" id="relatedSection" style="padding:48px 0;background:var(--cream)">
   <div class="container">
     <h2 class="section-title" id="relatedTitle" style="font-size:24px;font-weight:700;text-align:center;margin-bottom:28px">Related Products</h2>
     <div class="related-grid" id="relatedGrid"></div>
@@ -828,9 +822,8 @@ function switchLang() {
   const idx = langs.indexOf(currentLang);
   currentLang = langs[(idx + 1) % 3];
   applyLang(currentLang);
-  applyProduct(currentProduct);
 }
-function setLang(l) { currentLang = l; applyLang(l); applyProduct(currentProduct); }
+function setLang(l) { currentLang = l; applyLang(l); }
 
 function applyLang(l) {
   const d = L[l];
@@ -893,19 +886,27 @@ function applyLang(l) {
   document.getElementById('pReadReviews').textContent = d.readRev;
   document.getElementById('relatedTitle').textContent = d.relTitle;
 
-  // Catalog
+  // Catalog labels (language-aware)
+  const labels = {
+    en: { catTitle: 'All Products', catSub: 'Browse our full catalog', back: 'Back to Products' },
+    cn: { catTitle: '全部产品', catSub: '浏览全部产品', back: '返回产品列表' },
+    ar: { catTitle: 'جميع المنتجات', catSub: 'تصفح جميع المنتجات', back: 'العودة إلى المنتجات' },
+  };
+  const lbl = labels[l] || labels.en;
   const catTitle = document.getElementById('catTitle');
   const catSub = document.getElementById('catSub');
   const backLabel = document.getElementById('backLabel');
-  if (catTitle) catTitle.textContent = l === 'en' ? 'All Products' : l === 'cn' ? '全部产品' : 'جميع المنتجات';
-  if (catSub) catSub.textContent = l === 'en' ? 'Browse our full catalog' : l === 'cn' ? '浏览全部产品' : 'تصفح جميع المنتجات';
-  if (backLabel) backLabel.textContent = l === 'en' ? 'Back to Products' : l === 'cn' ? '返回产品列表' : 'العودة إلى المنتجات';
-  if (document.getElementById('catalogSection') && !document.getElementById('catalogSection').classList.contains('hidden')) {
-    renderCatalog(getUrlCategory());
-  }
+  if (catTitle) catTitle.textContent = lbl.catTitle;
+  if (catSub) catSub.textContent = lbl.catSub;
+  if (backLabel) backLabel.textContent = lbl.back;
 
-  // Re-render related products (language-specific names)
-  window.renderRelated && window.renderRelated(currentProduct);
+  // Re-render current mode
+  if (pageMode === 'catalog') {
+    renderCatalog(getUrlCategory());
+  } else {
+    applyProduct(currentProduct);
+    window.renderRelated && window.renderRelated(currentProduct);
+  }
 
   // Footer
   document.getElementById('fNav1').textContent = d.fNav1;
@@ -1018,6 +1019,9 @@ function showToast(msg) {
 
 
 // ===== CATALOG MODE =====
+// ===== CATALOG MODE (clean state machine) =====
+let pageMode = 'catalog'; // 'catalog' | 'detail'
+
 const CATEGORY_ICONS = {
   'Isolation Gowns': '🛡️',
   'Protective Caps': '🧢',
@@ -1025,12 +1029,10 @@ const CATEGORY_ICONS = {
   'Gloves': '🧤',
 };
 
-// Get unique categories from products
 function getCategories() {
   const cats = new Set();
   Object.keys(PRODUCTS).forEach(k => {
-    const p = PRODUCTS[k];
-    const name = (p.en && p.en.cat) ? p.en.cat : 'Other';
+    const name = PRODUCTS[k].en ? PRODUCTS[k].en.cat : 'Other';
     cats.add(name);
   });
   return ['All', ...Array.from(cats)];
@@ -1045,49 +1047,36 @@ function renderCatalog(filter) {
   const categories = getCategories();
   const lang = currentLang;
 
-  // Render tabs
+  // Tabs
   tabs.innerHTML = categories.map(cat =>
     `<button class="cat-tab${cat === (filter || 'All') ? ' active' : ''}" onclick="renderCatalog('${cat === 'All' ? '' : cat}')">${cat}</button>`
   ).join('');
 
-  // Filter products
+  // Filter
   let keys = Object.keys(PRODUCTS);
   if (filter && filter !== 'All') {
-    keys = keys.filter(k => {
-      const p = PRODUCTS[k];
-      const catName = p.en ? p.en.cat : '';
-      return catName === filter;
-    });
+    keys = keys.filter(k => PRODUCTS[k].en && PRODUCTS[k].en.cat === filter);
   }
 
-  // Sort: products with images first
-  keys.sort((a, b) => {
-    const aHas = PRODUCTS[a].image ? 1 : 0;
-    const bHas = PRODUCTS[b].image ? 1 : 0;
-    return bHas - aHas;
-  });
+  // Sort: images first
+  keys.sort((a, b) => (PRODUCTS[b].image ? 1 : 0) - (PRODUCTS[a].image ? 1 : 0));
 
   count.textContent = keys.length + ' product' + (keys.length !== 1 ? 's' : '');
 
-  // Render grid
+  // Grid
   grid.innerHTML = keys.map(k => {
     const p = PRODUCTS[k];
     const d = p[lang] || p.en;
     const hasImg = !!p.image;
-
-    let imageHtml;
-    if (hasImg) {
-      imageHtml = `<img src="${p.image}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover">`;
-    } else {
-      const icon = CATEGORY_ICONS[d.cat] || '📦';
-      const catLabel = d.cat || '';
-      imageHtml = `<span class="svg-icon">${icon}</span>`;
-    }
-
-    const badgeHtml = hasImg ? '<span class="badge">📸 In Stock</span>' : '<span class="no-img-label">Product photo coming soon</span>';
-
+    const icon = CATEGORY_ICONS[d.cat] || '📦';
+    const imgHtml = hasImg
+      ? `<img src="${p.image}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover">`
+      : `<span class="svg-icon">${icon}</span>`;
+    const badgeHtml = hasImg
+      ? '<span class="badge">📸 In Stock</span>'
+      : '<span class="no-img-label">Photo coming soon</span>';
     return `<div class="cat-card" onclick="location.hash='${k}'">
-      <div class="image">${imageHtml}</div>
+      <div class="image">${imgHtml}</div>
       <div class="info">
         <div class="name">${d.name}</div>
         <div class="name-en">${d.sub || ''}</div>
@@ -1099,32 +1088,37 @@ function renderCatalog(filter) {
 }
 
 function showCatalog() {
-  document.getElementById('catalogSection').classList.remove('hidden');
+  pageMode = 'catalog';
+  document.getElementById('catalogSection').classList.add('active');
   document.getElementById('detailSection').classList.remove('active');
   document.getElementById('breadcrumbRow').style.display = 'none';
+  document.getElementById('productMain').style.display = 'none';
+  document.getElementById('tabsSection').style.display = 'none';
+  document.getElementById('relatedSection').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Update URL without triggering hashchange
-  history.pushState(null, '', window.location.pathname + window.location.search);
-  currentProduct = null;
+  // Clear hash
+  if (window.location.hash) {
+    history.pushState(null, '', window.location.pathname + window.location.search);
+  }
   renderCatalog(getUrlCategory());
 }
 
 function showDetail(id) {
-  document.getElementById('catalogSection').classList.add('hidden');
+  pageMode = 'detail';
+  document.getElementById('catalogSection').classList.remove('active');
   document.getElementById('detailSection').classList.add('active');
   document.getElementById('breadcrumbRow').style.display = '';
+  document.getElementById('productMain').style.display = '';
+  document.getElementById('tabsSection').style.display = '';
+  document.getElementById('relatedSection').style.display = '';
   loadProduct(id);
 }
 
-// Get category from URL query param
 function getUrlCategory() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('cat') || '';
+  return new URLSearchParams(window.location.search).get('cat') || '';
 }
 
-
 // ===== Init =====
-// Set hash-based product loading
 window.addEventListener('hashchange', () => {
   const id = window.location.hash.replace('#','');
   if (PRODUCTS[id]) {
@@ -1134,21 +1128,13 @@ window.addEventListener('hashchange', () => {
   }
 });
 
-// Load from hash on page load, or show catalog
-const initId = window.location.hash.replace('#','');
-if (PRODUCTS[initId]) {
-  currentProduct = initId;
-  applyLang('en');
-  applyProduct(currentProduct);
-  document.getElementById('catalogSection').classList.add('hidden');
-  document.getElementById('detailSection').classList.add('active');
+// Boot: hash → detail, no hash → catalog
+applyLang('en');
+const bootId = window.location.hash.replace('#','');
+if (PRODUCTS[bootId]) {
+  showDetail(bootId);
 } else {
-  // Show catalog
-  document.getElementById('catalogSection').classList.remove('hidden');
-  document.getElementById('detailSection').classList.remove('active');
-  document.getElementById('breadcrumbRow').style.display = 'none';
-  applyLang('en');
-  renderCatalog(getUrlCategory());
+  showCatalog();
 }
 
 // Init variant listeners
