@@ -67,6 +67,69 @@
       font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center
     }
 
+
+    /* ===== Catalog Mode ===== */
+    .catalog-section { display: block; }
+    .catalog-section.hidden { display: none; }
+    .product-detail-section { display: none; }
+    .product-detail-section.active { display: block; }
+
+    .cat-tabs {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border-light);
+      margin-bottom: 28px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .cat-tab {
+      padding: 10px 20px; background: none; border: none; border-bottom: 3px solid transparent;
+      font-size: 14px; font-weight: 600; font-family: inherit; color: var(--warm-text);
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .cat-tab:hover { color: var(--warm-black); }
+    .cat-tab.active { color: var(--warm-blue); border-bottom-color: var(--warm-blue); }
+
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .cat-card {
+      background: var(--white); border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-card); cursor: pointer; transition: all .3s;
+    }
+    .cat-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .cat-card .image {
+      aspect-ratio: 1/1; background: #FAF8F5;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .cat-card .image img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-card .image .svg-icon { font-size: 48px; opacity: 0.4; }
+    .cat-card .info { padding: 14px; }
+    .cat-card .info .name { font-size: 14px; font-weight: 600; }
+    .cat-card .info .name-en { font-size: 12px; color: var(--warm-text); margin-top: 2px; }
+    .cat-card .info .price { font-size: 17px; font-weight: 700; color: var(--sand-orange); margin-top: 6px; }
+    .cat-card .info .badge {
+      display: inline-block; background: var(--desert-gold); color: var(--white);
+      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 6px;
+    }
+    .cat-card .info .no-img-label {
+      font-size: 11px; color: var(--warm-text); margin-top: 4px; opacity: 0.6;
+    }
+
+    .cat-count { font-size: 13px; color: var(--warm-text); margin-bottom: 16px; }
+    .back-link-catalog {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--warm-blue); font-size: 14px; font-weight: 600;
+      cursor: pointer; margin-bottom: 20px; transition: color .2s;
+    }
+    .back-link-catalog:hover { color: var(--light-blue); }
+
+    @media(max-width:1024px){
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media(max-width:768px){
+      .cat-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .cat-tab { padding: 8px 14px; font-size: 13px; }
+    }
+    @media(max-width:480px){
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+
     /* ===== Breadcrumb ===== */
     .breadcrumb{padding:16px 0;font-size:13px;color:var(--warm-text)}
     .breadcrumb a{color:var(--warm-blue)}
@@ -301,6 +364,24 @@
   </div>
 </header>
 
+<!-- ===== Catalog Section ===== -->
+<section class="catalog-section" id="catalogSection">
+  <div class="container">
+    <h1 class="section-title" id="catTitle" style="font-size:28px;font-weight:700;text-align:center;margin-bottom:4px">All Products</h1>
+    <p class="section-sub" id="catSub" style="text-align:center;font-size:15px;color:var(--warm-text);margin-bottom:28px">Browse our full catalog</p>
+
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="cat-count" id="catCount"></div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ===== Product Detail Section (wrapped original content) ===== -->
+<div class="product-detail-section" id="detailSection">
+  <div class="container">
+    <div class="back-link-catalog" id="backLink" onclick="showCatalog()">← <span id="backLabel">Back to Products</span></div>
+  </div>
+
 <!-- ===== Product ===== -->
 <div class="container">
   <div class="breadcrumb">
@@ -308,6 +389,7 @@
     <a href="#" id="bcCat">Isolation Gowns</a><span> / </span>
     <span id="bcProduct">AAMI Level 2 Isolation Gown</span>
   </div>
+</div>
 </div>
 
 <section class="product-main">
@@ -811,6 +893,17 @@ function applyLang(l) {
   document.getElementById('pReadReviews').textContent = d.readRev;
   document.getElementById('relatedTitle').textContent = d.relTitle;
 
+  // Catalog
+  const catTitle = document.getElementById('catTitle');
+  const catSub = document.getElementById('catSub');
+  const backLabel = document.getElementById('backLabel');
+  if (catTitle) catTitle.textContent = l === 'en' ? 'All Products' : l === 'cn' ? '全部产品' : 'جميع المنتجات';
+  if (catSub) catSub.textContent = l === 'en' ? 'Browse our full catalog' : l === 'cn' ? '浏览全部产品' : 'تصفح جميع المنتجات';
+  if (backLabel) backLabel.textContent = l === 'en' ? 'Back to Products' : l === 'cn' ? '返回产品列表' : 'العودة إلى المنتجات';
+  if (document.getElementById('catalogSection') && !document.getElementById('catalogSection').classList.contains('hidden')) {
+    renderCatalog(getUrlCategory());
+  }
+
   // Re-render related products (language-specific names)
   window.renderRelated && window.renderRelated(currentProduct);
 
@@ -923,18 +1016,140 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+
+// ===== CATALOG MODE =====
+const CATEGORY_ICONS = {
+  'Isolation Gowns': '🛡️',
+  'Protective Caps': '🧢',
+  'Shoe Covers': '👟',
+  'Gloves': '🧤',
+};
+
+// Get unique categories from products
+function getCategories() {
+  const cats = new Set();
+  Object.keys(PRODUCTS).forEach(k => {
+    const p = PRODUCTS[k];
+    const name = (p.en && p.en.cat) ? p.en.cat : 'Other';
+    cats.add(name);
+  });
+  return ['All', ...Array.from(cats)];
+}
+
+function renderCatalog(filter) {
+  const grid = document.getElementById('catGrid');
+  const tabs = document.getElementById('catTabs');
+  const count = document.getElementById('catCount');
+  if (!grid) return;
+
+  const categories = getCategories();
+  const lang = currentLang;
+
+  // Render tabs
+  tabs.innerHTML = categories.map(cat =>
+    `<button class="cat-tab${cat === (filter || 'All') ? ' active' : ''}" onclick="renderCatalog('${cat === 'All' ? '' : cat}')">${cat}</button>`
+  ).join('');
+
+  // Filter products
+  let keys = Object.keys(PRODUCTS);
+  if (filter && filter !== 'All') {
+    keys = keys.filter(k => {
+      const p = PRODUCTS[k];
+      const catName = p.en ? p.en.cat : '';
+      return catName === filter;
+    });
+  }
+
+  // Sort: products with images first
+  keys.sort((a, b) => {
+    const aHas = PRODUCTS[a].image ? 1 : 0;
+    const bHas = PRODUCTS[b].image ? 1 : 0;
+    return bHas - aHas;
+  });
+
+  count.textContent = keys.length + ' product' + (keys.length !== 1 ? 's' : '');
+
+  // Render grid
+  grid.innerHTML = keys.map(k => {
+    const p = PRODUCTS[k];
+    const d = p[lang] || p.en;
+    const hasImg = !!p.image;
+
+    let imageHtml;
+    if (hasImg) {
+      imageHtml = `<img src="${p.image}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover">`;
+    } else {
+      const icon = CATEGORY_ICONS[d.cat] || '📦';
+      const catLabel = d.cat || '';
+      imageHtml = `<span class="svg-icon">${icon}</span>`;
+    }
+
+    const badgeHtml = hasImg ? '<span class="badge">📸 In Stock</span>' : '<span class="no-img-label">Product photo coming soon</span>';
+
+    return `<div class="cat-card" onclick="location.hash='${k}'">
+      <div class="image">${imageHtml}</div>
+      <div class="info">
+        <div class="name">${d.name}</div>
+        <div class="name-en">${d.sub || ''}</div>
+        <div class="price">SAR ${p.price}</div>
+        ${badgeHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showCatalog() {
+  document.getElementById('catalogSection').classList.remove('hidden');
+  document.getElementById('detailSection').classList.remove('active');
+  document.getElementById('breadcrumbRow').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Update URL without triggering hashchange
+  history.pushState(null, '', window.location.pathname + window.location.search);
+  currentProduct = null;
+  renderCatalog(getUrlCategory());
+}
+
+function showDetail(id) {
+  document.getElementById('catalogSection').classList.add('hidden');
+  document.getElementById('detailSection').classList.add('active');
+  document.getElementById('breadcrumbRow').style.display = '';
+  loadProduct(id);
+}
+
+// Get category from URL query param
+function getUrlCategory() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('cat') || '';
+}
+
+
 // ===== Init =====
 // Set hash-based product loading
 window.addEventListener('hashchange', () => {
   const id = window.location.hash.replace('#','');
-  if (PRODUCTS[id]) loadProduct(id);
+  if (PRODUCTS[id]) {
+    showDetail(id);
+  } else {
+    showCatalog();
+  }
 });
-// Load from hash on page load
-const initId = window.location.hash.replace('#','');
-if (PRODUCTS[initId]) currentProduct = initId;
 
-applyLang('en');
-applyProduct(currentProduct);
+// Load from hash on page load, or show catalog
+const initId = window.location.hash.replace('#','');
+if (PRODUCTS[initId]) {
+  currentProduct = initId;
+  applyLang('en');
+  applyProduct(currentProduct);
+  document.getElementById('catalogSection').classList.add('hidden');
+  document.getElementById('detailSection').classList.add('active');
+} else {
+  // Show catalog
+  document.getElementById('catalogSection').classList.remove('hidden');
+  document.getElementById('detailSection').classList.remove('active');
+  document.getElementById('breadcrumbRow').style.display = 'none';
+  applyLang('en');
+  renderCatalog(getUrlCategory());
+}
 
 // Init variant listeners
 document.querySelectorAll('.variant-btn').forEach(b => {
