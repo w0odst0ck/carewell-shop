@@ -410,9 +410,9 @@
           <button class="active-lang" onclick="switchLang('AR')">AR</button>
         </div>
       </div>
-      <button class="cart-btn" onclick="showToast()">
+      <button class="cart-btn" onclick="window.location.href='checkout.html'">
         🛒
-        <span class="cart-badge">0</span>
+        <span class="cart-badge" style="display:none">0</span>
       </button>
     </div>
   </div>
@@ -567,7 +567,7 @@
         <div class="status">🟢 متصلة · الرد خلال &lt;٥ دقائق</div>
       </div>
     </div>
-    <a href="https://wa.me/966551234567" class="btn">💬 تواصل معنا</a>
+    <a href="#" onclick="window.open(waLink(),'_blank');return false;" class="btn">💬 تواصل معنا</a>
   </div>
 </section>
 
@@ -583,7 +583,7 @@
         </p>
         <div class="contact-info" style="margin-top:16px;">
           📧 info@mojin.shop<br>
-          💬 واتساب: +86 XXX XXXX XXXX
+          💬 واتساب: <span data-wa-placeholder></span>
         </div>
         <div class="saudi-flag">🇸🇦 شحن داخل المملكة</div>
       </div>
@@ -706,5 +706,8 @@
     }
   });
 </script>
+<script src="data/site-config.js"></script>
+<script src="data/order-lang.js"></script>
+<script src="data/cart.js"></script>
 </body>
 </html>

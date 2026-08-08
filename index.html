@@ -778,9 +778,8 @@
         </div>
       </div>
 
-      <button class="cart-btn" onclick="showToast()">
-        🛒
-        <span class="cart-badge">0</span>
+      <button class="cart-btn" onclick="window.location.href='checkout.html'">
+        🛒<span class="cart-badge" style="display:none">0</span>
       </button>
     </div>
   </div>
@@ -942,7 +941,7 @@
         <div class="status">🟢 Online · Usually replies in &lt;5 min</div>
       </div>
     </div>
-    <a href="https://wa.me/966551234567" class="btn">💬 WhatsApp Us</a>
+    <a href="#" onclick="window.open(waLink(),'_blank');return false;" class="btn">💬 WhatsApp Us</a>
   </div>
 </section>
 
@@ -958,7 +957,7 @@
         </p>
         <div class="contact-info" style="margin-top:16px;">
           📧 info@mojin.shop<br>
-          💬 WhatsApp: +86 XXX XXXX XXXX
+          💬 WhatsApp: <span data-wa-placeholder></span>
         </div>
       </div>
       <div>
@@ -1091,5 +1090,8 @@
     }
   });
 </script>
+<script src="data/site-config.js"></script>
+<script src="data/order-lang.js"></script>
+<script src="data/cart.js"></script>
 </body>
 </html>
