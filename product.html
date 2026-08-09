@@ -214,6 +214,11 @@
     }
 
     .product-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+    .product-actions .btn{flex:1}
+    .product-actions .btn-ask{flex:1.5;font-size:16px;padding:16px 28px}   /* 咨询主位：更宽更显眼 */
+    .product-actions .btn-cart{flex:1;background:var(--white);color:var(--warm-blue);border:1.5px solid var(--warm-blue)}  /* 加购次级：描边样式 */
+    .product-actions .btn-cart:hover{background:var(--light-blue);color:var(--white);transform:translateY(-2px)}
+    .ask-hint{margin-top:10px;font-size:12.5px;color:var(--warm-text);text-align:center}
     .btn{
       display:inline-flex;align-items:center;gap:8px;padding:14px 28px;
       border-radius:var(--radius-md);font-size:15px;font-weight:600;font-family:inherit;
@@ -465,9 +470,10 @@
         </div>
 
         <div class="product-actions">
-          <button class="btn btn-primary" onclick="addToCart()" id="btnAddCart">🛒 Add to Cart</button>
-          <button class="btn btn-wa" onclick="askWhatsApp()" id="btnWhatsApp">💬 WhatsApp</button>
+          <button class="btn btn-wa btn-ask" onclick="askWhatsApp()" id="btnAskWA">💬 咨询这个产品</button>
+          <button class="btn btn-primary btn-cart" onclick="addToCart()" id="btnAddCart">🛒 Add to Cart</button>
         </div>
+        <p class="ask-hint" id="askHint">We reply within minutes on WhatsApp</p>
 
         <ul class="product-trust" id="trustList">
           <li><span class="check">✓</span> <span id="trust1">Free shipping over SAR 100</span></li>
@@ -693,7 +699,8 @@ function applyLang(l) {
 
   // Buttons
   document.getElementById('btnAddCart').textContent = d.btnAdd;
-  document.getElementById('btnWhatsApp').textContent = d.btnWA;
+  document.getElementById('btnAskWA').textContent = d.btnWA;
+  document.getElementById('askHint').textContent = d.askHint;
 
   // Trust
   ['trust1','trust2','trust3'].forEach((id,i) => {
@@ -890,12 +897,55 @@ function addToCart() {
 function askWhatsApp() {
   const id = currentProduct;
   const p = PRODUCTS[id];
-  let msg = 'Hello Mojin 👋\nI have a question about';
-  if (p) {
-    const d = p[currentLang] || p.en;
-    msg += ' "' + d.name + '"';
+  const lang = currentLang || 'en';
+  const d = p ? (p[lang] || p.en) : null;
+
+  /* 三语消息模板 */
+  const t = {
+    en: {
+      hi: 'Hello Mojin 👋',
+      interest: "I'm interested in:",
+      size: 'Size:',
+      color: 'Color:',
+      qty: 'Qty:',
+      city: 'My city (for shipping estimate):',
+    },
+    cn: {
+      hi: '你好 Mojin 👋',
+      interest: '我想咨询：',
+      size: '尺码：',
+      color: '颜色：',
+      qty: '数量：',
+      city: '我的城市（用于估算运费）：',
+    },
+    ar: {
+      hi: 'مرحبًا موجين 👋',
+      interest: 'أنا مهتم بـ:',
+      size: 'المقاس:',
+      color: 'اللون:',
+      qty: 'الكمية:',
+      city: 'مدينتي (لتقدير الشحن):',
+    },
+  }[lang] || { hi: 'Hello Mojin 👋', interest: "I'm interested in:", size: 'Size:', color: 'Color:', qty: 'Qty:', city: 'My city (for shipping estimate):' };
+
+  let msg = t.hi + '\n' + t.interest + ' ' + (d ? d.name : id) + (d && d.sub ? ' (' + d.sub + ')' : '');
+  if (id) msg += ' (SKU: ' + id + ')';
+
+  /* 带上当前选中的变体与数量 */
+  const size = getActiveVariant('size');
+  const color = getActiveVariant('color');
+  const qtyInput = document.getElementById('qtyInput');
+  const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+  if (size) msg += '\n' + t.size + ' ' + size;
+  if (color) msg += '\n' + t.color + ' ' + color;
+  msg += '\n' + t.qty + ' ' + qty;
+  msg += '\n' + t.city + ' ______________';
+
+  /* GA4: 咨询事件（比加购更能反映真实兴趣） */
+  if (window.mjTrack) {
+    window.mjTrack('contact_click', { item_id: id, item_name: d ? d.name : id, language: lang });
   }
-  msg += '.';
+
   window.open(waLink(msg), '_blank');
 }
 
