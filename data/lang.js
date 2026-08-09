@@ -21,7 +21,7 @@ const L = {
     fNav1: 'Products', fNav2: 'Company', fNav3: 'Contact',
     fProd: ['Isolation Gowns','Protective Caps','Shoe Covers','Gloves'],
     fComp: ['About Mojin','FAQ','Contact Us'],
-    fCont: '📧 info@mojin.shop\n💬 WhatsApp\n📍 Saudi Arabia\n🏭 China',
+    fCont: '📧 info@mojin.store\n💬 WhatsApp\n📍 Saudi Arabia\n🏭 China',
     copy: '© 2026 Mojin. All rights reserved. · 莲墨瑾服装有限公司 · موجين. جميع الحقوق محفوظة.',
   },
   cn: {
@@ -46,7 +46,7 @@ const L = {
     fNav1: '产品', fNav2: '关于', fNav3: '联系方式',
     fProd: ['隔离衣','防护帽','鞋套','手套'],
     fComp: ['关于莲墨瑾','常见问题','联系我们'],
-    fCont: '📧 info@mojin.shop\n💬 WhatsApp\n📍 沙特阿拉伯\n🏭 中国',
+    fCont: '📧 info@mojin.store\n💬 WhatsApp\n📍 沙特阿拉伯\n🏭 中国',
     copy: '© 2026 莲墨瑾服装有限公司 · Mojin · موجين. 保留所有权利。',
   },
   ar: {
@@ -71,7 +71,7 @@ const L = {
     fNav1: 'المنتجات', fNav2: 'عن الموجين', fNav3: 'تواصل',
     fProd: ['أثواب عزل','أغطية رأس','أغطية أحذية','قفازات'],
     fComp: ['عنا','الأسئلة الشائعة','اتصل بنا'],
-    fCont: '📧 info@mojin.shop\n💬 واتساب\n📍 المملكة العربية السعودية\n🏭 الصين',
+    fCont: '📧 info@mojin.store\n💬 واتساب\n📍 المملكة العربية السعودية\n🏭 الصين',
     copy: '© 2026 موجين. جميع الحقوق محفوظة. · Mojin · 莲墨瑾服装有限公司',
   }
 };

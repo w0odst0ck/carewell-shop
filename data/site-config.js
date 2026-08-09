@@ -18,14 +18,14 @@ const SITE_CONFIG = {
   gaId: 'G-XXXXXXXXXX',             // TODO: GA4 Measurement ID
 
   /* ── 联系 ── */
-  storeEmail: 'info@mojin.shop',
+  storeEmail: 'info@mojin.store',
 
   /* ── 下单 ── */
   orderPrefix: 'MJ',                // 订单号前缀，如 MJ-20260808-001
   shippingNote: 'Shipping cost will be confirmed by our team on WhatsApp.',
 
   /* ── 站点 ── */
-  domain: 'mojin.shop',
+  domain: 'mojin.store',
   siteName: 'Mojin',
 };
 
