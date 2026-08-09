@@ -2,6 +2,7 @@
    Mojin Cart v1.0 (2026-08-08)
    纯前端购物车：localStorage 持久化，跨页保留
    依赖: data/products.js (PRODUCTS), data/site-config.js (SITE_CONFIG)
+   可选: data/ga4.js (window.mjTrack) —— GA4 事件埋点，未加载/未配置时静默跳过
    事件: window 'cart-changed'  {count, subtotal} —— 页面监听更新徽章
    ========================================================= */
 const Cart = (() => {
@@ -54,6 +55,17 @@ const Cart = (() => {
     if (it) { it.qty += qty; }
     else { items.push({ sku, qty, size, color }); }
     save();
+    /* GA4: add_to_cart 事件（ga4.js 未加载或 gaId 未配置时 mjTrack 静默跳过） */
+    if (typeof window.mjTrack === 'function') {
+      window.mjTrack('add_to_cart', {
+        sku: sku,
+        qty: qty,
+        price: Number(p.price) || 0,
+        currency: SITE_CONFIG.currency,
+        item_id: sku,
+        item_name: nameOf(sku),
+      });
+    }
     return true;
   }
 

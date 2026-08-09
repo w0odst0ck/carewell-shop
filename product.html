@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Mojin · 莲墨瑾 · موجين — Product</title>
+  <meta property="og:title" content="Mojin — Products">
+  <meta property="og:description" content="Browse Mojin's full catalog — isolation gowns, protective caps, shoe covers and gloves. CE &amp; SASO certified, shipped across Saudi Arabia.">
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://mojin.store/product.html">
+  <meta property="og:image" content="https://mojin.store/images/cap-round.webp">
+  <meta property="og:site_name" content="Mojin">
+  <meta property="og:locale" content="en_US">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -331,6 +338,8 @@
   <script src="data/site-config.js"></script>
   <script src="data/order-lang.js"></script>
   <script src="data/cart.js"></script>
+  <script src="data/ga4.js"></script>
+  <script src="data/wa-float.js"></script>
 </head>
 <body class="lang-en">
 
@@ -612,6 +621,9 @@ let currentLang = 'en';
 let currentProduct = 'gown-l2';
 
 // ===== Related Products Renderer =====
+/* HTML 转义工具（innerHTML 渲染处使用；数据文件存原始值，cart/WhatsApp 纯文本上下文不受影响） */
+const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
 function renderRelated(id) {
   if (!id) id = currentProduct;
   // Only show products with real images
@@ -623,12 +635,12 @@ function renderRelated(id) {
     const rp = PRODUCTS[rk];
     const rl = rp[currentLang] || rp.en;
     const imgHtml = rp.image
-      ? `<div class="image" style="background:#FAF8F5;overflow:hidden"><img src="${rp.image}" alt="${rl.name}" style="width:100%;height:100%;object-fit:cover"></div>`
+      ? `<div class="image" style="background:#FAF8F5;overflow:hidden"><img src="${rp.image}" alt="${escHtml(rl.name)}" style="width:100%;height:100%;object-fit:cover"></div>`
       : `<div class="image">🖼️</div>`;
     return `<div class="related-card" onclick="loadProduct('${rk}')">
       ${imgHtml}
       <div class="info">
-        <div class="name">${rl.name}</div>
+        <div class="name">${escHtml(rl.name)}</div>
         <div class="price">SAR ${rp.price}</div>
       </div>
     </div>`;
@@ -738,6 +750,9 @@ function applyLang(l) {
 
   window.msgAddCart = d.msgAdd;
   window.msgCart = d.msgCart;
+
+  // JSON-LD 不在此重建：语言切换会走 applyProduct → 内部 updateJsonLd（避免双重序列化）
+  // 目录页（pageMode=catalog）不展示具体商品，applyProduct 内已跳过 updateJsonLd
 }
 
 function applyProduct(id) {
@@ -784,16 +799,69 @@ function applyProduct(id) {
   // Description
   document.getElementById('descContent').innerHTML = d.desc || p.en.desc;
 
-  // Sizes
+  // Sizes（innerHTML 渲染 → 转义）
   const sizeOpts = document.getElementById('sizeOptions');
-  sizeOpts.innerHTML = p.sizes.map(s => `<button class="variant-btn${s === 'L' || s === 'One Size' || s === 'Standard' ? ' active' : ''}">${s}</button>`).join('');
+  sizeOpts.innerHTML = p.sizes.map(s => `<button class="variant-btn${s === 'L' || s === 'One Size' || s === 'Standard' ? ' active' : ''}">${escHtml(s)}</button>`).join('');
 
   // Colors
   const colOpts = document.getElementById('colorOptions');
-  colOpts.innerHTML = p.colors.map(c => `<button class="variant-btn${c === 'Blue' ? ' active' : ''}">${c}</button>`).join('');
+  colOpts.innerHTML = p.colors.map(c => `<button class="variant-btn${c === 'Blue' ? ' active' : ''}">${escHtml(c)}</button>`).join('');
 
   // Related products — dynamic render
   window.renderRelated && window.renderRelated(id);
+
+  // JSON-LD Product structured data (current product, current language)
+  updateJsonLd();
+}
+
+// ===== JSON-LD Product Structured Data =====
+// 动态生成 Product JSON-LD 并注入 <head>，随产品/语言切换重建
+function updateJsonLd() {
+  const p = PRODUCTS[currentProduct];
+  if (!p || pageMode === 'catalog') {
+    // 目录页不展示具体商品：移除残留的 Product 结构化数据，避免向搜索引擎输出非当前页面商品
+    const stale = document.getElementById('productJsonLd');
+    if (stale) stale.remove();
+    return;
+  }
+  const d = p[currentLang] || p.en;
+  const plainDesc = (d.desc || '')
+    .replace(/<\/h[1-6]>|<\/p>|<\/li>|<br\s*\/?>/gi, '. ')  // 闭合标签 → 句号分隔，避免标题/段落粘连
+    .replace(/<[^>]+>/g, ' ')   // 其余标签去 HTML
+    .replace(/\s+/g, ' ')       // 压缩空白
+    .replace(/\.\s*\./g, '.') // 连续句号合并
+    .trim();
+
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: d.name,
+    description: plainDesc,
+    brand: { '@type': 'Brand', name: 'Mojin' },
+    offers: {
+      '@type': 'Offer',
+      price: p.price,
+      priceCurrency: 'SAR',
+      availability: 'InStock',
+    },
+  };
+  if (p.image) json.image = encodeURI('https://mojin.store/' + p.image);  // 中文/非 ASCII 文件名需百分号编码，保证 RFC-3986 合法 URL
+  if (p.rating && p.reviews) {
+    json.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: p.rating,
+      reviewCount: p.reviews,
+    };
+  }
+
+  let el = document.getElementById('productJsonLd');
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = 'productJsonLd';
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(json).replace(/</g, '\u003c');  // 防 JSON-LD 注入：转义 < 避免闭合标签提前截断
 }
 
 function loadProduct(id) {
@@ -917,7 +985,7 @@ function renderCatalog(filter) {
     const hasImg = !!p.image;
     const icon = CATEGORY_ICONS[d.cat] || '📦';
     const imgHtml = hasImg
-      ? `<img src="${p.image}" alt="${d.name}" style="width:100%;height:100%;object-fit:cover">`
+      ? `<img src="${p.image}" alt="${escHtml(d.name)}" style="width:100%;height:100%;object-fit:cover">`
       : `<span class="svg-icon">${icon}</span>`;
     const badgeHtml = hasImg
       ? '<span class="badge">📸 In Stock</span>'
@@ -925,8 +993,8 @@ function renderCatalog(filter) {
     return `<div class="cat-card" onclick="location.hash='${k}'">
       <div class="image">${imgHtml}</div>
       <div class="info">
-        <div class="name">${d.name}</div>
-        <div class="name-en">${d.sub || ''}</div>
+        <div class="name">${escHtml(d.name)}</div>
+        <div class="name-en">${escHtml(d.sub || '')}</div>
         <div class="price">SAR ${p.price}</div>
         ${badgeHtml}
       </div>

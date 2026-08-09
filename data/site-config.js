@@ -18,7 +18,7 @@ const SITE_CONFIG = {
   gaId: 'G-XXXXXXXXXX',             // TODO: GA4 Measurement ID
 
   /* ── 联系 ── */
-  storeEmail: 'info@mojin.store',
+  storeEmail: 'info@mojin.store',   // 邮箱单一来源（lang.js 的 fCont 为纯数据对象、且部分页面先于本文件加载，故未抽离引用；修改邮箱时两处需同步）
 
   /* ── 下单 ── */
   orderPrefix: 'MJ',                // 订单号前缀，如 MJ-20260808-001

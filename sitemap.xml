@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- 首页（根 URL）· 三语独立 URL 互相 alternate -->
+  <url>
+    <loc>https://mojin.store/</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/index-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/index-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/"/>
+  </url>
+  <url>
+    <loc>https://mojin.store/index-cn.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/index-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/index-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/"/>
+  </url>
+  <url>
+    <loc>https://mojin.store/index-ar.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/index-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/index-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/"/>
+  </url>
+
+  <!-- 单 URL 页面（页内三语切换，无独立语言 URL → 不声明 alternate） -->
+  <url>
+    <loc>https://mojin.store/product.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+  <url>
+    <loc>https://mojin.store/checkout.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+  <url>
+    <loc>https://mojin.store/faq.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+
+  <!-- 关于我们 · 三语独立 URL 互相 alternate -->
+  <url>
+    <loc>https://mojin.store/about-en.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/about-en.html"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/about-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/about-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/about-en.html"/>
+  </url>
+  <url>
+    <loc>https://mojin.store/about-cn.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/about-en.html"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/about-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/about-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/about-en.html"/>
+  </url>
+  <url>
+    <loc>https://mojin.store/about-ar.html</loc>
+    <lastmod>2026-08-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mojin.store/about-en.html"/>
+    <xhtml:link rel="alternate" hreflang="cn" href="https://mojin.store/about-cn.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mojin.store/about-ar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mojin.store/about-en.html"/>
+  </url>
+
+  <!-- 政策页（EN/AR 页内切换，单一 URL → 不声明 alternate） -->
+  <url>
+    <loc>https://mojin.store/shipping.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+  <url>
+    <loc>https://mojin.store/return-policy.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+  <url>
+    <loc>https://mojin.store/privacy.html</loc>
+    <lastmod>2026-08-09</lastmod>
+  </url>
+</urlset>

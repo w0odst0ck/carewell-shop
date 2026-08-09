@@ -1,0 +1,69 @@
+# products.yml — CSV 改动自动重新生成 products.js
+#
+# 触发条件：push 到 gh-pages 分支，且 products.csv 或 images/ 有变化
+# 作用：
+#   1. 运行 scripts/gen-products.js 校验 CSV 并重新生成 data/products.js
+#      （校验失败 → job 失败，不提交，运营看到红叉即 CSV 有错）
+#   2. 若 data/products.js 有变化，提交并 push 回 gh-pages，
+#      保证 products.js 始终与 CSV 同步（GitHub Pages 内置部署随后自动发布）
+#
+# 防死循环：触发路径只包含 products.csv 与 images/**，提交 products.js 不会再次触发本 workflow；
+#           另加提交作者检查（bot 提交不处理）双保险。
+# 防并发：同一分支同时只能跑一个 sync（避免两个 job 同时 push 导致 non-fast-forward 红叉）
+
+name: Sync products from CSV
+
+on:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'products.csv'
+      - 'images/**'
+
+concurrency:
+  group: sync-products-${{ github.ref }}
+  cancel-in-progress: true
+
+# workflow 内 push 需要 contents: write 权限
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 不持久化默认凭证，push 时用下方显式配置的 GITHUB_TOKEN
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Skip if triggered by our own bot commit
+        if: github.actor == 'github-actions[bot]'
+        run: echo "本提交由 bot 完成，跳过避免死循环" && exit 0
+
+      - name: Generate products.js from products.csv
+        run: node scripts/gen-products.js products.csv data/products.js
+
+      - name: Commit generated products.js if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet data/products.js; then
+            echo "✅ products.js 无变化，无需提交"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # 显式使用 GITHUB_TOKEN 认证 push（避免依赖 checkout 持久化凭证）
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git add data/products.js
+          git commit -m "chore: 由 products.csv 自动重新生成 products.js"
+          git push origin gh-pages
+          echo "✅ 已提交并推送重新生成的 products.js"

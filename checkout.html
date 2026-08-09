@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout · Mojin</title>
 <meta name="description" content="Secure checkout for Mojin — PPE products delivered across Saudi Arabia.">
+<meta property="og:title" content="Checkout · Mojin">
+<meta property="og:description" content="Secure checkout for Mojin — PPE products delivered across Saudi Arabia.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mojin.store/checkout.html">
+<meta property="og:image" content="https://mojin.store/images/cap-round.webp">
+<meta property="og:site_name" content="Mojin">
+<meta property="og:locale" content="en_US">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,16 +190,19 @@
 <script src="data/products.js"></script>
 <script src="data/order-lang.js"></script>
 <script src="data/cart.js"></script>
+<script src="data/ga4.js"></script>
+<script src="data/wa-float.js"></script>
 <script>
 /* =========================================================
    Checkout 页逻辑：语言切换 / 汇总渲染 / 提交
    ========================================================= */
-let currentLang = localStorage.getItem('mojin_lang') || 'en';
+// 隐私模式/存储禁用时 localStorage 可能抛异常 → try/catch 兜底
+let currentLang = (function(){ try { return localStorage.getItem('mojin_lang') || 'en'; } catch(e) { return 'en'; } })();
 const $ = id => document.getElementById(id);
 
 function applyLang(l) {
   currentLang = l;
-  localStorage.setItem('mojin_lang', l);
+  try { localStorage.setItem('mojin_lang', l); } catch(e) {}  // 持久化语言偏好
   const t = MJ_LANG[l];
   document.documentElement.lang = l;
   document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
@@ -277,6 +287,15 @@ function placeOrder() {
   order.payment = pay;
   const msg = Cart.orderText(order, currentLang);
   window.open(waOrderLink(msg), '_blank');
+  /* GA4: purchase 事件（订单已生成并跳转 WhatsApp 时触发） */
+  if (window.mjTrack) {
+    window.mjTrack('purchase', {
+      transaction_id: order.orderId,
+      value: order.total,
+      currency: order.currency,
+      items: order.items.map(it => ({ item_id: it.sku, item_name: it.name, quantity: it.qty, price: it.unitPrice })),
+    });
+  }
   Cart.clear();
   showToast('✅ ' + (currentLang === 'cn' ? '订单已生成，请发送' : currentLang === 'ar' ? 'تم إنشاء الطلب، يرجى الإرسال' : 'Order ready, please send'));
   renderSummary();
@@ -301,6 +320,14 @@ if (Cart.isEmpty()) {
 } else {
   $('emptyView').style.display = 'none';
   $('checkoutView').style.display = 'block';
+  /* GA4: begin_checkout 事件（进入结算页且购物车非空时触发） */
+  if (window.mjTrack) {
+    window.mjTrack('begin_checkout', {
+      value: Cart.subtotal(),
+      currency: SITE_CONFIG.currency,
+      items: Cart.get().map(it => ({ item_id: it.sku, quantity: it.qty, price: Cart.priceOf(it.sku) })),
+    });
+  }
 }
 </script>
 </body>

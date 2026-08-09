@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>FAQ — Mojin · 莲墨瑾 · موجين</title>
+  <meta property="og:title" content="FAQ — Mojin · 莲墨瑾 · موجين">
+  <meta property="og:description" content="Frequently asked questions about Mojin — shipping, returns, payment and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mojin.store/faq.html">
+  <meta property="og:image" content="https://mojin.store/images/cap-round.webp">
+  <meta property="og:site_name" content="Mojin">
+  <meta property="og:locale" content="en_US">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -77,6 +84,9 @@
     .whatsapp-cta .btn:hover{opacity:.9}
 
     footer{text-align:center;margin-top:40px;font-size:13px;color:var(--warm-text)}
+    .footer-links{margin-bottom:10px}
+    .footer-links a{color:var(--warm-blue);margin:0 6px}
+    .footer-links a:hover{text-decoration:underline}
   </style>
 </head>
 <body class="lang-en">
@@ -98,14 +108,19 @@
     <a href="#" onclick="window.open(waLink(),'_blank');return false;" class="btn" id="ctaBtn">💬 WhatsApp Us</a>
   </div>
 
-  <footer id="footerText">© 2026 Mojin · 莲墨瑾 · موجين</footer>
+  <footer>
+    <div class="footer-links" id="footerLinks">
+      <a href="shipping.html">Shipping Policy</a> · <a href="return-policy.html">Return Policy</a> · <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <div id="footerText">© 2026 Mojin · 莲墨瑾 · موجين</div>
+  </footer>
 </div>
 
 <script>
 const L = {
-  en: { title:'FAQ', sub:'Frequently asked questions about Mojin', ctaTitle:'Still have questions?', ctaSub:'We\'re here to help — usually replies within 5 minutes', ctaBtn:'💬 WhatsApp Us', footer:'© 2026 Mojin · 莲墨瑾 · موجين' },
-  cn: { title:'常见问题', sub:'关于莲墨瑾的常见问题', ctaTitle:'还有问题？', ctaSub:'联系我们 — 通常 5 分钟内回复', ctaBtn:'💬 联系我们', footer:'© 2026 莲墨瑾服装有限公司 · Mojin · موجين' },
-  ar: { title:'الأسئلة الشائعة', sub:'أسئلة شائعة عن موجين', ctaTitle:'ما زال عندك سؤال؟', ctaSub:'نحن هنا للمساعدة — الرد خلال 5 دقائق', ctaBtn:'💬 تواصل معنا', footer:'© 2026 موجين · Mojin · 莲墨瑾' },
+  en: { title:'FAQ', sub:'Frequently asked questions about Mojin', ctaTitle:'Still have questions?', ctaSub:'We\'re here to help — usually replies within 5 minutes', ctaBtn:'💬 WhatsApp Us', footer:'© 2026 Mojin · 莲墨瑾 · موجين', policies:['Shipping Policy','Return Policy','Privacy Policy'] },
+  cn: { title:'常见问题', sub:'关于莲墨瑾的常见问题', ctaTitle:'还有问题？', ctaSub:'联系我们 — 通常 5 分钟内回复', ctaBtn:'💬 联系我们', footer:'© 2026 莲墨瑾服装有限公司 · Mojin · موجين', policies:['运输政策','退换政策','隐私政策'] },
+  ar: { title:'الأسئلة الشائعة', sub:'أسئلة شائعة عن موجين', ctaTitle:'ما زال عندك سؤال؟', ctaSub:'نحن هنا للمساعدة — الرد خلال 5 دقائق', ctaBtn:'💬 تواصل معنا', footer:'© 2026 موجين · Mojin · 莲墨瑾', policies:['سياسة الشحن','سياسة الإرجاع','سياسة الخصوصية'] },
 };
 
 let data = null;
@@ -135,6 +150,8 @@ function render(lang) {
   document.getElementById('ctaSub').textContent = d.ctaSub;
   document.getElementById('ctaBtn').textContent = d.ctaBtn;
   document.getElementById('footerText').textContent = d.footer;
+  const pHrefs = ['shipping.html','return-policy.html','privacy.html'];
+  document.getElementById('footerLinks').innerHTML = d.policies.map((t, i) => '<a href="' + pHrefs[i] + '">' + t + '</a>').join(' · ');
 
   document.querySelectorAll('.lang-bar button').forEach(b => {
     b.classList.toggle('active', b.textContent.toLowerCase() === lang);
@@ -180,5 +197,7 @@ function setLang(l) {
 loadFAQ();
 </script>
 <script src="data/site-config.js"></script>
+<script src="data/ga4.js"></script>
+<script src="data/wa-float.js"></script>
 </body>
 </html>
