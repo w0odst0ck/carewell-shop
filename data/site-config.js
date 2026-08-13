@@ -27,6 +27,9 @@ const SITE_CONFIG = {
   /* ── 站点 ── */
   domain: 'mojin.store',
   siteName: 'Mojin',
+
+  /* ── AI 客服后端（widget 用；本地 :8000，部署后改为 Worker 公网地址） ── */
+  mojinApiBase: 'http://127.0.0.1:8000',
 };
 
 /* 工具：生成 wa.me 下单链接（预填订单消息） */

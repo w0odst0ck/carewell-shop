@@ -8,21 +8,39 @@
   "categories": [
     {
       "id": "about",
-      "en": { "name": "About Mojin" },
-      "cn": { "name": "关于莲墨瑾" },
-      "ar": { "name": "عن موجين" }
+      "en": {
+        "name": "About Mojin"
+      },
+      "cn": {
+        "name": "关于莲墨瑾"
+      },
+      "ar": {
+        "name": "عن موجين"
+      }
     },
     {
       "id": "shipping",
-      "en": { "name": "Products & Shipping" },
-      "cn": { "name": "产品与配送" },
-      "ar": { "name": "المنتجات والشحن" }
+      "en": {
+        "name": "Products & Shipping"
+      },
+      "cn": {
+        "name": "产品与配送"
+      },
+      "ar": {
+        "name": "المنتجات والشحن"
+      }
     },
     {
       "id": "support",
-      "en": { "name": "Returns & Support" },
-      "cn": { "name": "退换与客服" },
-      "ar": { "name": "الإرجاع والدعم" }
+      "en": {
+        "name": "Returns & Support"
+      },
+      "cn": {
+        "name": "退换与客服"
+      },
+      "ar": {
+        "name": "الإرجاع والدعم"
+      }
     }
   ],
   "faqs": [
@@ -168,6 +186,38 @@
       "ar": {
         "question": "كيف يمكنني الاتصال بخدمة العملاء؟",
         "answer": "يمكنك التواصل معنا عبر:\n- واتساب: +86 XXX XXXX XXXX (أسرع رد، عادةً خلال 5 دقائق)\n- البريد الإلكتروني: info@mojin.shop\nندعم العربية والإنجليزية والصينية. ساعات العمل: الأحد إلى الخميس، 9:00 صباحاً – 6:00 مساءً (بتوقيت السعودية)."
+      }
+    },
+    {
+      "id": "q10",
+      "category": "shipping",
+      "en": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept two payment methods:\n- Cash on Delivery (COD): pay in cash when your order arrives\n- Bank Transfer: we send you the bank details on WhatsApp after you place the order"
+      },
+      "cn": {
+        "question": "支持哪些支付方式？",
+        "answer": "我们支持两种支付方式：\n- 货到付款（COD）：订单送达时现金支付\n- 银行转账：下单后我们会在 WhatsApp 发送银行账户信息"
+      },
+      "ar": {
+        "question": "ما هي طرق الدفع المتاحة؟",
+        "answer": "نقبل طريقتين للدفع:\n- الدفع عند الاستلام (COD): ادفع نقدًا عند وصول طلبك\n- التحويل البنكي: نرسل لك تفاصيل الحساب البنكي عبر واتساب بعد تقديم طلبك"
+      }
+    },
+    {
+      "id": "q11",
+      "category": "shipping",
+      "en": {
+        "question": "How does Cash on Delivery (COD) work?",
+        "answer": "We deliver your order to your door and you pay in cash when it arrives. Shipping cost is confirmed on WhatsApp before we send your order. Free shipping applies to orders over SAR 100 within Saudi Arabia."
+      },
+      "cn": {
+        "question": "货到付款（COD）怎么操作？",
+        "answer": "我们送货上门，您收货时现金支付即可。发货前我们会通过 WhatsApp 与您确认运费。沙特境内订单满 SAR 100 免运费。"
+      },
+      "ar": {
+        "question": "كيف يعمل الدفع عند الاستلام (COD)؟",
+        "answer": "نوصل طلبك إلى باب منزلك وتدفع نقدًا عند الاستلام. يتم تأكيد تكلفة الشحن عبر واتساب قبل إرسال طلبك. الشحن مجاني للطلبات فوق 100 ريال داخل المملكة العربية السعودية."
       }
     }
   ]
