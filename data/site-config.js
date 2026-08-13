@@ -5,8 +5,8 @@
    ========================================================= */
 const SITE_CONFIG = {
   /* ── 商家 WhatsApp（国际格式，不含 + 和空格）── */
-  waNumber: '86XXXXXXXXXXX',        // TODO: 等用户提供真实号
-  waDisplay: '+86 XXX XXXX XXXX',   // 页面展示用
+  waNumber: '8613789915060',        // 国际格式，不含 + 和空格
+  waDisplay: '+86 137 8991 5060',   // 页面展示用
 
   /* ── 价格与税务 ── */
   currency: 'SAR',
