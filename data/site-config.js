@@ -28,8 +28,8 @@ const SITE_CONFIG = {
   domain: 'mojin.store',
   siteName: 'Mojin',
 
-  /* ── AI 客服后端（widget 用；本地 :8000，线上走 cloudflared 隧道；Worker 部署后改 Worker URL） ── */
-  mojinApiBase: 'https://keeps-install-unified-geographic.trycloudflare.com',
+  /* ── AI 客服后端（widget 用；Worker 反代稳定地址，背后是 cloudflared 隧道 → 本机 :8000） ── */
+  mojinApiBase: 'https://mojin-chat-proxy.zhangzhongze130.workers.dev',
 };
 
 /* 工具：生成 wa.me 下单链接（预填订单消息） */
