@@ -27,6 +27,7 @@
       : 'http://127.0.0.1:8000';
 
   var FETCH_TIMEOUT = 30000;   /* 30s 超时（AbortController） */
+  var STREAM_TIMEOUT = 70000;  /* SSE 流式最长 70s（后端 60s 上限 + 缓冲），超时中断转人工 */
 
   /* ── 三语 UI 文案（自包含，不依赖 lang.js） ── */
   var I18N = {
@@ -338,6 +339,8 @@
     return wrap;
   }
   function addHumanButton() {
+    /* 同一轮内去重：error 事件 + 连接中断可能先后触发，避免渲染两个按钮 */
+    if (body.querySelector('.mj-human')) return;
     var a = document.createElement('a');
     a.className = 'mj-human';
     a.href = humanLink();
@@ -373,8 +376,8 @@
     ta.disabled = busy;
   }
 
-  /* ── 调用后端 answer_question（30s 超时，全兜底不抛错） ── */
-  function ask(query) {
+  /* ── 非流式 JSON 调用（回退路径，30s 超时，全兜底不抛错） ── */
+  function askJSON(query) {
     var lang = currentLang();
     var url = API_BASE + '/mojin_chat/answer_question?query=' + encodeURIComponent(query) + '&lang=' + lang;
     var ctrl = new AbortController();
@@ -391,7 +394,64 @@
       .finally(function () { clearTimeout(timer); });
   }
 
-  /* ── 发送流程 ── */
+  /* ── SSE 流式调用（渐进增强：后端不支持流式 / 网络错误 → reject，调用方回退 JSON） ──
+     事件流：start(hit_count/sources) → token(delta)* → done(answer) | error(message) */
+  function readSSE(resp, onEvent) {
+    /* 逐块读取 + 按行缓冲，\n\n 分隔事件；每事件回调 onEvent(event, dataObj) */
+    var reader = resp.body.getReader();
+    var decoder = new TextDecoder('utf-8');
+    var buf = '';
+    function feed() {
+      var idx;
+      while ((idx = buf.indexOf('\n\n')) !== -1) {
+        var block = buf.slice(0, idx);
+        buf = buf.slice(idx + 2);
+        var event = null, data = '';
+        block.split('\n').forEach(function (line) {
+          if (line.indexOf('event: ') === 0) event = line.slice(7);
+          else if (line.indexOf('data: ') === 0) data += line.slice(6);
+        });
+        if (event !== null && data) {
+          var parsed = null;
+          try { parsed = JSON.parse(data); } catch (e) { parsed = { raw: data }; }
+          onEvent(event, parsed);
+        }
+      }
+    }
+    function pump() {
+      return reader.read().then(function (res) {
+        if (res.done) return;
+        buf += decoder.decode(res.value, { stream: true });
+        feed();
+        return pump();
+      });
+    }
+    return pump().then(function () {
+      buf += decoder.decode();
+      feed();
+    });
+  }
+
+  function askStream(query, onEvent) {
+    var lang = currentLang();
+    var url = API_BASE + '/mojin_chat/answer_question?query=' + encodeURIComponent(query) +
+      '&lang=' + lang + '&stream=true';
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, STREAM_TIMEOUT);
+    return fetch(url, { method: 'GET', signal: ctrl.signal })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var ct = (resp.headers.get('content-type') || '').toLowerCase();
+        if (ct.indexOf('text/event-stream') !== 0) throw new Error('no-sse'); /* 后端不支持流式 → 回退 */
+        return readSSE(resp, onEvent).then(function () { clearTimeout(timer); });
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  /* ── 发送流程：优先 SSE 流式（打字机），后端不支持 / 网络失败 → 回退非流式 JSON ── */
   function send(text) {
     var q = (text != null ? text : ta.value).trim();
     if (!q || sendBtn.disabled) return;
@@ -404,27 +464,113 @@
     setBusy(true);
     addTyping();
 
-    ask(q).then(function (data) {
+    /* 流式会话状态：当前 AI 气泡、已累积文本、来源、命中数 */
+    var aiWrap = null;
+    var aiMsg = null;
+    var fullText = '';
+    var srcDocs = [];
+    var hitCount = -1;
+    var finished = false;
+
+    /* 首个 token 到达时把「正在输入」替换成 AI 气泡 */
+    function ensureBubble() {
+      if (aiMsg) return;
       var typing = document.getElementById('mj-typing');
       if (typing) typing.remove();
-
-      /* 后端不可达 / 超时 / 服务端报错 → 错误兜底 + 转人工 */
-      var error = (data && data.error) || (!data || data.hit_count === undefined ? 'network' : null);
-      var hitCount = data ? (data.hit_count == null ? -1 : data.hit_count) : -1;
-      var answer = (data && data.answer) ? String(data.answer) : t('error');
-
-      var srcDocs = [];
-      if (data && Array.isArray(data.sources)) {
-        srcDocs = data.sources.map(function (s) { return s && s.doc_id ? s.doc_id : ''; }).filter(Boolean).slice(0, 2);
+      aiWrap = addBubble('ai', '', []);
+      aiMsg = aiWrap.querySelector('.mj-msg.ai');
+    }
+    /* 打字机渲染：重绘累积文本（先全量转义防 XSS，再只做 **加粗** 与换行） */
+    function renderAccumulated() {
+      if (!aiMsg) return;
+      aiMsg.innerHTML = '';
+      aiMsg.appendChild(renderAI(fullText));
+      scrollToBottom();
+    }
+    function ensureSrc() {
+      if (!srcDocs.length || !aiWrap) return;
+      var src = aiWrap.querySelector('.mj-src');
+      if (!src) {
+        src = document.createElement('div');
+        src.className = 'mj-src';
+        aiWrap.appendChild(src);
       }
-
+      src.textContent = (currentLang() === 'ar' ? 'المصدر: ' : currentLang() === 'cn' ? '来源: ' : 'Source: ') +
+        srcDocs.join(', ');
+    }
+    function finishStream(answer) {
+      if (finished) return;
+      finished = true;
+      if (!aiMsg) {            /* 极端情况：无任何 token 就 done（空答案兜底） */
+        ensureBubble();
+        aiMsg.appendChild(renderAI(answer));
+      }
+      ensureSrc();
       history.push({ role: 'ai', text: answer, src: srcDocs });
-      addBubble('ai', answer, srcDocs);
-
-      /* hit_count === 0（知识库无命中）或出错 → 转人工按钮 */
-      if (error || hitCount === 0) addHumanButton();
+      if (hitCount === 0) addHumanButton();  /* 知识库无命中 → 转人工 */
       saveState();
       setBusy(false);
+    }
+    /* 流式中断（网络错误 / 70s 超时）：保留已输出部分 + 转人工按钮 */
+    function interruptStream() {
+      if (finished) return;
+      finished = true;
+      var typing = document.getElementById('mj-typing');
+      if (typing) typing.remove();
+      if (!aiMsg) {            /* 一开始就失败（后端不支持流式 / 网络断）→ 回退 JSON */
+        askJSON(q).then(function (data) {
+          var error = (data && data.error) || (!data || data.hit_count === undefined ? 'network' : null);
+          var hit = data ? (data.hit_count == null ? -1 : data.hit_count) : -1;
+          var answer = (data && data.answer) ? String(data.answer) : t('error');
+          var srcs = [];
+          if (data && Array.isArray(data.sources)) {
+            srcs = data.sources.map(function (s) { return s && s.doc_id ? s.doc_id : ''; }).filter(Boolean).slice(0, 2);
+          }
+          history.push({ role: 'ai', text: answer, src: srcs });
+          addBubble('ai', answer, srcs);
+          if (error || hit === 0) addHumanButton();
+          saveState();
+          setBusy(false);
+        });
+        return;
+      }
+      /* 已收到部分 token：保留已输出文本 + 转人工 */
+      if (fullText) {
+        aiMsg.innerHTML = '';
+        aiMsg.appendChild(renderAI(fullText));
+        ensureSrc();
+        history.push({ role: 'ai', text: fullText, src: srcDocs });
+      } else {
+        addBubble('ai', t('error'), []);
+        history.push({ role: 'ai', text: t('error'), src: [] });
+      }
+      addHumanButton();
+      saveState();
+      setBusy(false);
+    }
+
+    /* 尝试流式（失败 → interruptStream 自动回退 JSON） */
+    askStream(q, function (event, data) {
+      if (event === 'start') {
+        hitCount = data ? data.hit_count : -1;
+        if (data && Array.isArray(data.sources)) {
+          srcDocs = data.sources.map(function (s) { return s && s.doc_id ? s.doc_id : ''; }).filter(Boolean).slice(0, 2);
+        }
+      } else if (event === 'token') {
+        ensureBubble();
+        fullText += (data && data.delta) || '';
+        renderAccumulated();
+      } else if (event === 'error') {
+        addHumanButton();      /* 后端报错（LLM 失败/超时）→ 转人工按钮 */
+      } else if (event === 'done') {
+        finishStream((data && data.answer) ? String(data.answer) : fullText);
+      }
+    }).then(function () {
+      /* 流正常读完但没收到 done（异常空流）→ 兜底收尾 */
+      if (!finished) finishStream(fullText || t('error'));
+    }).catch(function () {
+      /* 后端不支持流式 / 网络失败 / 70s 超时 → 中断处理（含 JSON 回退） */
+      interruptStream();
     });
   }
 
