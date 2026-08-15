@@ -15,7 +15,7 @@ const SITE_CONFIG = {
   freeShippingThreshold: 100,       // 满 SAR 100 免运费
 
   /* ── 分析 ── */
-  gaId: 'G-XXXXXXXXXX',             // TODO: GA4 Measurement ID
+  gaId: 'G-5N80Y56YFB',            // GA4 Measurement ID（2026-08-15 上线）
 
   /* ── 联系 ── */
   storeEmail: 'info@mojin.store',   // 邮箱单一来源（lang.js 的 fCont 为纯数据对象、且部分页面先于本文件加载，故未抽离引用；修改邮箱时两处需同步）
