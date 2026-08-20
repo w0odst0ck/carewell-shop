@@ -30,6 +30,9 @@ const SITE_CONFIG = {
 
   /* ── AI 客服后端（widget 用；Worker 反代稳定地址，背后是 cloudflared 隧道 → 本机 :8000） ── */
   mojinApiBase: 'https://mojin-chat-proxy.zhangzhongze130.workers.dev',
+
+  /* ── AI 购物规划师（globex 门面 AI 接待；P2 上线后改 https://planner.mojin.store） ── */
+  plannerUrl: 'http://127.0.0.1:5173',
 };
 
 /* 工具：生成 wa.me 下单链接（预填订单消息） */

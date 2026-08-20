@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <title>موجين — استفسار B2B | مصنع أقمشة غير منسوجة OEM/ODM</title>
+  <meta property="og:title" content="موجين — استفسار B2B | مصنع أقمشة غير منسوجة OEM/ODM">
+  <meta property="og:description" content="أسعار الجملة، تخصيص OEM/ODM، علامة خاصة ونماذج سريعة — مباشرة من أكبر مركز صناعي للأقمشة غير المنسوجة في العالم.">
+</head>
+<body>
+<header>
+  <div class="container">
+    <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+
+    <a href="/" class="logo">MOJIN</a>
+
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about-en.html">About Us</a>
+      <a href="inquiry-en.html">B2B Inquiry</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn" onclick="toggleLang()">
+          <span class="globe">🌐 -->
+          <span id="currentLang">EN</span>
+          <span class="arrow">▾</span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <button class="active-lang" onclick="switchLang('EN')">EN</button>
+          <button onclick="switchLang('CN')">CN</button>
+          <button onclick="switchLang('AR')">AR</button>
+        </div>
+      </div>
+
+      <button class="cart-btn" onclick="window.location.href='checkout.html'">
+        🛒<span class="cart-badge" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-nav" onclick="toggleMobileNav()">✕</button>
+    <a href="index.html">Home</a>
+    <a href="product.html">Products</a>
+    <a href="about-en.html">About Us</a>
+    <a href="inquiry-en.html">B2B Inquiry</a>
+    <a href="faq.html">FAQ</a>
+    <a href="javascript:void(0)" onclick="switchLang()" style="margin-top:16px;font-size:14px;">
+      🌐 Language: <span id="mobileLang">EN</span>
+    </a>
+  </div>
+</header>
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-nav" onclick="toggleMobileNav()">✕</button>
+    <a href="index.html">الرئيسية</a>
+    <a href="product.html">المنتجات</a>
+    <a href="about-en.html">من نحن</a>
+    <a href="inquiry-ar.html">استفسار الأعمال</a>
+    <a href="faq.html">الأسئلة</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <p style="font-size:14px;letter-spacing:1px;color:var(--sand-orange);margin-bottom:8px;font-weight:600;">🇸🇦 مباشرة من المصنع · شيانتاو الصين · CE / SASO / ISO 13485</p>
+      <h1 class="tagline">اطلب عرض سعر</h1>
+      <p class="sub">أسعار الجملة، تخصيص OEM/ODM، علامة خاصة ونماذج سريعة — مباشرة من أكبر مركز صناعي للأقمشة غير المنسوجة في العالم.</p>
+    </div>
+  </section>
+
+  <!-- AI 规划师入口 -->
+  <section class="section">
+    <div class="container" style="max-width:720px;text-align:center;background:var(--warm-blue);color:var(--white);border-radius:16px;padding:28px 24px;">
+      <h2 style="color:var(--white);margin-bottom:10px;">🤖 دع الذكاء الاصطناعي يخطط قائمتك أولاً</h2>
+      <p style="font-size:14px;line-height:1.8;opacity:.95;margin-bottom:18px;">أخبر مخطط التسوق الذكي باحتياجاتك (تجهيز عيادة، مستلزمات فنادق، حزمة معدات وقاية...) واحصل على قائمة منظمة بأسعار تشمل ضريبة القيمة المضافة 15% خلال ثوانٍ، ثم أرسلها لنا لعرض السعر.</p>
+      <a href="#" onclick="window.open(SITE_CONFIG.plannerUrl,'_blank');return false;" class="btn btn-primary" style="font-size:15px;">افتح مخطط التسوق الذكي</a>
+    </div>
+  </section>
+
+  <!-- 询盘表单 -->
+  <section class="section alt">
+    <div class="container" style="max-width:680px;">
+      <h2 class="section-title">📩 أو أرسل استفسارك مباشرة</h2>
+      <p style="font-size:13px;color:var(--warm-text);margin-bottom:20px;">الحقول المميزة بـ * إلزامية. نرد خلال 24 ساعة.</p>
+      <form id="inquiryForm" onsubmit="submitInquiry(event)" style="display:grid;gap:14px;">
+        <div>
+          <label for="fCategory" style="font-weight:600;font-size:14px;">فئة المنتج *</label>
+          <select id="fCategory" required style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+            <option value="" disabled selected>اختر الفئة</option>
+                        <option value="أثواب عزل">أثواب عزل</option>
+            <option value="قبعات واقية">قبعات واقية</option>
+            <option value="أغطية أحذية">أغطية أحذية</option>
+            <option value="قفازات نيتريل">قفازات نيتريل</option>
+            <option value="كمامات">كمامات</option>
+            <option value="منتجات مخصصة OEM">منتجات مخصصة OEM</option>
+            <option value="أخرى">أخرى</option>
+          </select>
+        </div>
+        <div>
+          <label for="fQty" style="font-weight:600;font-size:14px;">الكمية التقديرية</label>
+          <input id="fQty" type="text" placeholder="مثال: 500 عبوة شهرياً" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+        </div>
+        <div>
+          <label for="fCustom" style="font-weight:600;font-size:14px;">احتياجات التخصيص</label>
+          <textarea id="fCustom" rows="2" placeholder="طباعة الشعار، تغيير المقاس/المواصفات، التغليف، علامة خاصة..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label for="fCompany" style="font-weight:600;font-size:14px;">الشركة / المؤسسة *</label>
+            <input id="fCompany" type="text" required placeholder="اسم الشركة" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+          </div>
+          <div>
+            <label for="fName" style="font-weight:600;font-size:14px;">جهة الاتصال *</label>
+            <input id="fName" type="text" required placeholder="اسمك" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label for="fWa" style="font-weight:600;font-size:14px;">رقم واتساب *</label>
+            <input id="fWa" type="tel" required placeholder="مثال: 9665xxxxxxxx" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+          </div>
+          <div>
+            <label for="fEmail" style="font-weight:600;font-size:14px;">البريد الإلكتروني</label>
+            <input id="fEmail" type="email" placeholder="you@company.com" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
+          </div>
+        </div>
+        <div>
+          <label for="fMsg" style="font-weight:600;font-size:14px;">رسالة</label>
+          <textarea id="fMsg" rows="3" placeholder="أخبرنا عن احتياجاتك..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;"></textarea>
+        </div>
+        <button type="submit" class="btn-submit" style="width:100%;background:var(--sand-orange);color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;">💬 أرسل الاستفسار عبر واتساب</button>
+        <p style="font-size:12px;color:var(--warm-text);text-align:center;">سيتم إرسال استفسارك كرسالة واتساب إلى فريق المبيعات.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>MOJIN <span class="sub">موجين · 莲墨瑾</span></h3>
+        <p style="font-size:13px;color:var(--warm-text);margin-top:8px;line-height:1.7;">
+          Protection You Can Trust.<br>
+          Professional-grade protective gear, direct from our factory to your door.
+        </p>
+        <div class="contact-info" style="margin-top:16px;">
+          📧 info@mojin.store<br>
+          💬 WhatsApp: <span data-wa-placeholder></span>
+        </div>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="product.html">Isolation Gowns</a></li>
+          <li><a href="product.html">Protective Caps</a></li>
+          <li><a href="product.html">Shoe Covers</a></li>
+          <li><a href="product.html">Gloves</a></li>
+          
+          
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about-en.html">About Mojin</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="faq.html">Contact Us</a></li>
+          <li><a href="shipping.html">Shipping Policy</a></li>
+          <li><a href="return-policy.html">Return Policy</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          
+          
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="contact-info">
+          📧 info@mojin.store<br>
+          💬 WhatsApp<br>
+          📍 Saudi Arabia<br>
+          🏭 China
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Mojin. All rights reserved. · 莲墨瑾服装有限公司 · موجين. جميع الحقوق محفوظة.
+    </div>
+  </div>
+</footer>
+<script>
+  function submitInquiry(e) {
+    e.preventDefault();
+    const category = document.getElementById('fCategory').value;
+    const company = document.getElementById('fCompany').value.trim();
+    const name = document.getElementById('fName').value.trim();
+    const wa = document.getElementById('fWa').value.trim();
+    if (!category || !company || !name || !wa) {
+      alert("يرجى تعبئة الحقول الإلزامية.");
+      return;
+    }
+    const qty = document.getElementById('fQty').value.trim();
+    const custom = document.getElementById('fCustom').value.trim();
+    const email = document.getElementById('fEmail').value.trim();
+    const msg = document.getElementById('fMsg').value.trim();
+    const lines = [
+      '📩 NEW B2B INQUIRY — mojin.store',
+      'Category: ' + category,
+      'Company: ' + company,
+      'Contact: ' + name,
+      'WhatsApp: ' + wa,
+    ];
+    if (email) lines.push('Email: ' + email);
+    if (qty) lines.push('Estimated qty: ' + qty);
+    if (custom) lines.push('Customization: ' + custom);
+    if (msg) lines.push('Message: ' + msg);
+    window.open(waOrderLink(lines.join('\n')), '_blank');
+    if (window.mjTrack) window.mjTrack('generate_lead', { category, company });
+  }
+</script>
+
+
+<script>
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('active');
+  }
+  function toggleLang() {
+    document.getElementById('langDropdown').classList.toggle('active');
+  }
+  function switchLang(lang) {
+    const page = { EN: 'inquiry-en.html', CN: 'inquiry-cn.html', AR: 'inquiry-ar.html' }[lang];
+    if (page) window.location.href = page;
+  }
+</script>
+<script src="data/site-config.js"></script>
+<script src="data/order-lang.js"></script>
+<script src="data/cart.js"></script>
+<script src="data/ga4.js"></script>
+<script src="data/wa-float.js"></script>
+
+</body>
+</html>
