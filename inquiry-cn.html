@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-CN" dir="ltr">
 <head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  
   <title>Mojin — B2B 询盘 | 无纺布 OEM/ODM 工厂</title>
   <meta property="og:title" content="Mojin — B2B 询盘 | 无纺布 OEM/ODM 工厂">
   <meta property="og:description" content="批量价格、OEM/ODM 定制、自有品牌与快速打样——直连全国最大无纺布产业带。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mojin.store/inquiry-cn.html">
+  <meta property="og:site_name" content="Mojin">
+  <meta property="og:locale" content="zh_CN">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vars.css">
+  <link rel="stylesheet" href="css/inquiry.css">
 </head>
 <body>
 <header>
   <div class="container">
     <button class="hamburger" onclick="toggleMobileNav()">☰</button>
 
-    <a href="/" class="logo">MOJIN</a>
+    <a href="index-cn.html" class="logo">MOJIN</a>
 
     <nav class="desktop-nav">
-      <a href="index.html">Home</a>
-      <a href="product.html">Products</a>
-      <a href="about-en.html">About Us</a>
-      <a href="inquiry-en.html">B2B Inquiry</a>
-      <a href="faq.html">FAQ</a>
+      <a href="index-cn.html">首页</a>
+      <a href="product.html">产品</a>
+      <a href="about-cn.html">关于我们</a>
+      <a href="inquiry-cn.html">B2B 询盘</a>
+      <a href="faq.html">常见问题</a>
     </nav>
 
     <div class="header-actions">
@@ -42,120 +47,122 @@
       </div>
 
       <button class="cart-btn" onclick="window.location.href='checkout.html'">
-        🛒<span class="cart-badge" style="display:none">0</span>
+        🛒<span class="cart-badge">0</span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <button class="close-nav" onclick="toggleMobileNav()">✕</button>
-    <a href="index.html">Home</a>
-    <a href="product.html">Products</a>
-    <a href="about-en.html">About Us</a>
-    <a href="inquiry-en.html">B2B Inquiry</a>
-    <a href="faq.html">FAQ</a>
-    <a href="javascript:void(0)" onclick="switchLang()" style="margin-top:16px;font-size:14px;">
-      🌐 Language: <span id="mobileLang">EN</span>
+    <a href="index-cn.html">首页</a>
+    <a href="product.html">产品</a>
+    <a href="about-cn.html">关于我们</a>
+    <a href="inquiry-cn.html">B2B 询盘</a>
+    <a href="faq.html">常见问题</a>
+    <a href="javascript:void(0)" onclick="switchLang('AR')" class="mobile-lang">
+      🌐 Language: <span id="mobileLang">CN</span>
     </a>
   </div>
 </header>
-  <div class="mobile-nav" id="mobileNav">
-    <button class="close-nav" onclick="toggleMobileNav()">✕</button>
-    <a href="index.html">首页</a>
-    <a href="product.html">产品</a>
-    <a href="about-en.html">关于我们</a>
-    <a href="inquiry-cn.html">B2B 询盘</a>
-    <a href="faq.html">常见问题</a>
-  </div>
-</header>
-
 <main>
   <section class="hero">
     <div class="hero-content">
-      <p style="font-size:14px;letter-spacing:1px;color:var(--sand-orange);margin-bottom:8px;font-weight:600;">🇸🇦 工厂直供 · 湖北仙桃 · CE / SASO / ISO 13485</p>
+      <p class="hero-badge">🇸🇦 工厂直供 · 湖北仙桃 · CE / SASO / ISO 13485</p>
       <h1 class="tagline">获取报价</h1>
       <p class="sub">批量价格、OEM/ODM 定制、自有品牌与快速打样——直连全国最大无纺布产业带。</p>
     </div>
   </section>
 
-  <!-- AI 规划师入口 -->
   <section class="section">
-    <div class="container" style="max-width:720px;text-align:center;background:var(--warm-blue);color:var(--white);border-radius:16px;padding:28px 24px;">
-      <h2 style="color:var(--white);margin-bottom:10px;">🤖 先让 AI 帮你规划采购清单</h2>
-      <p style="font-size:14px;line-height:1.8;opacity:.95;margin-bottom:18px;">告诉 AI 购物规划师你的需求（诊所配置、酒店用品、防护耗材包……），数秒内生成结构化清单（含沙特 15% VAT 到手价），再发给我们报价。</p>
-      <a href="#" onclick="window.open(SITE_CONFIG.plannerUrl,'_blank');return false;" class="btn btn-primary" style="font-size:15px;">打开 AI 购物规划师</a>
+    <div class="container">
+      <div class="planner-card">
+        <h2 class="planner-title">🤖 先让 AI 帮你规划采购清单</h2>
+        <p class="planner-sub">告诉 AI 购物规划师你的需求（诊所配置、酒店用品、防护耗材包……），数秒内生成结构化清单（含沙特 15% VAT 到手价），再发给我们报价。</p>
+        <a href="#" onclick="window.open(SITE_CONFIG.plannerUrl,'_blank');return false;" class="btn btn-primary planner-cta">打开 AI 购物规划师</a>
+      </div>
     </div>
   </section>
 
-  <!-- 询盘表单 -->
   <section class="section alt">
-    <div class="container" style="max-width:680px;">
-      <h2 class="section-title">📩 或直接提交询盘</h2>
-      <p style="font-size:13px;color:var(--warm-text);margin-bottom:20px;">带 * 为必填。我们 24 小时内回复。</p>
-      <form id="inquiryForm" onsubmit="submitInquiry(event)" style="display:grid;gap:14px;">
-        <div>
-          <label for="fCategory" style="font-weight:600;font-size:14px;">产品品类 *</label>
-          <select id="fCategory" required style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-            <option value="" disabled selected>选择品类</option>
-                        <option value="隔离衣">隔离衣</option>
-            <option value="防护帽">防护帽</option>
-            <option value="鞋套">鞋套</option>
-            <option value="丁腈手套">丁腈手套</option>
-            <option value="口罩">口罩</option>
-            <option value="OEM/定制产品">OEM/定制产品</option>
-            <option value="其他">其他</option>
-          </select>
-        </div>
-        <div>
-          <label for="fQty" style="font-weight:600;font-size:14px;">预计数量</label>
-          <input id="fQty" type="text" placeholder="如：每月 500 包" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-        </div>
-        <div>
-          <label for="fCustom" style="font-weight:600;font-size:14px;">定制需求</label>
-          <textarea id="fCustom" rows="2" placeholder="Logo 印刷、尺寸/规格调整、包装、自有品牌……" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;"></textarea>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-          <div>
-            <label for="fCompany" style="font-weight:600;font-size:14px;">公司/机构 *</label>
-            <input id="fCompany" type="text" required placeholder="公司名称" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-          </div>
-          <div>
-            <label for="fName" style="font-weight:600;font-size:14px;">联系人 *</label>
-            <input id="fName" type="text" required placeholder="您的姓名" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-          <div>
-            <label for="fWa" style="font-weight:600;font-size:14px;">WhatsApp 号码 *</label>
-            <input id="fWa" type="tel" required placeholder="如：9665xxxxxxxx" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-          </div>
-          <div>
-            <label for="fEmail" style="font-weight:600;font-size:14px;">邮箱</label>
-            <input id="fEmail" type="email" placeholder="you@company.com" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;">
-          </div>
-        </div>
-        <div>
-          <label for="fMsg" style="font-weight:600;font-size:14px;">补充说明</label>
-          <textarea id="fMsg" rows="3" placeholder="告诉我们您的需求……" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin-top:6px;font-family:inherit;"></textarea>
-        </div>
-        <button type="submit" class="btn-submit" style="width:100%;background:var(--sand-orange);color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;">💬 通过 WhatsApp 发送询盘</button>
-        <p style="font-size:12px;color:var(--warm-text);text-align:center;">点击后将您的询盘以 WhatsApp 消息发送给我们的销售团队。</p>
-      </form>
+    <div class="container">
+      <div class="form-shell">
+        <h2 class="section-title">📩 或直接提交询盘</h2>
+        <p class="form-note">带 * 为必填。我们 24 小时内回复。</p>
+        <form id="inquiryForm" class="inquiry-form" onsubmit="submitInquiry(event)">
+          <fieldset class="form-group">
+            <legend class="form-group-title">产品需求</legend>
+            <div class="field">
+              <label class="field-label" for="fCategory">产品品类 *</label>
+              <select id="fCategory" class="field-select" required>
+                <option value="" disabled selected>选择品类</option>
+                                <option value="隔离衣">隔离衣</option>
+                <option value="防护帽">防护帽</option>
+                <option value="鞋套">鞋套</option>
+                <option value="丁腈手套">丁腈手套</option>
+                <option value="口罩">口罩</option>
+                <option value="OEM/定制产品">OEM/定制产品</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="fQty">预计数量</label>
+              <input id="fQty" type="text" class="field-input" placeholder="如：每月 500 包">
+            </div>
+            <div class="field">
+              <label class="field-label" for="fCustom">定制需求</label>
+              <textarea id="fCustom" rows="2" class="field-textarea" placeholder="Logo 印刷、尺寸/规格调整、包装、自有品牌……"></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-group-title">联系信息</legend>
+            <div class="field-row">
+              <div class="field">
+                <label class="field-label" for="fCompany">公司/机构 *</label>
+                <input id="fCompany" type="text" class="field-input" required placeholder="公司名称">
+              </div>
+              <div class="field">
+                <label class="field-label" for="fName">联系人 *</label>
+                <input id="fName" type="text" class="field-input" required placeholder="您的姓名">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="field-label" for="fWa">WhatsApp 号码 *</label>
+                <input id="fWa" type="tel" class="field-input" required placeholder="如：9665xxxxxxxx">
+              </div>
+              <div class="field">
+                <label class="field-label" for="fEmail">邮箱</label>
+                <input id="fEmail" type="email" class="field-input" placeholder="you@company.com">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend class="form-group-title">补充说明</legend>
+            <div class="field">
+              <label class="field-label" for="fMsg">补充说明</label>
+              <textarea id="fMsg" rows="3" class="field-textarea" placeholder="告诉我们您的需求……"></textarea>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn-submit">💬 通过 WhatsApp 发送询盘</button>
+          <p class="submit-note">点击后将您的询盘以 WhatsApp 消息发送给我们的销售团队。</p>
+        </form>
+      </div>
     </div>
   </section>
 </main>
-
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div>
+      <div class="footer-brand">
         <h3>MOJIN <span class="sub">موجين · 莲墨瑾</span></h3>
-        <p style="font-size:13px;color:var(--warm-text);margin-top:8px;line-height:1.7;">
+        <p class="footer-about">
           Protection You Can Trust.<br>
           Professional-grade protective gear, direct from our factory to your door.
         </p>
-        <div class="contact-info" style="margin-top:16px;">
+        <div class="contact-info footer-contact">
           📧 info@mojin.store<br>
           💬 WhatsApp: <span data-wa-placeholder></span>
         </div>
@@ -167,8 +174,6 @@
           <li><a href="product.html">Protective Caps</a></li>
           <li><a href="product.html">Shoe Covers</a></li>
           <li><a href="product.html">Gloves</a></li>
-          
-          
         </ul>
       </div>
       <div>
@@ -180,8 +185,6 @@
           <li><a href="shipping.html">Shipping Policy</a></li>
           <li><a href="return-policy.html">Return Policy</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
-          
-          
         </ul>
       </div>
       <div>
@@ -229,8 +232,6 @@
     if (window.mjTrack) window.mjTrack('generate_lead', { category, company });
   }
 </script>
-
-
 <script>
   function toggleMobileNav() {
     document.getElementById('mobileNav').classList.toggle('active');
@@ -248,6 +249,5 @@
 <script src="data/cart.js"></script>
 <script src="data/ga4.js"></script>
 <script src="data/wa-float.js"></script>
-
 </body>
 </html>
