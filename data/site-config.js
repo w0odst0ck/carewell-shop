@@ -31,8 +31,8 @@ const SITE_CONFIG = {
   /* ── AI 客服后端（widget 用；Worker 反代稳定地址，背后是 cloudflared 隧道 → 本机 :8000） ── */
   mojinApiBase: 'https://mojin-chat-proxy.zhangzhongze130.workers.dev',
 
-  /* ── AI 购物规划师（globex 门面 AI 接待；本机统一入口 Caddy，P2 上线后改 https://planner.mojin.store） ── */
-  plannerUrl: 'http://planner.localhost:8080',
+  /* ── AI 购物规划师（globex 门面 AI 接待；线上 A 方案：本机 Named Tunnel，2026-08-21 上线；运营期换 VPS 域名不变） ── */
+  plannerUrl: 'https://planner.mojin.store',
 };
 
 /* 工具：生成 wa.me 下单链接（预填订单消息） */
