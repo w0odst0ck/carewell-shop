@@ -36,7 +36,16 @@ const HEADERS = [
   'desc_en', 'desc_cn', 'desc_ar',
   'price', 'old_price', 'unit', 'sale', 'rating', 'reviews',
   'sizes', 'colors', 'image',
+  'status',
 ];
+
+/* status 合法值（缺省/留空 → active；hidden 不输出但数据保留） */
+const STATUS_VALUES = ['active', 'hidden'];
+
+/** 归一化 status：空/缺省 → active */
+function normalizeStatus(v) {
+  return String(v || '').trim().toLowerCase() || 'active';
+}
 
 /* 必填列（缺失表头直接报错） */
 const REQUIRED_HEADERS = [
@@ -210,6 +219,12 @@ function validateRow(row, lineNo, seenSku, csvDir, errors) {
     err(`SKU '${sku}' reviews 必须是非负整数（当前: '${row.reviews}'）`);
   }
 
+  /* ── status：缺省/留空 → active；非法值报错（hidden 行仍参与完整校验但不输出） ── */
+  const status = normalizeStatus(row.status);
+  if (!STATUS_VALUES.includes(status)) {
+    err(`SKU '${sku}' status 必须是 active 或 hidden（当前: '${row.status}'）`);
+  }
+
   /* ── image 必填 + 三条规则 ── */
   const img = parseImage(row.image);
   if (!img) {
@@ -336,7 +351,7 @@ function main() {
     process.exit(1);
   }
 
-  // 5. 生成 + 写入
+  // 5. 生成 + 写入（hidden 行不输出，但已通过完整校验）
   const dataRows = [];
   for (let i = 1; i < table.length; i++) {
     const cells = table[i];
@@ -344,7 +359,8 @@ function main() {
     header.forEach((h, ci) => { if (h !== '' && h !== undefined) row[h] = (cells[ci] === undefined ? '' : cells[ci]); });
     dataRows.push(row);
   }
-  const js = generateProductsJs(dataRows);
+  const activeRows = dataRows.filter(r => normalizeStatus(r.status) === 'active');
+  const js = generateProductsJs(activeRows);
 
   try {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
@@ -363,7 +379,7 @@ function main() {
   }
 
   // 7. 统计
-  console.log(`生成完成：${dataRows.length} 个 SKU`);
+  console.log(`生成完成：${activeRows.length} 个 SKU（hidden 忽略 ${dataRows.length - activeRows.length} 个）`);
   console.log(`已写入: ${outPath}（语法检查通过）`);
 }
 

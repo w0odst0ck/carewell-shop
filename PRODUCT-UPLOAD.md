@@ -36,12 +36,13 @@ push 之后 GitHub Actions 会自动：
 | `sizes` | | 尺码，逗号分隔（含逗号，**必须加引号**，如 `"M,L,XL"`） |
 | `colors` | | 颜色，逗号分隔（同上，如 `"Blue,White"`） |
 | `image` | ✅ | 图片文件名（见下方图片要求） |
+| `status` | | 上下架：`active`=上架（默认）/ `hidden`=下架（不出现在网站但数据保留）。留空=`active`；非法值报错 |
 
 ### 示例行
 
 ```
-sku,name_en,price,sizes,colors,image
-face-mask,Disposable Face Mask (50 pcs),12.5,"M,L,XL","White,Blue",images/face-mask.webp
+sku,name_en,price,sizes,colors,image,status
+face-mask,Disposable Face Mask (50 pcs),12.5,"M,L,XL","White,Blue",images/face-mask.webp,active
 ```
 
 ## 图片要求
@@ -50,6 +51,11 @@ face-mask,Disposable Face Mask (50 pcs),12.5,"M,L,XL","White,Blue",images/face-m
 - 大小：**小于 100KB**（可用 tinypng、squoosh 等在线工具压缩）
 - 文件名：**只允许英文、数字、连字符 `-`、下划线 `_`**（如 `face-mask.webp`），不能有中文或空格
 - 位置：放进 `images/` 文件夹；CSV 的 `image` 列写 `images/文件名.webp`
+
+## 上下架 = 改一个词
+
+- **上架**：把该行的 `status` 设为 `active`（或留空，默认就是上架）。
+- **下架**：把 `status` 改成 `hidden`。**不要删行**——删行会丢数据，hidden 只是让商品不出现在网站上，数据、图片都完整保留，随时改回 `active` 即可重新上架。
 
 ## 常见错误（workflow 报红时对照）
 
@@ -62,6 +68,7 @@ face-mask,Disposable Face Mask (50 pcs),12.5,"M,L,XL","White,Blue",images/face-m
 | `图片文件名 '手工医生帽.jpg' 只能包含英文...` | 文件名有中文，重命名图片为英文 |
 | `图片 xxx 不是 webp 格式` | 用了 jpg/png，转成 webp |
 | `图片 images/xxx.webp 在 images/ 目录下不存在` | 文件名写错，或图片忘了放进 images/ 并一起 push |
+| `status 必须是 active 或 hidden` | status 填了 active/hidden 以外的值，改成 `active` 或 `hidden`（或留空） |
 
 ## 本地测试（可选，给懂命令行的人）
 

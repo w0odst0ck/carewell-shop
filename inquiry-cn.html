@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Mojin — B2B 询盘 | 无纺布 OEM/ODM 工厂</title>
+  <meta name="description" content="隔离衣与医用防护用品批量采购、OEM/ODM 定制、自有品牌与快速打样——直连 Mojin 无纺布工厂。CE 与 SASO 认证，覆盖沙特配送。">
   <meta property="og:title" content="Mojin — B2B 询盘 | 无纺布 OEM/ODM 工厂">
   <meta property="og:description" content="批量价格、OEM/ODM 定制、自有品牌与快速打样——直连全国最大无纺布产业带。">
   <meta property="og:type" content="website">
@@ -229,7 +230,10 @@
     if (custom) lines.push('Customization: ' + custom);
     if (msg) lines.push('Message: ' + msg);
     window.open(waOrderLink(lines.join('\n')), '_blank');
-    if (window.mjTrack) window.mjTrack('generate_lead', { category, company });
+    if (window.mjTrack) {
+      window.mjTrack('generate_lead', { category, company });
+      window.mjTrack('inquiry_submit', { category, company, page: 'inquiry-cn.html' });
+    }
   }
 </script>
 <script>

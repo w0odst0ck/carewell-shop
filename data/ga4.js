@@ -36,4 +36,22 @@
       window.gtag('event', eventName, params || {});
     }
   };
+
+  /* ── wa_click 统一委托埋点（事件名固定，三语页一致）──
+     覆盖站内所有 WhatsApp 入口：
+       - a[href*="wa.me"]            静态/动态 wa.me 链接
+       - #mj-wa-float                浮动 WhatsApp 按钮（wa-float.js 注入）
+       - [data-wa-placeholder]       页脚联系电话占位（site-config.js 填充）
+     无需为每个按钮单独写埋点；页面显式埋点处（onclick 内 mjTrack('wa_click')）
+     与委托不重复（那些按钮不带上述选择器）。
+   ── */
+  document.addEventListener('click', function (e) {
+    const t = e.target;
+    const el = t && t.closest
+      ? t.closest('a[href*="wa.me"], #mj-wa-float, [data-wa-placeholder]')
+      : null;
+    if (el) {
+      window.mjTrack('wa_click', { page: location.pathname || location.href });
+    }
+  }, true);
 })();
