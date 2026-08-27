@@ -1,2 +1,5 @@
 # workitem 状态（防发布到 gh-pages）
 .flow/
+
+# 上架备份文件（xlsx-import 写前备份，不入仓）
+products.csv.bak-*
