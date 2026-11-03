@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ============================================================
+   MoJin Insights · 设计令牌
+   配色沿用旧站 Mojin Design Tokens v1.0（css/vars.css）
+   暖海蓝主色 + 沙橙 CTA + 奶油白底 —— 与 mojin.store 视觉一致
+   ============================================================ */
+
+@theme {
+  /* ── 主品牌 ── */
+  --color-warm-blue: #3a7b9e;      /* 主品牌色：暖海蓝 */
+  --color-light-blue: #6d9fb8;     /* 浅海蓝：hover / 辅助 */
+  --color-sand-orange: #e8874e;    /* 主 CTA：沙橙 */
+  --color-light-orange: #f4a261;   /* 浅橙：hover */
+
+  /* ── 底色 ── */
+  --color-cream: #fcf8f4;          /* 页面底色：奶油白 */
+  --color-warm-gray: #f0ede8;      /* 区块底色：暖灰 */
+  --color-card: #ffffff;           /* 卡片白 */
+
+  /* ── 文字 ── */
+  --color-ink: #3a3530;            /* 主文字：暖黑 */
+  --color-ink-soft: #7a756e;       /* 次级文字 */
+  --color-ink-faint: #a8a29a;      /* 弱化文字 */
+
+  /* ── 点缀 ── */
+  --color-desert-gold: #daa55c;    /* 沙漠金（评分/强调） */
+  --color-saudi-green: #006c35;    /* 沙特绿（信任/认证） */
+  --color-border: #e8e2d8;         /* 边框 */
+  --color-border-soft: #f0ece5;
+  --color-wa-green: #25d366;       /* WhatsApp 品牌绿 */
+
+  /* ── 字体 ── */
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: var(--font-mono-jet), ui-monospace, monospace;
+
+  /* ── 阴影 ── */
+  --shadow-card: 0 4px 20px rgba(58, 53, 48, 0.06);
+  --shadow-hover: 0 8px 30px rgba(58, 53, 48, 0.10);
+  --shadow-btn: 0 2px 8px rgba(232, 135, 78, 0.20);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-cream);
+  color-scheme: light;
+  scroll-behavior: auto; /* Lenis 接管 */
+  overflow-x: clip;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* 用 clip 而非 hidden：hidden 会让 body 变滚动容器，破坏 scrollY 与 Lenis */
+  overflow-x: clip;
+}
+
+/* ============ 排版 ============ */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.display {
+  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.h2 {
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-warm-blue);
+  font-weight: 600;
+}
+
+.body-lg {
+  font-size: clamp(1rem, 1.35vw, 1.175rem);
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+}
+
+/* ============ 分隔与网格 ============ */
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border) 15%,
+    var(--color-border) 85%,
+    transparent
+  );
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(var(--color-border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-soft) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 25%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 25%, transparent 78%);
+}
+
+/* 纸张质感底纹（暖调版） */
+.paper {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(109, 159, 184, 0.10) 0%, transparent 42%),
+    radial-gradient(circle at 88% 8%, rgba(232, 135, 78, 0.09) 0%, transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(218, 165, 92, 0.07) 0%, transparent 45%);
+}
+
+/* ============ 动效（克制版） ============ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+a,
+button {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 180ms;
+}
+
+::selection {
+  background: rgba(58, 123, 158, 0.22);
+  color: var(--color-ink);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-warm-gray);
+}
+::-webkit-scrollbar-thumb {
+  background: #d6cfc4;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-light-blue);
+}
