@@ -1,0 +1,192 @@
+{
+ "period": 2023,
+ "source": "UN Comtrade",
+ "items": {
+  "621010": {
+   "name": "无纺布服装 · 隔离衣手术衣",
+   "nameEn": "Nonwoven apparel, isolation & surgical gowns",
+   "byCountry": {
+    "沙特": {
+     "iso": "SAU",
+     "value": 20041278,
+     "netWgt": 2441411,
+     "unitPrice": 8.21,
+     "partners": 39
+    },
+    "阿联酋": {
+     "iso": "ARE",
+     "value": 19672797,
+     "netWgt": 3573871,
+     "unitPrice": 5.5,
+     "partners": 57
+    },
+    "英国": {
+     "iso": "GBR",
+     "value": 70221144,
+     "netWgt": 0,
+     "unitPrice": null,
+     "partners": 63
+    },
+    "中国": {
+     "iso": "CHN",
+     "value": 5966985,
+     "netWgt": 1233454,
+     "unitPrice": 4.84,
+     "partners": 33
+    },
+    "德国": {
+     "iso": "DEU",
+     "value": 113824933,
+     "netWgt": 15582312,
+     "unitPrice": 7.3,
+     "partners": 49
+    },
+    "日本": {
+     "iso": "JPN",
+     "value": 131100822,
+     "netWgt": 15236032,
+     "unitPrice": 8.6,
+     "partners": 22
+    },
+    "韩国": {
+     "iso": "KOR",
+     "value": 49383968,
+     "netWgt": 6877466,
+     "unitPrice": 7.18,
+     "partners": 35
+    },
+    "马来西亚": {
+     "iso": "MYS",
+     "value": 15462696,
+     "netWgt": 0,
+     "unitPrice": null,
+     "partners": 51
+    }
+   }
+  },
+  "630790": {
+   "name": "纺织制成品 · 口罩类",
+   "nameEn": "Made-up textile articles, masks",
+   "byCountry": {
+    "沙特": {
+     "iso": "SAU",
+     "value": 22465646,
+     "netWgt": 1508525,
+     "unitPrice": 14.89,
+     "partners": 70
+    },
+    "阿联酋": {
+     "iso": "ARE",
+     "value": 81049237,
+     "netWgt": 10113971,
+     "unitPrice": 8.01,
+     "partners": 107
+    },
+    "英国": {
+     "iso": "GBR",
+     "value": 444079541,
+     "netWgt": 55732445,
+     "unitPrice": 7.97,
+     "partners": 95
+    },
+    "中国": {
+     "iso": "CHN",
+     "value": 155110502,
+     "netWgt": 8238730,
+     "unitPrice": 18.83,
+     "partners": 85
+    },
+    "德国": {
+     "iso": "DEU",
+     "value": 1201240961,
+     "netWgt": 162535838,
+     "unitPrice": 7.39,
+     "partners": 108
+    },
+    "日本": {
+     "iso": "JPN",
+     "value": 1510049600,
+     "netWgt": 156451727,
+     "unitPrice": 9.65,
+     "partners": 82
+    },
+    "韩国": {
+     "iso": "KOR",
+     "value": 362946410,
+     "netWgt": 43676869,
+     "unitPrice": 8.31,
+     "partners": 101
+    },
+    "马来西亚": {
+     "iso": "MYS",
+     "value": 47074982,
+     "netWgt": 10151377,
+     "unitPrice": 4.64,
+     "partners": 75
+    }
+   }
+  },
+  "401519": {
+   "name": "橡胶手套",
+   "nameEn": "Rubber gloves",
+   "byCountry": {
+    "沙特": {
+     "iso": "SAU",
+     "value": 51397074,
+     "netWgt": 7525510,
+     "unitPrice": 6.83,
+     "partners": 39
+    },
+    "阿联酋": {
+     "iso": "ARE",
+     "value": 23316224,
+     "netWgt": 6004407,
+     "unitPrice": 3.88,
+     "partners": 52
+    },
+    "英国": {
+     "iso": "GBR",
+     "value": 131378624,
+     "netWgt": 0,
+     "unitPrice": null,
+     "partners": 47
+    },
+    "中国": {
+     "iso": "CHN",
+     "value": 149914799,
+     "netWgt": 35987083,
+     "unitPrice": 4.17,
+     "partners": 51
+    },
+    "德国": {
+     "iso": "DEU",
+     "value": 170265145,
+     "netWgt": 20565265,
+     "unitPrice": 8.28,
+     "partners": 55
+    },
+    "日本": {
+     "iso": "JPN",
+     "value": 359294725,
+     "netWgt": 53496769,
+     "unitPrice": 6.72,
+     "partners": 28
+    },
+    "韩国": {
+     "iso": "KOR",
+     "value": 128887118,
+     "netWgt": 21267944,
+     "unitPrice": 6.06,
+     "partners": 48
+    },
+    "马来西亚": {
+     "iso": "MYS",
+     "value": 44110965,
+     "netWgt": 0,
+     "unitPrice": null,
+     "partners": 44
+    }
+   }
+  }
+ }
+}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const NAV = [
+  { href: "/dashboard/", label: "看板" },
   { href: "/insights/", label: "洞察" },
   { href: "/reports/", label: "报告" },
   { href: "/about/", label: "关于" },
