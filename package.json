@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "scan:images": "node scripts/gen-product-images.mjs",
+    "prebuild": "node scripts/gen-product-images.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
