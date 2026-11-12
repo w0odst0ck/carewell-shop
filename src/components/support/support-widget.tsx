@@ -92,7 +92,7 @@ export function SupportWidget({
   const [busy, setBusy] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const listRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   /** 取字符串文案；数组类（chips）请用 chipsOf */
   const t = useCallback(
@@ -132,6 +132,16 @@ export function SupportWidget({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  /** 人工模式：把输入内容带去 WhatsApp 人工客服 */
+  function sendToHuman(text: string) {
+    const q = text.trim();
+    if (!q) return;
+    const suffix =
+      lang === "ar" ? "\n\n(من موقع موجين)" : lang === "en" ? "\n\n(from mojin.store)" : "\n\n(来自 mojin.store)";
+    window.open(waHref(q + suffix), "_blank", "noopener,noreferrer");
+    setInput("");
+  }
 
   /** AI 辅助问答 —— 仅在配置了 NEXT_PUBLIC_CHAT_API 时可用（当前未启用） */
   async function send(text: string) {
@@ -345,6 +355,79 @@ export function SupportWidget({
               </>
             )}
           </div>
+
+          {/* AI 模式：输入框（储备实现，当前不启用） */}
+          {AI_ENABLED && (
+            <div className="border-t border-[var(--color-border)] p-3">
+              <div className="flex items-center gap-2">
+                <input
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      send(input);
+                    }
+                  }}
+                  placeholder={t("placeholder")}
+                  className="min-w-0 flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-cream)] px-3 py-2 text-[12px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-warm-blue)]"
+                />
+                <button
+                  onClick={() => send(input)}
+                  disabled={busy || !input.trim()}
+                  className="rounded-lg bg-[var(--color-warm-blue)] px-3 py-2 text-[12px] font-medium text-white transition-opacity disabled:opacity-40"
+                >
+                  {t("send")}
+                </button>
+              </div>
+              <a
+                href={waHref()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-[var(--color-wa-green)]/10 py-2 text-[11px] font-medium text-[var(--color-wa-green)] transition-colors hover:bg-[var(--color-wa-green)]/20"
+              >
+                {t("human")}
+                <span className="text-[9px] opacity-70">· {waDisplay}</span>
+              </a>
+            </div>
+          )}
+
+          {/* 人工模式：输入框 → 发送到 WhatsApp */}
+          {!AI_ENABLED && (
+            <div className="border-t border-[var(--color-border)] p-3">
+              <div className="flex items-end gap-2">
+                <textarea
+                  ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      sendToHuman(input);
+                    }
+                  }}
+                  rows={1}
+                  placeholder={t("placeholder")}
+                  className="min-h-[38px] max-h-24 min-w-0 flex-1 resize-none rounded-lg border border-[var(--color-border)] bg-[var(--color-cream)] px-3 py-2.5 text-[12px] leading-snug text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-warm-blue)]"
+                />
+                <button
+                  onClick={() => sendToHuman(input)}
+                  disabled={!input.trim()}
+                  className="shrink-0 rounded-lg bg-[var(--color-wa-green)] px-3 py-2.5 text-[12px] font-medium text-white transition-opacity disabled:opacity-40"
+                >
+                  {t("send")}
+                </button>
+              </div>
+              <div className="mt-1.5 text-center text-[9px] text-[var(--color-ink-faint)]">
+                {isAr
+                  ? "سيُفتح واتساب ويُرسل نصك إلى فريقنا"
+                  : lang === "en"
+                    ? "Opens WhatsApp with your message pre-filled"
+                    : "点击后跳转 WhatsApp，内容自动填入"}
+              </div>
+            </div>
+          )}
 
           {/* 页脚说明 */}
           <div className="border-t border-[var(--color-border)] px-4 py-2 text-center text-[9.5px] text-[var(--color-ink-faint)]">
