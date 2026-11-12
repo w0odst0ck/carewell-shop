@@ -36,7 +36,6 @@ const I18N: Record<Lang, Record<string, string | string[]>> = {
     human: "联系人工客服",
     humanSub: "WhatsApp · 点击直接对话",
     email: "邮件联系",
-    note: "以上为人工接待，非自动应答",
     aiNote: "AI 辅助回答，仅供参考",
     error: "暂时无法回复，请直接联系人工客服。",
     chips: ["产品与定制", "报价与起订量", "订单与物流"],
@@ -53,7 +52,6 @@ const I18N: Record<Lang, Record<string, string | string[]>> = {
     human: "Talk to our team",
     humanSub: "WhatsApp · opens a direct chat",
     email: "Email us",
-    note: "Human support, not an automated reply",
     aiNote: "AI-assisted answer, for reference only",
     error: "Unable to reply right now. Please contact our team directly.",
     chips: ["Products & OEM", "Pricing & MOQ", "Order & shipping"],
@@ -70,7 +68,6 @@ const I18N: Record<Lang, Record<string, string | string[]>> = {
     human: "تحدث مع فريقنا",
     humanSub: "واتساب · يفتح محادثة مباشرة",
     email: "راسلنا بالبريد",
-    note: "دعم بشري وليس ردًا آليًا",
     aiNote: "إجابة بمساعدة الذكاء الاصطناعي، للاسترشاد فقط",
     error: "لا يمكن الرد حاليًا. يرجى التواصل مع فريقنا مباشرة.",
     chips: ["المنتجات والتخصيص", "الأسعار وأقل كمية", "الطلب والشحن"],
@@ -419,20 +416,9 @@ export function SupportWidget({
                   {t("send")}
                 </button>
               </div>
-              <div className="mt-1.5 text-center text-[9px] text-[var(--color-ink-faint)]">
-                {isAr
-                  ? "سيُفتح واتساب ويُرسل نصك إلى فريقنا"
-                  : lang === "en"
-                    ? "Opens WhatsApp with your message pre-filled"
-                    : "点击后跳转 WhatsApp，内容自动填入"}
-              </div>
             </div>
           )}
 
-          {/* 页脚说明 */}
-          <div className="border-t border-[var(--color-border)] px-4 py-2 text-center text-[9.5px] text-[var(--color-ink-faint)]">
-            {t("note")}
-          </div>
         </div>
       )}
     </>
