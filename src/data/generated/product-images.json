@@ -1,4 +1,41 @@
 {
- "generatedAt": "2026-11-11",
- "byCategory": {}
+ "generatedAt": "2026-11-12",
+ "byCategory": {
+  "A": [
+   "/products/A.webp"
+  ],
+  "B": [
+   "/products/B.webp"
+  ],
+  "C": [
+   "/products/C.webp"
+  ],
+  "D": [
+   "/products/D.webp"
+  ],
+  "E": [
+   "/products/E.webp"
+  ],
+  "F": [
+   "/products/F.webp"
+  ],
+  "G": [
+   "/products/G.webp"
+  ],
+  "H": [
+   "/products/H.webp"
+  ],
+  "I": [
+   "/products/I.webp"
+  ],
+  "J": [
+   "/products/J.webp"
+  ],
+  "K": [
+   "/products/K.webp"
+  ],
+  "L": [
+   "/products/L.webp"
+  ]
+ }
 }
