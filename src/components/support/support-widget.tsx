@@ -3,76 +3,88 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * 客服浮标 — 人工优先 + AI 辅助
+ * 客服浮标 — 人工客服接待（全站常驻）
  *
- * 设计原则（用户确认）：
- *   1. 人工客服是主体，AI 是辅助 —— 任何时候都能一键转人工
- *   2. WhatsApp 永远可达（AI 挂了、后端不可达、知识库没命中，都不影响转人工）
- *   3. AI 回答仅作参考，回答下方恒常显示「转人工」
+ * 当前策略（用户 2026-11-12 拍板）：
+ *   - 人工客服团队是主体，浮标是刚需
+ *   - AI 客服作为技术储备，**暂不对外上线**（可行性已验证）
+ *   - 后端将迁移至服务器，本机不跑
  *
- * 后端：MCPForge `/mojin_chat/answer_question`
- *   未配置 / 不可达 → 直接降级为「WhatsApp 人工」，不显示错误给访客
+ * 因此：默认情况下面板只呈现人工接待（WhatsApp / 邮件），不出现对话框。
+ * 若将来配置了 NEXT_PUBLIC_CHAT_API，会自动启用 AI 辅助模式：
+ *   AI 回答 + 每条回答下方恒常「转人工」，未命中/超时/不可达一律降级人工。
+ *
+ * AI 相关代码保留在此文件内作为储备实现，不删除。
  */
 
 type Lang = "cn" | "en" | "ar";
 type Msg = { role: "user" | "ai"; text: string; handoff?: boolean };
 
+/** 空字符串 = AI 未启用（当前默认） */
 const API_BASE = process.env.NEXT_PUBLIC_CHAT_API ?? "";
+const AI_ENABLED = API_BASE.length > 0;
 
 const I18N: Record<Lang, Record<string, string | string[]>> = {
   cn: {
     title: "Mojin 在线客服",
-    subtitle: "人工优先 · AI 辅助",
+    subtitle: "人工客服直接回复",
     fab: "联系客服",
+    welcome: "您好，这里是 Mojin 客服。产品、报价、订单相关问题，直接联系我们，人工回复。",
     placeholder: "输入你想咨询的问题…",
     send: "发送",
     typing: "正在回复",
-    welcome:
-      "您好，这里是 Mojin 在线客服。可以直接提问，也可以随时点下方按钮转人工。",
-    human: "转人工 · WhatsApp",
-    humanNote: "人工客服会直接回复你",
-    error: "AI 助手暂时不可用，请直接联系我们的人工客服。",
+    human: "联系人工客服",
+    humanSub: "WhatsApp · 点击直接对话",
+    email: "邮件联系",
+    note: "以上为人工接待，非自动应答",
     aiNote: "AI 辅助回答，仅供参考",
-    chips: ["有什么产品", "最小起订量", "能贴牌吗"],
+    error: "暂时无法回复，请直接联系人工客服。",
+    chips: ["产品与定制", "报价与起订量", "订单与物流"],
   },
   en: {
     title: "Mojin Support",
-    subtitle: "Human first · AI assisted",
+    subtitle: "Replied by our team",
     fab: "Chat with us",
+    welcome:
+      "Hello, this is Mojin support. For products, pricing or orders, contact us directly — a human replies.",
     placeholder: "Type your question…",
     send: "Send",
     typing: "Replying",
-    welcome:
-      "Hi, this is Mojin support. Ask anything, or switch to a human agent anytime.",
-    human: "Talk to a human · WhatsApp",
-    humanNote: "A human agent replies directly",
-    error: "AI assistant is unavailable. Please reach our human support.",
+    human: "Talk to our team",
+    humanSub: "WhatsApp · opens a direct chat",
+    email: "Email us",
+    note: "Human support, not an automated reply",
     aiNote: "AI-assisted answer, for reference only",
-    chips: ["What do you produce", "Minimum order", "Can you do OEM"],
+    error: "Unable to reply right now. Please contact our team directly.",
+    chips: ["Products & OEM", "Pricing & MOQ", "Order & shipping"],
   },
   ar: {
     title: "دعم موجين",
-    subtitle: "البشري أولًا · بمساعدة الذكاء الاصطناعي",
+    subtitle: "يرد عليك فريقنا",
     fab: "تواصل معنا",
+    welcome:
+      "مرحبًا، هذا دعم موجين. لأي استفسار عن المنتجات أو الأسعار أو الطلبات، تواصل معنا مباشرة — يرد عليك موظف.",
     placeholder: "اكتب سؤالك…",
     send: "إرسال",
     typing: "جارٍ الرد",
-    welcome:
-      "مرحبًا، هذا دعم موجين. اسأل عن أي شيء، أو تحدث مع موظف بشري في أي وقت.",
-    human: "التحدث مع موظف · واتساب",
-    humanNote: "موظف الدعم يرد عليك مباشرة",
-    error: "المساعد الذكي غير متاح حاليًا. يرجى التواصل مع الدعم البشري.",
+    human: "تحدث مع فريقنا",
+    humanSub: "واتساب · يفتح محادثة مباشرة",
+    email: "راسلنا بالبريد",
+    note: "دعم بشري وليس ردًا آليًا",
     aiNote: "إجابة بمساعدة الذكاء الاصطناعي، للاسترشاد فقط",
-    chips: ["ماذا تنتجون", "أقل كمية للطلب", "هل تقبلون العلامة الخاصة"],
+    error: "لا يمكن الرد حاليًا. يرجى التواصل مع فريقنا مباشرة.",
+    chips: ["المنتجات والتخصيص", "الأسعار وأقل كمية", "الطلب والشحن"],
   },
 };
 
 export function SupportWidget({
   waNumber,
   waDisplay,
+  email,
 }: {
   waNumber: string;
   waDisplay: string;
+  email?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<Lang>("cn");
@@ -82,10 +94,11 @@ export function SupportWidget({
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  /** 取字符串文案；数组类（chips）请用 chipsOf */
   const t = useCallback(
-    (k: string) => {
+    (k: string): string => {
       const v = I18N[lang][k];
-      return Array.isArray(v) ? v : (v as string);
+      return Array.isArray(v) ? v.join("") : v;
     },
     [lang]
   );
@@ -96,26 +109,21 @@ export function SupportWidget({
     [waNumber]
   );
 
-  // 欢迎语
+  // AI 模式下的欢迎语
   useEffect(() => {
-    if (open && msgs.length === 0) {
+    if (AI_ENABLED && open && msgs.length === 0) {
       setMsgs([{ role: "ai", text: I18N[lang].welcome as string }]);
     }
   }, [open, msgs.length, lang]);
 
-  // 滚动到底
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
+    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [msgs, busy]);
 
-  // 打开时聚焦
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 120);
+    if (open && AI_ENABLED) setTimeout(() => inputRef.current?.focus(), 120);
   }, [open]);
 
-  // Esc 关闭
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -125,22 +133,13 @@ export function SupportWidget({
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  /** AI 辅助问答 —— 仅在配置了 NEXT_PUBLIC_CHAT_API 时可用（当前未启用） */
   async function send(text: string) {
     const q = text.trim();
-    if (!q || busy) return;
+    if (!q || busy || !AI_ENABLED) return;
     setInput("");
     setMsgs((m) => [...m, { role: "user", text: q }]);
     setBusy(true);
-
-    // 后端未配置 → 直接引导人工，不暴露技术细节
-    if (!API_BASE) {
-      setBusy(false);
-      setMsgs((m) => [
-        ...m,
-        { role: "ai", text: t("error") as string, handoff: true },
-      ]);
-      return;
-    }
 
     try {
       const ctl = new AbortController();
@@ -154,12 +153,8 @@ export function SupportWidget({
       const data = await res.json();
 
       if (data?.error || !data?.answer) {
-        setMsgs((m) => [
-          ...m,
-          { role: "ai", text: t("error") as string, handoff: true },
-        ]);
+        setMsgs((m) => [...m, { role: "ai", text: t("error"), handoff: true }]);
       } else {
-        // 知识库未命中 → 一并给转人工
         const noHit = (data.hit_count ?? 0) === 0;
         setMsgs((m) => [
           ...m,
@@ -167,26 +162,24 @@ export function SupportWidget({
         ]);
       }
     } catch {
-      setMsgs((m) => [
-        ...m,
-        { role: "ai", text: t("error") as string, handoff: true },
-      ]);
+      setMsgs((m) => [...m, { role: "ai", text: t("error"), handoff: true }]);
     } finally {
       setBusy(false);
     }
   }
 
-  const chips = t("chips") as string[];
+  const chips = I18N[lang].chips as string[];
   const isAr = lang === "ar";
+  const side = isAr ? { left: 24, right: "auto" } : undefined;
 
   return (
     <>
       {/* 浮标 */}
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label={t("fab") as string}
+        aria-label={t("fab")}
         className="fixed bottom-6 z-[9999] flex items-center gap-2 rounded-full bg-[var(--color-warm-blue)] px-5 py-3.5 text-sm font-medium text-white shadow-[0_6px_24px_rgba(58,123,158,0.35)] transition-transform hover:scale-[1.03] active:scale-[0.98] ltr:right-6 rtl:left-6"
-        style={isAr ? { left: 24, right: "auto" } : undefined}
+        style={side}
       >
         {open ? (
           <span className="text-base leading-none">✕</span>
@@ -196,7 +189,7 @@ export function SupportWidget({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-wa-green)] opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-wa-green)]" />
             </span>
-            <span>{t("fab") as string}</span>
+            <span>{t("fab")}</span>
           </>
         )}
       </button>
@@ -205,25 +198,26 @@ export function SupportWidget({
       {open && (
         <div
           dir={isAr ? "rtl" : "ltr"}
-          className="fixed bottom-24 z-[9999] flex w-[calc(100vw-3rem)] max-w-[380px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_12px_48px_rgba(0,0,0,0.14)] ltr:right-6 rtl:left-6"
-          style={{ maxHeight: "min(70vh, 560px)", ...(isAr ? { left: 24, right: "auto" } : {}) }}
+          className="fixed bottom-24 z-[9999] flex w-[calc(100vw-3rem)] max-w-[360px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-[0_12px_48px_rgba(0,0,0,0.14)] ltr:right-6 rtl:left-6"
+          style={{ maxHeight: "min(72vh, 540px)", ...side }}
         >
           {/* 头部 */}
           <div className="flex items-start justify-between border-b border-[var(--color-border)] px-4 py-3">
             <div>
-              <div className="text-sm font-semibold text-[var(--color-ink)]">
-                {t("title") as string}
-              </div>
+              <div className="text-sm font-semibold text-[var(--color-ink)]">{t("title")}</div>
               <div className="mt-0.5 flex items-center gap-1.5 text-[10px] text-[var(--color-ink-faint)]">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-wa-green)]" />
-                {t("subtitle") as string}
+                {t("subtitle")}
               </div>
             </div>
             <div className="flex items-center gap-1">
               {(["cn", "en", "ar"] as Lang[]).map((l) => (
                 <button
                   key={l}
-                  onClick={() => setLang(l)}
+                  onClick={() => {
+                    setLang(l);
+                    setMsgs([]);
+                  }}
                   className={`rounded px-1.5 py-0.5 text-[10px] transition-colors ${
                     lang === l
                       ? "bg-[var(--color-warm-blue)] text-white"
@@ -236,109 +230,125 @@ export function SupportWidget({
             </div>
           </div>
 
-          {/* 消息区 */}
-          <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
-            {msgs.map((m, i) => (
-              <div key={i}>
-                <div
-                  className={`max-w-[86%] rounded-xl px-3 py-2 text-[13px] leading-relaxed ${
-                    m.role === "user"
-                      ? "ms-auto bg-[var(--color-warm-blue)] text-white"
-                      : "bg-[var(--color-warm-gray)] text-[var(--color-ink)]"
-                  }`}
-                >
-                  {m.text}
-                </div>
+          {/* 主体 */}
+          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4">
+            {/* 欢迎语 */}
+            <div className="mb-4 rounded-xl bg-[var(--color-warm-gray)] px-3 py-2.5 text-[12.5px] leading-relaxed text-[var(--color-ink)]">
+              {t("welcome")}
+            </div>
 
-                {/* AI 回答下方恒常标注 + 转人工 */}
-                {m.role === "ai" && i > 0 && (
-                  <div className="mt-1.5 space-y-1.5">
-                    <div className="text-[9px] text-[var(--color-ink-faint)]">
-                      {t("aiNote") as string}
+            {/* AI 模式：对话流（当前不启用） */}
+            {AI_ENABLED && (
+              <>
+                <div className="space-y-3">
+                  {msgs.map((m, i) => (
+                    <div key={i}>
+                      <div
+                        className={`max-w-[86%] rounded-xl px-3 py-2 text-[13px] leading-relaxed ${
+                          m.role === "user"
+                            ? "ms-auto bg-[var(--color-warm-blue)] text-white"
+                            : "bg-[var(--color-warm-gray)] text-[var(--color-ink)]"
+                        }`}
+                      >
+                        {m.text}
+                      </div>
+                      {m.role === "ai" && i > 0 && (
+                        <div className="mt-1.5 space-y-1.5">
+                          <div className="text-[9px] text-[var(--color-ink-faint)]">
+                            {t("aiNote")}
+                          </div>
+                          <a
+                            href={waHref(t("welcome"))}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-medium ${
+                              m.handoff
+                                ? "bg-[var(--color-wa-green)] text-white hover:opacity-90"
+                                : "border border-[var(--color-wa-green)]/40 text-[var(--color-wa-green)] hover:bg-[var(--color-wa-green)]/10"
+                            }`}
+                          >
+                            {t("human")}
+                          </a>
+                        </div>
+                      )}
                     </div>
-                    <a
-                      href={waHref(t("welcome") as string)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-medium transition-colors ${
-                        m.handoff
-                          ? "bg-[var(--color-wa-green)] text-white hover:opacity-90"
-                          : "border border-[var(--color-wa-green)]/40 text-[var(--color-wa-green)] hover:bg-[var(--color-wa-green)]/10"
-                      }`}
+                  ))}
+                  {busy && (
+                    <div className="text-[11px] text-[var(--color-ink-faint)]">
+                      {t("typing")}…
+                    </div>
+                  )}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {chips.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => send(c)}
+                      className="rounded-full border border-[var(--color-border)] px-2.5 py-1 text-[10px] text-[var(--color-ink-soft)] hover:border-[var(--color-warm-blue)]/40 hover:text-[var(--color-warm-blue)]"
                     >
-                      {t("human") as string}
-                    </a>
-                  </div>
-                )}
-              </div>
-            ))}
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
 
-            {busy && (
-              <div className="flex items-center gap-1.5 text-[11px] text-[var(--color-ink-faint)]">
-                <span className="inline-block h-1 w-1 animate-bounce rounded-full bg-[var(--color-ink-faint)]" />
-                <span
-                  className="inline-block h-1 w-1 animate-bounce rounded-full bg-[var(--color-ink-faint)]"
-                  style={{ animationDelay: "0.15s" }}
-                />
-                <span
-                  className="inline-block h-1 w-1 animate-bounce rounded-full bg-[var(--color-ink-faint)]"
-                  style={{ animationDelay: "0.3s" }}
-                />
-                <span className="ms-1">{t("typing") as string}</span>
-              </div>
+            {/* 人工接待（默认模式） */}
+            {!AI_ENABLED && (
+              <>
+                <a
+                  href={waHref(`${t("welcome")} (mojin.store)`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mb-2 flex items-center justify-between rounded-xl bg-[var(--color-wa-green)] px-4 py-3 text-white transition-opacity hover:opacity-95"
+                >
+                  <div>
+                    <div className="text-[13px] font-semibold">{t("human")}</div>
+                    <div className="mt-0.5 text-[10px] opacity-85">{t("humanSub")}</div>
+                  </div>
+                  <span className="font-[family-name:var(--font-mono)] text-[11px] opacity-90">
+                    {waDisplay}
+                  </span>
+                </a>
+
+                {email && (
+                  <a
+                    href={`mailto:${email}`}
+                    className="flex items-center justify-between rounded-xl border border-[var(--color-border)] px-4 py-2.5 transition-colors hover:border-[var(--color-warm-blue)]/40"
+                  >
+                    <span className="text-[12px] text-[var(--color-ink)]">{t("email")}</span>
+                    <span className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--color-ink-faint)]">
+                      {email}
+                    </span>
+                  </a>
+                )}
+
+                {/* 快捷主题 → 预填 WhatsApp 消息 */}
+                <div className="mt-4">
+                  <div className="mb-2 text-[10px] uppercase tracking-wider text-[var(--color-ink-faint)]">
+                    {isAr ? "مواضيع شائعة" : lang === "en" ? "Common topics" : "常见咨询"}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {chips.map((c) => (
+                      <a
+                        key={c}
+                        href={waHref(`${c} — ${lang === "ar" ? "من موقع موجين" : lang === "en" ? "from mojin.store" : "来自 mojin.store"}`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-[var(--color-border)] px-2.5 py-1 text-[10px] text-[var(--color-ink-soft)] transition-colors hover:border-[var(--color-wa-green)]/40 hover:text-[var(--color-wa-green)]"
+                      >
+                        {c}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </>
             )}
           </div>
 
-          {/* 快捷问题 */}
-          {msgs.length <= 1 && (
-            <div className="flex flex-wrap gap-1.5 px-4 pb-2">
-              {chips.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => send(c)}
-                  className="rounded-full border border-[var(--color-border)] px-2.5 py-1 text-[10px] text-[var(--color-ink-soft)] transition-colors hover:border-[var(--color-warm-blue)]/40 hover:text-[var(--color-warm-blue)]"
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* 输入区 */}
-          <div className="border-t border-[var(--color-border)] p-3">
-            <div className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    send(input);
-                  }
-                }}
-                placeholder={t("placeholder") as string}
-                className="min-w-0 flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-cream)] px-3 py-2 text-[12px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-warm-blue)]"
-              />
-              <button
-                onClick={() => send(input)}
-                disabled={busy || !input.trim()}
-                className="rounded-lg bg-[var(--color-warm-blue)] px-3 py-2 text-[12px] font-medium text-white transition-opacity disabled:opacity-40"
-              >
-                {t("send") as string}
-              </button>
-            </div>
-
-            {/* 常驻人工入口 */}
-            <a
-              href={waHref()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-[var(--color-wa-green)]/10 py-2 text-[11px] font-medium text-[var(--color-wa-green)] transition-colors hover:bg-[var(--color-wa-green)]/20"
-            >
-              {t("human") as string}
-              <span className="text-[9px] opacity-70">· {waDisplay}</span>
-            </a>
+          {/* 页脚说明 */}
+          <div className="border-t border-[var(--color-border)] px-4 py-2 text-center text-[9.5px] text-[var(--color-ink-faint)]">
+            {t("note")}
           </div>
         </div>
       )}

@@ -50,7 +50,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
         <SmoothScroll>{children}</SmoothScroll>
         {/* 客服浮标：人工优先 + AI 辅助，全站常驻 */}
-        <SupportWidget waNumber={site.waNumber} waDisplay={site.waDisplay} />
+        <SupportWidget
+          waNumber={site.waNumber}
+          waDisplay={site.waDisplay}
+          email={site.email}
+        />
       </body>
     </html>
   );
