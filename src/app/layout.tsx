@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { SupportWidget } from "@/components/support/support-widget";
+import { site } from "@/data/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -47,6 +49,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
         <SmoothScroll>{children}</SmoothScroll>
+        {/* 客服浮标：人工优先 + AI 辅助，全站常驻 */}
+        <SupportWidget waNumber={site.waNumber} waDisplay={site.waDisplay} />
       </body>
     </html>
   );
