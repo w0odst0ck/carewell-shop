@@ -3,12 +3,18 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { heroMetrics } from "@/data/home";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+const GlobeViz = dynamic(
+  () => import("@/components/viz/globe").then((m) => m.GlobeViz),
+  { ssr: false, loading: () => <div className="h-full w-full" /> }
+);
 
 export function Hero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -27,10 +33,11 @@ export function Hero() {
         ".hero-cta",
         ".hero-metrics",
         ".hero-scroll",
+        ".hero-globe",
       ];
 
       if (reduce) {
-        gsap.set(targets, { opacity: 1, y: 0, clearProps: "transform" });
+        gsap.set(targets, { opacity: 1, y: 0, clearProps: "transform,filter" });
         return;
       }
 
@@ -40,13 +47,7 @@ export function Hero() {
         .fromTo(
           ".hero-line",
           { opacity: 0, y: 28, filter: "blur(6px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 1.0,
-            stagger: 0.13,
-          },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, stagger: 0.13 },
           "-=0.4"
         )
         .fromTo(".hero-sub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8 }, "-=0.55")
@@ -57,9 +58,15 @@ export function Hero() {
           { opacity: 1, y: 0, duration: 0.7, stagger: 0.09 },
           "-=0.5"
         )
-        .fromTo(".hero-scroll", { opacity: 0 }, { opacity: 1, duration: 0.6 }, "-=0.3");
+        .fromTo(
+          ".hero-globe",
+          { opacity: 0, scale: 0.92 },
+          { opacity: 1, scale: 1, duration: 1.4, ease: "power2.out" },
+          "-=1.1"
+        )
+        .fromTo(".hero-scroll", { opacity: 0 }, { opacity: 1, duration: 0.6 }, "-=0.4");
 
-      // 光晕缓慢呼吸
+      // 光晕呼吸
       gsap.to(".hero-glow", {
         scale: 1.15,
         opacity: 0.2,
@@ -69,16 +76,11 @@ export function Hero() {
         ease: "sine.inOut",
       });
 
-      // 网格轻微视差
+      // 网格视差
       gsap.to(".hero-grid", {
         yPercent: 8,
         ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
+        scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: 1 },
       });
 
       // 内容随滚动淡出
@@ -86,12 +88,7 @@ export function Hero() {
         opacity: 0.15,
         y: -40,
         ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          start: "40% top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
+        scrollTrigger: { trigger: el, start: "45% top", end: "bottom top", scrub: 0.6 },
       });
     }, el);
 
@@ -113,68 +110,85 @@ export function Hero() {
       />
 
       <div className="hero-inner relative mx-auto w-full max-w-[1400px] px-6 lg:px-10">
-        <p className="hero-eyebrow eyebrow mb-8 opacity-0">
-          Medical Consumables · Price &amp; Sourcing Intelligence
-        </p>
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-6">
+          {/* 左：文字 */}
+          <div className="min-w-0">
+            <p className="hero-eyebrow eyebrow mb-8 opacity-0">
+              Medical Consumables · Price &amp; Sourcing Intelligence
+            </p>
 
-        <h1 className="display mb-8 max-w-4xl">
-          <span className="hero-line block opacity-0">一次性防护用品的</span>
-          <span className="hero-line block opacity-0 text-[var(--color-warm-blue)]">
-            价格、货源与市场
-          </span>
-          <span className="hero-line block opacity-0">用真实数据看清楚</span>
-        </h1>
+            <h1 className="display mb-8 max-w-2xl">
+              <span className="hero-line block opacity-0">一次性防护用品的</span>
+              <span className="hero-line block opacity-0 text-[var(--color-warm-blue)]">
+                价格、货源与市场
+              </span>
+              <span className="hero-line block opacity-0">用真实数据看清楚</span>
+            </h1>
 
-        <p className="hero-sub body-lg mb-10 max-w-xl opacity-0">
-          从原油与树脂的原料价格，到出口运价与到岸成本，再到各国公共采购公告——
-          所有数字来自公开权威源，<span className="text-[var(--color-ink)]">可溯源、可复现</span>。
-        </p>
+            <p className="hero-sub body-lg mb-10 max-w-xl opacity-0">
+              从原油与树脂的原料价格，到出口运价与到岸成本，再到各国公共采购公告——
+              所有数字来自公开权威源，
+              <span className="text-[var(--color-ink)]">可溯源、可复现</span>。
+            </p>
 
-        <div className="hero-cta flex flex-wrap items-center gap-4 opacity-0">
-          <a
-            href="/dashboard/"
-            className="group inline-flex items-center gap-2 rounded-full bg-[var(--color-warm-blue)] px-6 py-3 text-sm font-medium text-white transition-[background-color,transform] hover:bg-[var(--color-light-blue)] active:scale-[0.98]"
-          >
-            查看看板
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </a>
-          <a
-            href="/solutions/"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-6 py-3 text-sm text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink-faint)] hover:bg-[var(--color-warm-gray)]"
-          >
-            场景方案
-          </a>
-          <a
-            href="/leads/"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-6 py-3 text-sm text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink-faint)] hover:bg-[var(--color-warm-gray)]"
-          >
-            采购线索
-          </a>
-        </div>
-
-        {/* 指标条 */}
-        <dl className="hero-metrics mt-16 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-[var(--color-border)] pt-8 sm:grid-cols-4">
-          {heroMetrics.map((m) => (
-            <div key={m.label} className="hero-metric opacity-0">
-              <dd className="text-2xl font-medium tracking-tight text-[var(--color-ink)] sm:text-[1.75rem]">
-                <span className="font-mono">
-                  {m.prefix}
-                  <NumberTicker value={m.value} decimals={m.decimals} duration={1600} />
-                </span>
-              </dd>
-              <dt className="mt-1.5 text-[11px] font-medium text-[var(--color-ink-soft)]">
-                {m.label}
-              </dt>
-              <dd className="mt-0.5 font-mono text-[9.5px] text-[var(--color-ink-faint)]">
-                {m.date}
-              </dd>
+            <div className="hero-cta flex flex-wrap items-center gap-3 opacity-0">
+              <a
+                href="/dashboard/"
+                className="group inline-flex items-center gap-2 rounded-full bg-[var(--color-warm-blue)] px-6 py-3 text-sm font-medium text-white transition-[background-color,transform] hover:bg-[var(--color-light-blue)] active:scale-[0.98]"
+              >
+                查看看板
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+              <a
+                href="/solutions/"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-5 py-3 text-sm text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink-faint)] hover:bg-[var(--color-warm-gray)]"
+              >
+                场景方案
+              </a>
+              <a
+                href="/leads/"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-5 py-3 text-sm text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink-faint)] hover:bg-[var(--color-warm-gray)]"
+              >
+                采购线索
+              </a>
             </div>
-          ))}
-        </dl>
+
+            {/* 指标条 */}
+            <dl className="hero-metrics mt-14 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-[var(--color-border)] pt-7 sm:grid-cols-4">
+              {heroMetrics.map((m) => (
+                <div key={m.label} className="hero-metric opacity-0">
+                  <dd className="font-mono text-xl font-medium tracking-tight text-[var(--color-ink)] sm:text-[1.4rem]">
+                    {m.prefix}
+                    <NumberTicker value={m.value} decimals={m.decimals} duration={1600} />
+                  </dd>
+                  <dt className="mt-1.5 text-[11px] font-medium text-[var(--color-ink-soft)]">
+                    {m.label}
+                  </dt>
+                  <dd className="mt-0.5 font-mono text-[9px] text-[var(--color-ink-faint)]">
+                    {m.date}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* 右：3D 地球 */}
+          <div className="hero-globe relative h-[42vh] w-full min-w-0 opacity-0 lg:h-[74vh]">
+            <GlobeViz />
+            {/* 底部渐隐，与下方区块衔接 */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--color-cream)] to-transparent" />
+            {/* 数据说明 */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-2 text-center">
+              <span className="font-mono text-[9.5px] tracking-wider text-[var(--color-ink-faint)]">
+                沙特医疗防护进口来源国 · UN Comtrade {2023}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* 滚动提示 */}
-      <div className="hero-scroll pointer-events-none absolute inset-x-0 bottom-8 flex justify-center opacity-0">
+      <div className="hero-scroll pointer-events-none absolute inset-x-0 bottom-6 flex justify-center opacity-0">
         <div className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--color-ink-faint)]">
           <span>Scroll</span>
           <span className="h-8 w-px animate-pulse bg-gradient-to-b from-[var(--color-border)] to-transparent" />
