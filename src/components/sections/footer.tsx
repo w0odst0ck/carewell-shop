@@ -72,7 +72,6 @@ export function SiteFooter() {
                   <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/dashboard/">看板</a></li>
                   <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/solutions/">方案</a></li>
                   <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/leads/">线索</a></li>
-                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/about/">关于</a></li>
                 </ul>
               </div>
               <div>

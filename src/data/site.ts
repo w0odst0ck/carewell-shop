@@ -22,6 +22,5 @@ export const nav = [
   { href: "/", label: "首页" },
   { href: "/insights/", label: "洞察" },
   { href: "/reports/", label: "报告" },
-  { href: "/about/", label: "关于" },
   { href: "/contact/", label: "联系" },
 ];

@@ -87,10 +87,10 @@ export function Hero() {
               <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </a>
             <a
-              href="/about/"
+              href="/dashboard/"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-6 py-3 text-sm text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink-faint)] hover:bg-white/[0.03]"
             >
-              查看方法
+              查看看板
             </a>
           </div>
 

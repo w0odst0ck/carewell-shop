@@ -8,7 +8,6 @@ const NAV = [
   { href: "/dashboard/", label: "看板" },
   { href: "/solutions/", label: "方案" },
   { href: "/leads/", label: "线索" },
-  { href: "/about/", label: "关于" },
   { href: "/contact/", label: "联系" },
 ];
 
