@@ -1,28 +1,36 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as echarts from "echarts";
 import { Reveal } from "@/components/motion/reveal";
+import { tradeTrend, materialSeries } from "@/data/home";
 
-/** 折线：趋势（带关键事件标注） */
-function TrendChart() {
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const COLORS = ["#3a7b9e", "#daa55c", "#6d9fb8", "#4a9d7f"];
+
+/** 沙特四大类进口趋势（真实 Comtrade 数据） */
+function TradeChart() {
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const chart = echarts.init(el, undefined, { renderer: "svg" });
-    const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"];
-    const healthcare = [820, 890, 1040, 1180, 1320, 1890, 2140, 2080, 2210, 2380];
-    const environment = [540, 570, 610, 660, 700, 640, 760, 820, 870, 940];
 
     chart.setOption({
       backgroundColor: "transparent",
-      grid: { left: 8, right: 16, top: 24, bottom: 8, containLabel: true },
+      grid: { left: 8, right: 16, top: 30, bottom: 8, containLabel: true },
       tooltip: {
         trigger: "axis",
         backgroundColor: "#ffffff",
         borderColor: "#e8e2d8",
         textStyle: { color: "#3a3530", fontSize: 12 },
+        valueFormatter: (v: number) => (v == null ? "—" : `$${v}M`),
       },
       legend: {
         right: 0,
@@ -30,67 +38,37 @@ function TrendChart() {
         icon: "roundRect",
         itemWidth: 8,
         itemHeight: 8,
-        textStyle: { color: "#7a756e", fontSize: 11 },
+        textStyle: { color: "#7a756e", fontSize: 10 },
       },
       xAxis: {
         type: "category",
-        data: years,
+        data: tradeTrend.years,
         boundaryGap: false,
         axisLine: { lineStyle: { color: "#e8e2d8" } },
         axisTick: { show: false },
-        axisLabel: { color: "#a8a29a", fontSize: 11 },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
       yAxis: {
         type: "value",
+        name: "百万美元",
+        nameTextStyle: { color: "#a8a29a", fontSize: 9 },
         splitLine: { lineStyle: { color: "#f0ece5" } },
-        axisLabel: { color: "#a8a29a", fontSize: 11 },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
-      animationDuration: 1400,
+      animationDuration: 1600,
       animationEasing: "cubicOut",
-      animationDelay: (idx: number) => idx * 90,
-      series: [
-        {
-          name: "医疗物资",
-          type: "line",
-          data: healthcare,
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 5,
-          showSymbol: false,
-          lineStyle: { width: 2, color: "#3a7b9e" },
-          itemStyle: { color: "#3a7b9e" },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "rgba(58,123,158,0.28)" },
-              { offset: 1, color: "rgba(58,123,158,0)" },
-            ]),
-          },
-          markPoint: {
-            symbol: "circle",
-            symbolSize: 8,
-            itemStyle: { color: "#3a7b9e", borderColor: "#fcf8f4", borderWidth: 2 },
-            label: {
-              show: true,
-              formatter: "疫情",
-              position: "top",
-              color: "#7a756e",
-              fontSize: 10,
-            },
-            data: [{ coord: ["2020", 1890] }],
-          },
-        },
-        {
-          name: "环境负荷",
-          type: "line",
-          data: environment,
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 5,
-          showSymbol: false,
-          lineStyle: { width: 2, color: "#6d9fb8" },
-          itemStyle: { color: "#6d9fb8" },
-        },
-      ],
+      series: tradeTrend.categories.map((c, i) => ({
+        name: c.name.split("（")[0],
+        type: "line",
+        data: c.values,
+        smooth: true,
+        symbol: "circle",
+        symbolSize: 4,
+        showSymbol: false,
+        lineStyle: { width: 2, color: COLORS[i % 4] },
+        itemStyle: { color: COLORS[i % 4] },
+        emphasis: { focus: "series" },
+      })),
     });
 
     const ro = new ResizeObserver(() => chart.resize());
@@ -100,72 +78,63 @@ function TrendChart() {
       chart.dispose();
     };
   }, []);
-  return <div ref={ref} className="h-[280px] w-full" />;
+
+  return <div ref={ref} className="h-full w-full" />;
 }
 
-/** 条形：国别排名（横向，动态） */
-function RankChart() {
+/** 原料传导（原油 vs 树脂 PPI，指数化真实数据） */
+function MaterialChart() {
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const chart = echarts.init(el, undefined, { renderer: "svg" });
 
-    const data = [
-      { name: "中国", value: 41280 },
-      { name: "美国", value: 28460 },
-      { name: "印度", value: 18640 },
-      { name: "德国", value: 15420 },
-      { name: "沙特", value: 12480 },
-      { name: "法国", value: 11980 },
-      { name: "英国", value: 10240 },
-    ].sort((a, b) => a.value - b.value);
-
     chart.setOption({
       backgroundColor: "transparent",
-      grid: { left: 8, right: 48, top: 8, bottom: 8, containLabel: true },
+      grid: { left: 8, right: 16, top: 30, bottom: 8, containLabel: true },
       tooltip: {
         trigger: "axis",
-        axisPointer: { type: "shadow" },
         backgroundColor: "#ffffff",
         borderColor: "#e8e2d8",
         textStyle: { color: "#3a3530", fontSize: 12 },
+        valueFormatter: (v: number) => `${v.toFixed(1)}`,
+      },
+      legend: {
+        right: 0,
+        top: 0,
+        icon: "roundRect",
+        itemWidth: 8,
+        itemHeight: 8,
+        textStyle: { color: "#7a756e", fontSize: 10 },
       },
       xAxis: {
-        type: "value",
-        splitLine: { lineStyle: { color: "#f0ece5" } },
-        axisLabel: { color: "#a8a29a", fontSize: 11 },
+        type: "time",
+        axisLine: { lineStyle: { color: "#e8e2d8" } },
+        axisTick: { show: false },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
+        splitLine: { show: false },
       },
       yAxis: {
-        type: "category",
-        data: data.map((d) => d.name),
-        axisLine: { show: false },
-        axisTick: { show: false },
-        axisLabel: { color: "#7a756e", fontSize: 12 },
+        type: "value",
+        name: "指数（2019=100）",
+        nameTextStyle: { color: "#a8a29a", fontSize: 9 },
+        splitLine: { lineStyle: { color: "#f0ece5" } },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
-      animationDuration: 1200,
+      animationDuration: 1800,
       animationEasing: "cubicOut",
-      series: [
-        {
-          type: "bar",
-          data: data.map((d) => d.value),
-          barWidth: 10,
-          itemStyle: {
-            borderRadius: [0, 3, 3, 0],
-            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              { offset: 0, color: "rgba(58,123,158,0.35)" },
-              { offset: 1, color: "#3a7b9e" },
-            ]),
-          },
-          label: {
-            show: true,
-            position: "right",
-            color: "#7a756e",
-            fontSize: 11,
-            formatter: (p: { value: number }) => p.value.toLocaleString(),
-          },
-        },
-      ],
+      series: materialSeries.map((s) => ({
+        name: s.name,
+        type: "line",
+        data: s.data,
+        smooth: true,
+        symbol: "none",
+        lineStyle: { width: 1.8, color: s.color },
+        itemStyle: { color: s.color },
+        emphasis: { focus: "series" },
+      })),
     });
 
     const ro = new ResizeObserver(() => chart.resize());
@@ -175,55 +144,126 @@ function RankChart() {
       chart.dispose();
     };
   }, []);
-  return <div ref={ref} className="h-[280px] w-full" />;
+
+  return <div ref={ref} className="h-full w-full" />;
 }
 
 export function DataSection() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".data-head",
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 78%" },
+        }
+      );
+      gsap.fromTo(
+        ".data-panel",
+        { opacity: 0, y: 36 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.16,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".data-grid", start: "top 82%" },
+        }
+      );
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="data" className="relative border-t border-[var(--color-border)] py-28">
+    <section ref={rootRef} className="relative border-t border-[var(--color-border)] py-28">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <Reveal>
-          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="eyebrow mb-4">Data</p>
-              <h2 className="h2 max-w-2xl">指标不是装饰，是判断的依据</h2>
+        <div className="data-head mb-16 opacity-0">
+          <p className="eyebrow mb-4">Live Data</p>
+          <h2 className="h2 mb-6 max-w-3xl">数字不是装饰，是判断的依据</h2>
+          <p className="body-lg max-w-2xl">
+            下面两张图来自实时采集：左边是原料价格如何传导，右边是沙特市场的品类结构变迁。
+          </p>
+        </div>
+
+        <div className="data-grid grid gap-6 lg:grid-cols-2">
+          {/* 原料传导 */}
+          <div className="data-panel rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 opacity-0">
+            <div className="mb-4 flex items-baseline justify-between">
+              <h3 className="text-base font-medium text-[var(--color-ink)]">原料价格传导</h3>
+              <span className="font-mono text-[10px] text-[var(--color-ink-faint)]">
+                FRED · 2019 至今
+              </span>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-[var(--color-ink-soft)]">
-              每个数字都可追溯到原始来源。图表展示的是结构性变化，而非单点波动。
+            <div className="h-[320px] w-full">
+              <MaterialChart />
+            </div>
+            <p className="mt-4 text-[11.5px] leading-relaxed text-[var(--color-ink-soft)]">
+              原油与树脂 PPI 的走势差异，反映的是传导滞后与加工环节的缓冲能力。
             </p>
           </div>
-        </Reveal>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Reveal className="lg:col-span-2">
-            <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-7">
-              <div className="mb-6 flex items-baseline justify-between">
-                <div>
-                  <h3 className="text-base font-medium text-[var(--color-ink)]">
-                    医疗物资与环境负荷的十年演进
-                  </h3>
-                  <p className="mt-1 text-xs text-[var(--color-ink-soft)]">
-                    2015–2024 · 指数化处理 · 单位：万吨
-                  </p>
-                </div>
-                <span className="rounded border border-[var(--color-border)] px-2 py-1 text-[10px] text-[var(--color-ink-faint)]">
-                  UN Comtrade
-                </span>
-              </div>
-              <TrendChart />
+          {/* 沙特进口 */}
+          <div className="data-panel rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 opacity-0">
+            <div className="mb-4 flex items-baseline justify-between">
+              <h3 className="text-base font-medium text-[var(--color-ink)]">沙特进口品类结构</h3>
+              <span className="font-mono text-[10px] text-[var(--color-ink-faint)]">
+                UN Comtrade · 2019–2024
+              </span>
             </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="h-full rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-7">
-              <div className="mb-6">
-                <h3 className="text-base font-medium text-[var(--color-ink)]">主要经济体规模</h3>
-                <p className="mt-1 text-xs text-[var(--color-ink-soft)]">2024 · 万美元</p>
-              </div>
-              <RankChart />
+            <div className="h-[320px] w-full">
+              <TradeChart />
             </div>
-          </Reveal>
+            <p className="mt-4 text-[11.5px] leading-relaxed text-[var(--color-ink-soft)]">
+              服装类从 2019 年的 $424M 降至 2024 年的 $89M，医用敷料逆势增至 $193M。
+            </p>
+          </div>
         </div>
+
+        <Reveal>
+          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-3">
+            {[
+              {
+                k: "-79%",
+                label: "服装类进口（2019→2024）",
+                desc: "疫情透支后的需求已回落到常态以下",
+              },
+              {
+                k: "+45%",
+                label: "医用敷料 / 急救包",
+                desc: "四大类中唯一持续增长的品类",
+              },
+              {
+                k: "4×",
+                label: "口罩单价波动幅度",
+                desc: "$21.26/kg（2020）→ $5.41/kg（2024）",
+              },
+            ].map((s) => (
+              <div key={s.label} className="bg-[var(--color-card)] p-6">
+                <div className="mb-1.5 font-mono text-2xl font-light text-[var(--color-ink)]">
+                  {s.k}
+                </div>
+                <div className="mb-1 text-[12px] font-medium text-[var(--color-ink)]">
+                  {s.label}
+                </div>
+                <div className="text-[11px] leading-relaxed text-[var(--color-ink-soft)]">
+                  {s.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
