@@ -1,0 +1,39 @@
+{
+ "generatedAt": "2026-11-13 10:56",
+ "period": "2026-11-06",
+ "prevPeriod": "2026-10-30",
+ "source": "上海航运交易所 SCFI（周更）",
+ "caveat": "航线与 JSON 字段映射为人工校准推断，仅作趋势参考",
+ "routes": {
+  "综合指数": {
+   "en": "Comprehensive Index",
+   "value": 3633.4482,
+   "prev": 3687.3528,
+   "changePct": -1.46
+  },
+  "欧洲20ft": {
+   "en": "Europe 20ft",
+   "value": 2324.625,
+   "prev": 2370.0554,
+   "changePct": -1.92
+  },
+  "美西40ft": {
+   "en": "USWC 40ft",
+   "value": 9857.042,
+   "prev": 10198.708,
+   "changePct": -3.35
+  },
+  "美东40ft": {
+   "en": "USEC 40ft",
+   "value": 6561.9165,
+   "prev": 6532.75,
+   "changePct": 0.45
+  },
+  "波斯湾20ft": {
+   "en": "Persian Gulf 20ft (Dubai)",
+   "value": 5167.913,
+   "prev": 4767.913,
+   "changePct": 8.39
+  }
+ }
+}
