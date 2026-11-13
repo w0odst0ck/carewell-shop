@@ -49,16 +49,22 @@ export function SiteFooter() {
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
           <div className="flex flex-col justify-between gap-10 md:flex-row">
             <div className="max-w-sm">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="grid h-8 w-8 place-items-center rounded-md bg-[var(--color-warm-blue)]/12 ring-1 ring-[var(--color-warm-blue)]/30">
-                  <span className="h-2 w-2 rounded-full bg-[var(--color-warm-blue)]" />
-                </span>
-                <span className="text-[15px] font-medium text-[var(--color-ink)]">
-                  MoJin <span className="text-[var(--color-ink-soft)]">Insights</span>
+              <div className="mb-4 flex items-center gap-2.5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo-48.png"
+                  srcSet="/logo-24.png 1x, /logo-48.png 2x"
+                  alt="MoJin"
+                  width={55}
+                  height={24}
+                  className="h-6 w-auto opacity-90"
+                />
+                <span className="text-[15px] font-medium text-[var(--color-ink-soft)]">
+                  Insights
                 </span>
               </div>
               <p className="text-sm leading-relaxed text-[var(--color-ink-soft)]">
-                全球卫生、医疗与环境议题的公开数据研究。
+                一次性防护用品的价格、货源与市场观察。
                 数据可溯源，方法可复现。
               </p>
             </div>

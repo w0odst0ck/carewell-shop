@@ -35,6 +35,10 @@ export const metadata: Metadata = {
     description: "一次性防护用品的价格、货源与市场",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

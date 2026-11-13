@@ -31,12 +31,18 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:px-10">
-        <Link href="/" className="group flex items-center gap-3">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-[var(--color-warm-blue)]/12 ring-1 ring-[var(--color-warm-blue)]/30">
-            <span className="h-2 w-2 rounded-full bg-[var(--color-warm-blue)]" />
-          </span>
+        <Link href="/" className="group flex items-center gap-2.5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-48.png"
+            srcSet="/logo-24.png 1x, /logo-48.png 2x, /logo-72.png 3x"
+            alt="MoJin"
+            width={55}
+            height={24}
+            className="h-6 w-auto opacity-90 transition-opacity group-hover:opacity-100"
+          />
           <span className="text-[15px] font-medium tracking-tight text-[var(--color-ink)]">
-            MoJin <span className="text-[var(--color-ink-soft)]">Insights</span>
+            <span className="text-[var(--color-ink-soft)]">Insights</span>
           </span>
         </Link>
 
