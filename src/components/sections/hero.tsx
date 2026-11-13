@@ -80,10 +80,10 @@ export function Hero() {
 
           <div className="hero-cta flex flex-wrap items-center gap-4 opacity-0 translate-y-4">
             <a
-              href="/insights/"
+              href="/solutions/"
               className="group inline-flex items-center gap-2 rounded-full bg-[var(--color-warm-blue)] px-6 py-3 text-sm font-medium text-white transition-[background-color,transform] hover:bg-[var(--color-warm-blue)] active:scale-[0.98]"
             >
-              浏览洞察
+              查看方案
               <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </a>
             <a

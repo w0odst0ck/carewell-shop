@@ -69,8 +69,9 @@ export function SiteFooter() {
                   研究
                 </h4>
                 <ul className="space-y-2.5 text-sm text-[var(--color-ink-soft)]">
-                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/insights/">洞察</a></li>
-                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/reports/">报告</a></li>
+                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/dashboard/">看板</a></li>
+                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/solutions/">方案</a></li>
+                  <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/leads/">线索</a></li>
                   <li><a className="transition-colors hover:text-[var(--color-ink)]" href="/about/">关于</a></li>
                 </ul>
               </div>
