@@ -18,20 +18,21 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MoJin Insights — 全球卫生 · 医疗 · 环境 议题研究",
+  title: "MoJin Insights — 一次性防护用品的价格 · 货源与市场",
   description:
-    "用公开数据追踪全球卫生、医疗与环境议题：贸易流向、政策演进、可持续发展指标。数据可溯源，方法可复现。",
+    "从原油与树脂的原料价格，到出口运价与到岸成本，再到各国公共采购公告。所有数字来自公开权威源，可溯源、可复现。",
   keywords: [
-    "global health",
-    "sanitation",
-    "medical supplies",
-    "environment",
-    "SDG",
-    "trade data",
+    "disposable medical supplies",
+    "protective equipment",
+    "medical consumables",
+    "price monitor",
+    "procurement leads",
+    "Saudi Arabia market",
+    "nonwoven",
   ],
   openGraph: {
     title: "MoJin Insights",
-    description: "全球卫生 · 医疗 · 环境 议题研究平台",
+    description: "一次性防护用品的价格、货源与市场",
     type: "website",
   },
 };
