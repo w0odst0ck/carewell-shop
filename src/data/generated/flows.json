@@ -1,0 +1,1152 @@
+{
+ "reporter": "沙特 (SAU)",
+ "period": 2024,
+ "source": "UN Comtrade",
+ "flow": "进口 (M)",
+ "categories": {
+  "6210": {
+   "name": "服装类",
+   "total": 89060328.47,
+   "partners": [
+    {
+     "code": 156,
+     "iso": null,
+     "name": null,
+     "value": 39753664.61,
+     "netWgt": 12709327.0
+    },
+    {
+     "code": 699,
+     "iso": null,
+     "name": null,
+     "value": 14133940.45,
+     "netWgt": 5798823.0
+    },
+    {
+     "code": 380,
+     "iso": null,
+     "name": null,
+     "value": 5257197.74,
+     "netWgt": 40136.0
+    },
+    {
+     "code": 818,
+     "iso": null,
+     "name": null,
+     "value": 4595190.02,
+     "netWgt": 5030397.0
+    },
+    {
+     "code": 760,
+     "iso": null,
+     "name": null,
+     "value": 3585457.78,
+     "netWgt": 1613362.0
+    },
+    {
+     "code": 792,
+     "iso": null,
+     "name": null,
+     "value": 2839498.33,
+     "netWgt": 225634.0
+    },
+    {
+     "code": 50,
+     "iso": null,
+     "name": null,
+     "value": 2451375.67,
+     "netWgt": 690016.0
+    },
+    {
+     "code": 704,
+     "iso": null,
+     "name": null,
+     "value": 2375447.14,
+     "netWgt": 163239.0
+    },
+    {
+     "code": 116,
+     "iso": null,
+     "name": null,
+     "value": 2136013.55,
+     "netWgt": 113844.0
+    },
+    {
+     "code": 400,
+     "iso": null,
+     "name": null,
+     "value": 1263551.17,
+     "netWgt": 130000.0
+    },
+    {
+     "code": 784,
+     "iso": null,
+     "name": null,
+     "value": 1128281.84,
+     "netWgt": 324736.0
+    },
+    {
+     "code": 586,
+     "iso": null,
+     "name": null,
+     "value": 1003643.71,
+     "netWgt": 261630.0
+    },
+    {
+     "code": 104,
+     "iso": null,
+     "name": null,
+     "value": 922090.64,
+     "netWgt": 24529.0
+    },
+    {
+     "code": 826,
+     "iso": null,
+     "name": null,
+     "value": 870247.44,
+     "netWgt": 5579.0
+    },
+    {
+     "code": 842,
+     "iso": null,
+     "name": null,
+     "value": 671259.72,
+     "netWgt": 16000.61
+    },
+    {
+     "code": 124,
+     "iso": null,
+     "name": null,
+     "value": 653279.45,
+     "netWgt": 1539.48
+    },
+    {
+     "code": 414,
+     "iso": null,
+     "name": null,
+     "value": 639324.78,
+     "netWgt": 143318.0
+    },
+    {
+     "code": 620,
+     "iso": null,
+     "name": null,
+     "value": 596702.12,
+     "netWgt": 2696.0
+    },
+    {
+     "code": 251,
+     "iso": null,
+     "name": null,
+     "value": 508187.72,
+     "netWgt": 2101.0
+    },
+    {
+     "code": 642,
+     "iso": null,
+     "name": null,
+     "value": 377405.59,
+     "netWgt": 879.72
+    },
+    {
+     "code": 428,
+     "iso": null,
+     "name": null,
+     "value": 294339.19,
+     "netWgt": 505.0
+    },
+    {
+     "code": 724,
+     "iso": null,
+     "name": null,
+     "value": 240538.93,
+     "netWgt": 1467.0
+    },
+    {
+     "code": 504,
+     "iso": null,
+     "name": null,
+     "value": 229985.59,
+     "netWgt": 13863.0
+    },
+    {
+     "code": 643,
+     "iso": null,
+     "name": null,
+     "value": 208559.73,
+     "netWgt": 5400.0
+    },
+    {
+     "code": 360,
+     "iso": null,
+     "name": null,
+     "value": 154716.0,
+     "netWgt": 133479.0
+    },
+    {
+     "code": 100,
+     "iso": null,
+     "name": null,
+     "value": 128402.4,
+     "netWgt": 1639.0
+    },
+    {
+     "code": 616,
+     "iso": null,
+     "name": null,
+     "value": 119397.33,
+     "netWgt": 372.0
+    },
+    {
+     "code": 36,
+     "iso": null,
+     "name": null,
+     "value": 117758.66,
+     "netWgt": 883.57
+    },
+    {
+     "code": 276,
+     "iso": null,
+     "name": null,
+     "value": 112384.26,
+     "netWgt": 10853.0
+    },
+    {
+     "code": 48,
+     "iso": null,
+     "name": null,
+     "value": 112203.2,
+     "netWgt": 1354.0
+    },
+    {
+     "code": 300,
+     "iso": null,
+     "name": null,
+     "value": 104048.0,
+     "netWgt": 337.0
+    },
+    {
+     "code": 170,
+     "iso": null,
+     "name": null,
+     "value": 98940.53,
+     "netWgt": 167.0
+    },
+    {
+     "code": 440,
+     "iso": null,
+     "name": null,
+     "value": 98448.8,
+     "netWgt": 264.0
+    },
+    {
+     "code": 392,
+     "iso": null,
+     "name": null,
+     "value": 87062.93,
+     "netWgt": 2259.0
+    },
+    {
+     "code": 372,
+     "iso": null,
+     "name": null,
+     "value": 86810.4,
+     "netWgt": 4546.51
+    },
+    {
+     "code": 788,
+     "iso": null,
+     "name": null,
+     "value": 81788.0,
+     "netWgt": 576.0
+    },
+    {
+     "code": 764,
+     "iso": null,
+     "name": null,
+     "value": 76910.13,
+     "netWgt": 29421.0
+    },
+    {
+     "code": 344,
+     "iso": null,
+     "name": null,
+     "value": 75347.2,
+     "netWgt": 327.0
+    },
+    {
+     "code": 528,
+     "iso": null,
+     "name": null,
+     "value": 72509.33,
+     "netWgt": 740.0
+    },
+    {
+     "code": 56,
+     "iso": null,
+     "name": null,
+     "value": 65825.87,
+     "netWgt": 804.89
+    }
+   ]
+  },
+  "6307": {
+   "name": "纺织制成品",
+   "total": 52664177.07,
+   "partners": [
+    {
+     "code": 156,
+     "iso": null,
+     "name": null,
+     "value": 27157716.39,
+     "netWgt": 7355904.0
+    },
+    {
+     "code": 699,
+     "iso": null,
+     "name": null,
+     "value": 5829132.39,
+     "netWgt": 954516.0
+    },
+    {
+     "code": 842,
+     "iso": null,
+     "name": null,
+     "value": 5405939.87,
+     "netWgt": 474509.0
+    },
+    {
+     "code": 586,
+     "iso": null,
+     "name": null,
+     "value": 3623129.78,
+     "netWgt": 4773126.0
+    },
+    {
+     "code": 704,
+     "iso": null,
+     "name": null,
+     "value": 2511225.8,
+     "netWgt": 604214.0
+    },
+    {
+     "code": 784,
+     "iso": null,
+     "name": null,
+     "value": 1395222.63,
+     "netWgt": 223188.0
+    },
+    {
+     "code": 380,
+     "iso": null,
+     "name": null,
+     "value": 1112402.91,
+     "netWgt": 76311.0
+    },
+    {
+     "code": 826,
+     "iso": null,
+     "name": null,
+     "value": 690897.32,
+     "netWgt": 14579.0
+    },
+    {
+     "code": 276,
+     "iso": null,
+     "name": null,
+     "value": 684439.72,
+     "netWgt": 79958.0
+    },
+    {
+     "code": 410,
+     "iso": null,
+     "name": null,
+     "value": 614500.79,
+     "netWgt": 76062.0
+    },
+    {
+     "code": 792,
+     "iso": null,
+     "name": null,
+     "value": 339645.06,
+     "netWgt": 72808.46
+    },
+    {
+     "code": 251,
+     "iso": null,
+     "name": null,
+     "value": 278302.13,
+     "netWgt": 5009.57
+    },
+    {
+     "code": 320,
+     "iso": null,
+     "name": null,
+     "value": 266154.93,
+     "netWgt": 8033.0
+    },
+    {
+     "code": 484,
+     "iso": null,
+     "name": null,
+     "value": 224406.39,
+     "netWgt": 12106.0
+    },
+    {
+     "code": 300,
+     "iso": null,
+     "name": null,
+     "value": 216455.2,
+     "netWgt": 3883.0
+    },
+    {
+     "code": 214,
+     "iso": null,
+     "name": null,
+     "value": 195577.6,
+     "netWgt": 6167.0
+    },
+    {
+     "code": 724,
+     "iso": null,
+     "name": null,
+     "value": 194635.99,
+     "netWgt": 7397.0
+    },
+    {
+     "code": 50,
+     "iso": null,
+     "name": null,
+     "value": 190766.66,
+     "netWgt": 19639.0
+    },
+    {
+     "code": 528,
+     "iso": null,
+     "name": null,
+     "value": 138639.46,
+     "netWgt": 12955.0
+    },
+    {
+     "code": 360,
+     "iso": null,
+     "name": null,
+     "value": 133968.0,
+     "netWgt": 7354.0
+    },
+    {
+     "code": 116,
+     "iso": null,
+     "name": null,
+     "value": 126123.46,
+     "netWgt": 4294.0
+    },
+    {
+     "code": 818,
+     "iso": null,
+     "name": null,
+     "value": 122619.2,
+     "netWgt": 81579.0
+    },
+    {
+     "code": 124,
+     "iso": null,
+     "name": null,
+     "value": 94130.13,
+     "netWgt": 2914.0
+    },
+    {
+     "code": 757,
+     "iso": null,
+     "name": null,
+     "value": 92145.33,
+     "netWgt": 676.0
+    },
+    {
+     "code": 392,
+     "iso": null,
+     "name": null,
+     "value": 92080.26,
+     "netWgt": 7053.0
+    },
+    {
+     "code": 752,
+     "iso": null,
+     "name": null,
+     "value": 85346.66,
+     "netWgt": 4084.0
+    },
+    {
+     "code": 764,
+     "iso": null,
+     "name": null,
+     "value": 81446.4,
+     "netWgt": 2688.0
+    },
+    {
+     "code": 36,
+     "iso": null,
+     "name": null,
+     "value": 69087.73,
+     "netWgt": 654.0
+    },
+    {
+     "code": 490,
+     "iso": null,
+     "name": null,
+     "value": 66894.4,
+     "netWgt": 4579.0
+    },
+    {
+     "code": 100,
+     "iso": null,
+     "name": null,
+     "value": 58389.6,
+     "netWgt": 7210.0
+    },
+    {
+     "code": 144,
+     "iso": null,
+     "name": null,
+     "value": 50402.93,
+     "netWgt": 1040.0
+    },
+    {
+     "code": 703,
+     "iso": null,
+     "name": null,
+     "value": 44948.8,
+     "netWgt": 2233.25
+    },
+    {
+     "code": 620,
+     "iso": null,
+     "name": null,
+     "value": 44449.33,
+     "netWgt": 2624.0
+    },
+    {
+     "code": 608,
+     "iso": null,
+     "name": null,
+     "value": 39600.0,
+     "netWgt": 117.0
+    },
+    {
+     "code": 40,
+     "iso": null,
+     "name": null,
+     "value": 36901.6,
+     "netWgt": 645.0
+    },
+    {
+     "code": 348,
+     "iso": null,
+     "name": null,
+     "value": 28207.47,
+     "netWgt": 488.0
+    },
+    {
+     "code": 440,
+     "iso": null,
+     "name": null,
+     "value": 27423.2,
+     "netWgt": 1557.0
+    },
+    {
+     "code": 642,
+     "iso": null,
+     "name": null,
+     "value": 24631.2,
+     "netWgt": 220.99
+    },
+    {
+     "code": 788,
+     "iso": null,
+     "name": null,
+     "value": 23294.13,
+     "netWgt": 1678.0
+    },
+    {
+     "code": 344,
+     "iso": null,
+     "name": null,
+     "value": 22788.53,
+     "netWgt": 221.59
+    }
+   ]
+  },
+  "4015": {
+   "name": "橡胶手套",
+   "total": 70155633.22,
+   "partners": [
+    {
+     "code": 156,
+     "iso": null,
+     "name": null,
+     "value": 22451580.24,
+     "netWgt": 7101174.0
+    },
+    {
+     "code": 458,
+     "iso": null,
+     "name": null,
+     "value": 18335406.21,
+     "netWgt": 3141702.0
+    },
+    {
+     "code": 512,
+     "iso": null,
+     "name": null,
+     "value": 12557386.89,
+     "netWgt": 1110631.0
+    },
+    {
+     "code": 764,
+     "iso": null,
+     "name": null,
+     "value": 6293972.91,
+     "netWgt": 1208087.0
+    },
+    {
+     "code": 440,
+     "iso": null,
+     "name": null,
+     "value": 3547351.91,
+     "netWgt": 47111.0
+    },
+    {
+     "code": 144,
+     "iso": null,
+     "name": null,
+     "value": 2470373.81,
+     "netWgt": 177018.0
+    },
+    {
+     "code": 699,
+     "iso": null,
+     "name": null,
+     "value": 1203468.24,
+     "netWgt": 129963.0
+    },
+    {
+     "code": 842,
+     "iso": null,
+     "name": null,
+     "value": 658366.12,
+     "netWgt": 22093.0
+    },
+    {
+     "code": 704,
+     "iso": null,
+     "name": null,
+     "value": 515184.52,
+     "netWgt": 18855.0
+    },
+    {
+     "code": 276,
+     "iso": null,
+     "name": null,
+     "value": 501741.32,
+     "netWgt": 6971.0
+    },
+    {
+     "code": 360,
+     "iso": null,
+     "name": null,
+     "value": 315718.39,
+     "netWgt": 15582.0
+    },
+    {
+     "code": 586,
+     "iso": null,
+     "name": null,
+     "value": 293398.93,
+     "netWgt": 21938.0
+    },
+    {
+     "code": 380,
+     "iso": null,
+     "name": null,
+     "value": 141200.26,
+     "netWgt": 5631.0
+    },
+    {
+     "code": 792,
+     "iso": null,
+     "name": null,
+     "value": 96171.46,
+     "netWgt": 2997.0
+    },
+    {
+     "code": 826,
+     "iso": null,
+     "name": null,
+     "value": 83244.8,
+     "netWgt": 2336.0
+    },
+    {
+     "code": 710,
+     "iso": null,
+     "name": null,
+     "value": 71178.66,
+     "netWgt": 157.0
+    },
+    {
+     "code": 490,
+     "iso": null,
+     "name": null,
+     "value": 67256.8,
+     "netWgt": 4920.0
+    },
+    {
+     "code": 191,
+     "iso": null,
+     "name": null,
+     "value": 61681.33,
+     "netWgt": 7500.0
+    },
+    {
+     "code": 116,
+     "iso": null,
+     "name": null,
+     "value": 47741.33,
+     "netWgt": 1474.0
+    },
+    {
+     "code": 40,
+     "iso": null,
+     "name": null,
+     "value": 45890.4,
+     "netWgt": 778.0
+    },
+    {
+     "code": 784,
+     "iso": null,
+     "name": null,
+     "value": 38878.93,
+     "netWgt": 999.0
+    },
+    {
+     "code": 484,
+     "iso": null,
+     "name": null,
+     "value": 38298.4,
+     "netWgt": 132.0
+    },
+    {
+     "code": 818,
+     "iso": null,
+     "name": null,
+     "value": 37801.33,
+     "netWgt": 6058.0
+    },
+    {
+     "code": 724,
+     "iso": null,
+     "name": null,
+     "value": 35556.8,
+     "netWgt": 784.0
+    },
+    {
+     "code": 36,
+     "iso": null,
+     "name": null,
+     "value": 30970.93,
+     "netWgt": 311.0
+    },
+    {
+     "code": 616,
+     "iso": null,
+     "name": null,
+     "value": 27319.47,
+     "netWgt": 4150.0
+    },
+    {
+     "code": 251,
+     "iso": null,
+     "name": null,
+     "value": 26333.07,
+     "netWgt": 617.0
+    },
+    {
+     "code": 344,
+     "iso": null,
+     "name": null,
+     "value": 25396.8,
+     "netWgt": 1067.0
+    },
+    {
+     "code": 76,
+     "iso": null,
+     "name": null,
+     "value": 16674.93,
+     "netWgt": 103.0
+    },
+    {
+     "code": 788,
+     "iso": null,
+     "name": null,
+     "value": 14574.67,
+     "netWgt": 306.0
+    },
+    {
+     "code": 372,
+     "iso": null,
+     "name": null,
+     "value": 13931.73,
+     "netWgt": 369.0
+    },
+    {
+     "code": 348,
+     "iso": null,
+     "name": null,
+     "value": 13382.67,
+     "netWgt": 49.0
+    },
+    {
+     "code": 804,
+     "iso": null,
+     "name": null,
+     "value": 9306.67,
+     "netWgt": 54.0
+    },
+    {
+     "code": 400,
+     "iso": null,
+     "name": null,
+     "value": 8852.8,
+     "netWgt": 397.0
+    },
+    {
+     "code": 620,
+     "iso": null,
+     "name": null,
+     "value": 8544.27,
+     "netWgt": 273.0
+    },
+    {
+     "code": 104,
+     "iso": null,
+     "name": null,
+     "value": 7843.73,
+     "netWgt": 2000.0
+    },
+    {
+     "code": 688,
+     "iso": null,
+     "name": null,
+     "value": 5958.93,
+     "netWgt": 45.0
+    },
+    {
+     "code": 702,
+     "iso": null,
+     "name": null,
+     "value": 5932.8,
+     "netWgt": 554.0
+    },
+    {
+     "code": 56,
+     "iso": null,
+     "name": null,
+     "value": 5417.87,
+     "netWgt": 279.0
+    },
+    {
+     "code": 410,
+     "iso": null,
+     "name": null,
+     "value": 4673.87,
+     "netWgt": 206.0
+    }
+   ]
+  },
+  "3006": {
+   "name": "医用敷料",
+   "total": 193223910.62,
+   "partners": [
+    {
+     "code": 276,
+     "iso": null,
+     "name": null,
+     "value": 48825842.78,
+     "netWgt": 225469.0
+    },
+    {
+     "code": 842,
+     "iso": null,
+     "name": null,
+     "value": 41025378.17,
+     "netWgt": 202583.0
+    },
+    {
+     "code": 372,
+     "iso": null,
+     "name": null,
+     "value": 15268863.88,
+     "netWgt": 174056.0
+    },
+    {
+     "code": 528,
+     "iso": null,
+     "name": null,
+     "value": 11737166.37,
+     "netWgt": 83771.88
+    },
+    {
+     "code": 484,
+     "iso": null,
+     "name": null,
+     "value": 9848923.75,
+     "netWgt": 21352.0
+    },
+    {
+     "code": 156,
+     "iso": null,
+     "name": null,
+     "value": 8514592.32,
+     "netWgt": 1063312.0
+    },
+    {
+     "code": 40,
+     "iso": null,
+     "name": null,
+     "value": 8435507.26,
+     "netWgt": 19307.0
+    },
+    {
+     "code": 251,
+     "iso": null,
+     "name": null,
+     "value": 7622871.01,
+     "netWgt": 74389.0
+    },
+    {
+     "code": 757,
+     "iso": null,
+     "name": null,
+     "value": 6056717.45,
+     "netWgt": 24879.0
+    },
+    {
+     "code": 410,
+     "iso": null,
+     "name": null,
+     "value": 5193890.0,
+     "netWgt": 36356.0
+    },
+    {
+     "code": 380,
+     "iso": null,
+     "name": null,
+     "value": 3741154.84,
+     "netWgt": 89119.0
+    },
+    {
+     "code": 214,
+     "iso": null,
+     "name": null,
+     "value": 2819330.6,
+     "netWgt": 31175.0
+    },
+    {
+     "code": 348,
+     "iso": null,
+     "name": null,
+     "value": 2688346.87,
+     "netWgt": 40397.0
+    },
+    {
+     "code": 36,
+     "iso": null,
+     "name": null,
+     "value": 2594266.87,
+     "netWgt": 37991.0
+    },
+    {
+     "code": 208,
+     "iso": null,
+     "name": null,
+     "value": 2492450.34,
+     "netWgt": 3107.0
+    },
+    {
+     "code": 724,
+     "iso": null,
+     "name": null,
+     "value": 2092254.88,
+     "netWgt": 13927.0
+    },
+    {
+     "code": 826,
+     "iso": null,
+     "name": null,
+     "value": 1710130.36,
+     "netWgt": 13181.0
+    },
+    {
+     "code": 124,
+     "iso": null,
+     "name": null,
+     "value": 1519579.7,
+     "netWgt": 21578.0
+    },
+    {
+     "code": 56,
+     "iso": null,
+     "name": null,
+     "value": 1496243.96,
+     "netWgt": 10225.0
+    },
+    {
+     "code": 392,
+     "iso": null,
+     "name": null,
+     "value": 1400657.3,
+     "netWgt": 2742.0
+    },
+    {
+     "code": 188,
+     "iso": null,
+     "name": null,
+     "value": 1215024.77,
+     "netWgt": 16716.0
+    },
+    {
+     "code": 579,
+     "iso": null,
+     "name": null,
+     "value": 1211982.9,
+     "netWgt": 1744.12
+    },
+    {
+     "code": 699,
+     "iso": null,
+     "name": null,
+     "value": 1120227.71,
+     "netWgt": 16881.0
+    },
+    {
+     "code": 76,
+     "iso": null,
+     "name": null,
+     "value": 943520.24,
+     "netWgt": 5497.0
+    },
+    {
+     "code": 440,
+     "iso": null,
+     "name": null,
+     "value": 565804.52,
+     "netWgt": 15711.0
+    },
+    {
+     "code": 792,
+     "iso": null,
+     "name": null,
+     "value": 551542.92,
+     "netWgt": 160348.0
+    },
+    {
+     "code": 490,
+     "iso": null,
+     "name": null,
+     "value": 487809.32,
+     "netWgt": 7874.0
+    },
+    {
+     "code": 616,
+     "iso": null,
+     "name": null,
+     "value": 440644.79,
+     "netWgt": 3190.0
+    },
+    {
+     "code": 818,
+     "iso": null,
+     "name": null,
+     "value": 258883.99,
+     "netWgt": 2264.0
+    },
+    {
+     "code": 212,
+     "iso": null,
+     "name": null,
+     "value": 234462.39,
+     "netWgt": 4295.0
+    },
+    {
+     "code": 246,
+     "iso": null,
+     "name": null,
+     "value": 197433.06,
+     "netWgt": 7130.0
+    },
+    {
+     "code": 642,
+     "iso": null,
+     "name": null,
+     "value": 185784.53,
+     "netWgt": 2281.0
+    },
+    {
+     "code": 300,
+     "iso": null,
+     "name": null,
+     "value": 122405.33,
+     "netWgt": 557.0
+    },
+    {
+     "code": 458,
+     "iso": null,
+     "name": null,
+     "value": 118175.46,
+     "netWgt": 210.0
+    },
+    {
+     "code": 604,
+     "iso": null,
+     "name": null,
+     "value": 106505.06,
+     "netWgt": 1102.0
+    },
+    {
+     "code": 764,
+     "iso": null,
+     "name": null,
+     "value": 60042.13,
+     "netWgt": 7007.0
+    },
+    {
+     "code": 203,
+     "iso": null,
+     "name": null,
+     "value": 44594.4,
+     "netWgt": 193.0
+    },
+    {
+     "code": 191,
+     "iso": null,
+     "name": null,
+     "value": 44460.0,
+     "netWgt": 1829.0
+    },
+    {
+     "code": 620,
+     "iso": null,
+     "name": null,
+     "value": 42694.13,
+     "netWgt": 332.0
+    },
+    {
+     "code": 643,
+     "iso": null,
+     "name": null,
+     "value": 42000.0,
+     "netWgt": 6.0
+    }
+   ]
+  }
+ }
+}

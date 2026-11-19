@@ -9,7 +9,7 @@ type Rec = { name: string; series: Record<string, { value: number; netWgt: numbe
 const T = tradeJson as unknown as { years: number[]; hs4: Record<string, Rec> };
 
 const HS_KEYS = ["6210", "6307", "4015", "3006"] as const;
-const COLORS = ["#d97757", "#daa55c", "#3a7b9e", "#4a9d7f"];
+const COLORS = ["#e8703f", "#d99a1f", "#2f8fc4", "#3aa876"];
 
 /** 沙特进口结构：堆叠面积图（联动品类筛选 + 时间切片） */
 export function ImportStructure() {
@@ -60,7 +60,7 @@ export function ImportStructure() {
           itemWidth: 7,
           itemHeight: 7,
           itemGap: 10,
-          textStyle: { color: "#7a756e", fontSize: 9 },
+          textStyle: { color: "#7a756e", fontSize: 10 },
         },
         xAxis: {
           type: "category",
@@ -68,12 +68,12 @@ export function ImportStructure() {
           boundaryGap: false,
           axisLine: { lineStyle: { color: "#e8e2d8" } },
           axisTick: { show: false },
-          axisLabel: { color: "#a8a29a", fontSize: 9 },
+          axisLabel: { color: "#a8a29a", fontSize: 10 },
         },
         yAxis: {
           type: "value",
           splitLine: { lineStyle: { color: "#f0ece5" } },
-          axisLabel: { color: "#a8a29a", fontSize: 9, formatter: "${value}M" },
+          axisLabel: { color: "#a8a29a", fontSize: 10, formatter: "${value}M" },
         },
         animationDuration: 700,
         series: seriesData.map((s) => ({
@@ -94,7 +94,7 @@ export function ImportStructure() {
                   silent: true,
                   symbol: "none",
                   data: [{ xAxis: markerIdx }],
-                  lineStyle: { color: "#e8874e", width: 1.2, type: "solid", opacity: 0.8 },
+                  lineStyle: { color: "#e8703f", width: 1.2, type: "solid", opacity: 0.85 },
                   label: { show: false },
                 }
               : undefined,
@@ -155,13 +155,13 @@ export function FreightBars({ routes }: { routes: Record<string, { value: number
         formatter: (p: { dataIndex: number }[]) => {
           const i = p[0].dataIndex;
           const c = changes[i];
-          return `<b>${names[i]}</b><br/>指数 ${values[i].toFixed(0)}<br/>周环比 <b style="color:${c >= 0 ? "#d97757" : "#4a9d7f"}">${c >= 0 ? "+" : ""}${c.toFixed(1)}%</b>`;
+          return `<b>${names[i]}</b><br/>指数 ${values[i].toFixed(0)}<br/>周环比 <b style="color:${c >= 0 ? "#e8703f" : "#3aa876"}">${c >= 0 ? "+" : ""}${c.toFixed(1)}%</b>`;
         },
       },
       xAxis: {
         type: "value",
         splitLine: { lineStyle: { color: "#f0ece5" } },
-        axisLabel: { color: "#a8a29a", fontSize: 8 },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
       yAxis: {
         type: "category",
@@ -179,14 +179,14 @@ export function FreightBars({ routes }: { routes: Record<string, { value: number
             value: v,
             itemStyle: {
               borderRadius: [0, 3, 3, 0],
-              color: changes[i] >= 0 ? "#d97757" : "#4a9d7f",
+              color: changes[i] >= 0 ? "#e8703f" : "#3aa876",
               opacity: 0.85,
             },
           })),
           label: {
             show: true,
             position: "right",
-            fontSize: 9,
+            fontSize: 10,
             color: "#7a756e",
             formatter: (p: { dataIndex: number }) => {
               const c = changes[p.dataIndex];
@@ -251,16 +251,16 @@ export function PriceVolumeBubble() {
       xAxis: {
         type: "value",
         name: "进口量（千吨）",
-        nameTextStyle: { color: "#a8a29a", fontSize: 8, padding: [8, 0, 0, 0] },
+        nameTextStyle: { color: "#a8a29a", fontSize: 10, padding: [8, 0, 0, 0] },
         splitLine: { lineStyle: { color: "#f0ece5" } },
-        axisLabel: { color: "#a8a29a", fontSize: 8 },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
       yAxis: {
         type: "value",
         name: "单价 $/kg",
-        nameTextStyle: { color: "#a8a29a", fontSize: 8 },
+        nameTextStyle: { color: "#a8a29a", fontSize: 10 },
         splitLine: { lineStyle: { color: "#f0ece5" } },
-        axisLabel: { color: "#a8a29a", fontSize: 8 },
+        axisLabel: { color: "#a8a29a", fontSize: 10 },
       },
       animationDuration: 700,
       series: [
@@ -275,7 +275,7 @@ export function PriceVolumeBubble() {
           label: {
             show: true,
             position: "top",
-            fontSize: 8.5,
+            fontSize: 10,
             color: "#7a756e",
             formatter: (p: { data: { name: string } }) => p.data.name,
           },
@@ -295,7 +295,7 @@ export function PriceVolumeBubble() {
   return (
     <div className="relative h-full w-full">
       <div ref={ref} className="h-full w-full" />
-      <div className="pointer-events-none absolute right-1 top-0 font-mono text-[8.5px] text-[var(--color-ink-faint)] opacity-70">
+      <div className="pointer-events-none absolute right-1 top-0 font-mono text-[9px] text-[var(--color-ink-faint)] opacity-70">
         {slice ? slice.slice(0, 4) : 2024}
       </div>
     </div>

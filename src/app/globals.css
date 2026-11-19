@@ -31,9 +31,11 @@
   --color-wa-green: #25d366;       /* WhatsApp 品牌绿 */
 
   /* ── 字体 ── */
-  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-sans: var(--font-inter), var(--font-noto-sc), 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-cn: var(--font-noto-sc), 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: var(--font-mono-jet), ui-monospace, monospace;
+  /* 数字专用：等宽 + 表格对齐，避免位数变化时抖动 */
+  --font-numeric: var(--font-mono-jet), ui-monospace, 'SF Mono', monospace;
 
   /* ── 阴影 ── */
   --shadow-card: 0 4px 20px rgba(58, 53, 48, 0.06);
@@ -167,4 +169,61 @@ button {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-light-blue);
+}
+
+/* ── 看板卡片三级分化（2026-11-18 阶段2）───────────────
+   设计意图：主卡（流向图）应比次卡更重，形成视觉落点。
+   层级通过「阴影 + 顶边高光 + 底色微差」表达，不靠加装饰。
+*/
+.panel-hero {
+  background:
+    radial-gradient(680px 300px at 50% -12%, rgba(58, 123, 158, 0.10), transparent 68%),
+    var(--color-card);
+  border-color: rgba(58, 123, 158, 0.32);
+  box-shadow:
+    var(--shadow-card),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.panel-sub {
+  background: var(--color-card);
+  border-color: var(--color-border);
+  box-shadow: 0 1px 3px rgba(58, 53, 48, 0.04);
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.panel-sub:hover {
+  box-shadow: var(--shadow-card);
+  border-color: var(--color-border-soft);
+}
+
+/* 辅级：KPI 卡（米底，无边框，压低存在感） */
+.kpi-card {
+  background: var(--color-card);
+  transition: background-color 220ms ease;
+}
+.kpi-card:hover {
+  background: color-mix(in srgb, var(--color-warm-gray) 30%, var(--color-card));
+}
+
+/* ── 数字排版（2026-11-18 阶段4 字体打磨）─────────────
+   等宽字体默认字距偏宽，看板数字收紧一档更利落。
+   tabular-nums 保证位数变化时对齐不抖。
+*/
+.font-mono,
+[class*="font-mono"] {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* KPI 大数字：稍紧一点，视觉更稳 */
+.kpi-card .font-mono {
+  letter-spacing: -0.02em;
+}
+
+/* 中文标题：Noto 的 600/700 偏重，看板小标题用 500 更稳 */
+h1, h2, h3 {
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
 }

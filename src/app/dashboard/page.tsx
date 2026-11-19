@@ -15,9 +15,10 @@ import {
 import prices from "@/data/generated/valuechain-prices.json";
 import freightJson from "@/data/generated/valuechain-freight.json";
 import tradeJson from "@/data/generated/valuechain-trade.json";
+import flowsJson from "@/data/generated/flows.json";
 
-const PriceSurface = dynamicImport(
-  () => import("@/components/dashboard/price-surface").then((m) => m.PriceSurface),
+const TradeFlows = dynamicImport(
+  () => import("@/components/dashboard/trade-flows").then((m) => m.TradeFlows),
   { ssr: false, loading: () => <ChartSkeleton /> }
 );
 const ImportStructure = dynamicImport(
@@ -56,6 +57,19 @@ const ROUTES = (freightJson.routes as unknown) as Record<
 const T = tradeJson as unknown as {
   years: number[];
   hs4: Record<string, { name: string; series: Record<string, { value: number; netWgt: number }> }>;
+};
+const FLOWS = flowsJson as unknown as {
+  reporter: string;
+  period: number;
+  source: string;
+  categories: Record<
+    string,
+    {
+      name: string;
+      total: number;
+      partners: { code: number; iso: string | null; name: string | null; value: number; netWgt: number }[];
+    }
+  >;
 };
 
 function deltaOf(series: Series, days: number): number {
@@ -144,10 +158,10 @@ function KpiStrip() {
         return (
           <div
             key={k.label}
-            className="kpi-card bg-[var(--color-card)] px-4 py-3 opacity-0 transition-colors hover:bg-[var(--color-warm-gray)]/30"
+            className="kpi-card px-4 py-3 opacity-0"
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[9.5px] uppercase tracking-wider text-[var(--color-ink-faint)]">
+              <span className="text-[10px] uppercase tracking-wider text-[var(--color-ink-faint)]">
                 {k.label}
               </span>
               {k.series && <MiniSpark data={k.series} up={up} flat={flat} />}
@@ -169,7 +183,7 @@ function KpiStrip() {
                 {Math.abs(k.delta).toFixed(1)}%
               </span>
             </div>
-            <div className="mt-0.5 font-mono text-[8.5px] text-[var(--color-ink-faint)]">
+            <div className="mt-0.5 font-mono text-[9px] text-[var(--color-ink-faint)]">
               {k.deltaLabel}
             </div>
           </div>
@@ -216,7 +230,7 @@ function Controls() {
           <button
             key={r}
             onClick={() => setRange(r)}
-            className={`rounded px-2 py-0.5 text-[10.5px] transition-colors ${
+            className={`rounded px-2 py-0.5 text-[10px] transition-colors ${
               range === r
                 ? "bg-[var(--color-warm-blue)] text-white"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-warm-gray)]"
@@ -237,7 +251,7 @@ function Controls() {
           <button
             key={c}
             onClick={() => setCat(c)}
-            className={`rounded px-2 py-0.5 text-[10.5px] transition-colors ${
+            className={`rounded px-2 py-0.5 text-[10px] transition-colors ${
               cat === c
                 ? "bg-[var(--color-warm-blue)] text-white"
                 : "text-[var(--color-ink-soft)] hover:bg-[var(--color-warm-gray)]"
@@ -280,26 +294,26 @@ function DashboardBody() {
       {/* 主视觉 + 侧栏 */}
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[1.62fr_1fr]">
         {/* 3D 曲面 */}
-        <div className="dash-panel relative overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] opacity-0">
+        <div className="dash-panel panel-hero relative overflow-hidden rounded-lg border opacity-0">
           <div className="flex items-baseline justify-between border-b border-[var(--color-border)] px-4 py-2">
-            <h2 className="text-[12.5px] font-semibold text-[var(--color-ink)]">
-              原料价格波动地形
+            <h2 className="text-[11.5px] font-semibold text-[var(--color-ink)]">
+              进口来源流向 · 谁在供货
             </h2>
             <span className="font-mono text-[9px] text-[var(--color-ink-faint)]">
               FRED · 2019-01 → 2026-11
             </span>
           </div>
           <div className="h-[min(62vh,560px)] w-full">
-            <PriceSurface data={P as unknown as Record<string, { name: string; freq: string; data: [string, number][] }>} />
+            <TradeFlows data={FLOWS} />
           </div>
         </div>
 
         {/* 侧栏三图 */}
         <div className="flex flex-col gap-3">
-          <div className="dash-panel flex-1 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] opacity-0">
+          <div className="dash-panel panel-sub flex-1 overflow-hidden rounded-lg border opacity-0">
             <div className="flex items-baseline justify-between border-b border-[var(--color-border)] px-3 py-1.5">
               <h3 className="text-[11.5px] font-medium text-[var(--color-ink)]">进口结构</h3>
-              <span className="font-mono text-[8.5px] text-[var(--color-ink-faint)]">
+              <span className="font-mono text-[9px] text-[var(--color-ink-faint)]">
                 UN Comtrade · 点击年份联动
               </span>
             </div>
@@ -308,20 +322,20 @@ function DashboardBody() {
             </div>
           </div>
 
-          <div className="dash-panel flex-1 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] opacity-0">
+          <div className="dash-panel panel-sub flex-1 overflow-hidden rounded-lg border opacity-0">
             <div className="flex items-baseline justify-between border-b border-[var(--color-border)] px-3 py-1.5">
               <h3 className="text-[11.5px] font-medium text-[var(--color-ink)]">运价指数</h3>
-              <span className="font-mono text-[8.5px] text-[var(--color-ink-faint)]">SCFI · 周环比</span>
+              <span className="font-mono text-[9px] text-[var(--color-ink-faint)]">SCFI · 周环比</span>
             </div>
             <div className="h-[clamp(100px,15vh,145px)] w-full px-1">
               <FreightBars routes={ROUTES} />
             </div>
           </div>
 
-          <div className="dash-panel flex-1 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] opacity-0">
+          <div className="dash-panel panel-sub flex-1 overflow-hidden rounded-lg border opacity-0">
             <div className="flex items-baseline justify-between border-b border-[var(--color-border)] px-3 py-1.5">
               <h3 className="text-[11.5px] font-medium text-[var(--color-ink)]">单价 vs 进口量</h3>
-              <span className="font-mono text-[8.5px] text-[var(--color-ink-faint)]">气泡 = 总额</span>
+              <span className="font-mono text-[9px] text-[var(--color-ink-faint)]">气泡 = 总额</span>
             </div>
             <div className="h-[clamp(110px,17vh,160px)] w-full px-1">
               <PriceVolumeBubble />
@@ -336,7 +350,7 @@ function DashboardBody() {
       </div>
 
       {/* 页脚说明 */}
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-[8.5px] text-[var(--color-ink-faint)]">
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-[9px] text-[var(--color-ink-faint)]">
         <span>
           FRED（美联储/BLS）· SCFI（上海航交所）· UN Comtrade ｜ 价格趋势监控，非成本核算
         </span>

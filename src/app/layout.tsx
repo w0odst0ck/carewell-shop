@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { SupportWidget } from "@/components/support/support-widget";
@@ -14,6 +14,14 @@ const inter = Inter({
 const mono = JetBrains_Mono({
   variable: "--font-mono-jet",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// 中文正文字体：仅取需要的字重，display:swap 避免阻塞首屏
+const notoSC = Noto_Sans_SC({
+  variable: "--font-noto-sc",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
@@ -50,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="zh-CN"
-      className={`${inter.variable} ${mono.variable} h-full antialiased`}
+      className={`${inter.variable} ${mono.variable} ${notoSC.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
         <SmoothScroll>{children}</SmoothScroll>
